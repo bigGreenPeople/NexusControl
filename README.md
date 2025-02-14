@@ -5,6 +5,9 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/bigGreenPeople/SharkModTemplate)
 ![root](https://img.shields.io/badge/root%20require-red.svg?logo=android&labelColor=black)
 ![Magisk](https://img.shields.io/badge/Magisk-24.0%2B-black.svg)
+![NexusControl](https://img.shields.io/github/downloads/bigGreenPeople/NexusControl/total)
+
+
 
 NexusControl 是一款基于 Android 系统的 远程群控解决方案，旨在为开发者、企业和 Android 设备管理提供强大且灵活的功能。通过 NexusControl，用户可以实现对大量 Android 设备的远程控制、远程应用安装/卸载、Magisk 模块发布及管理，并且支持 Xposed 框架的远程模块管理。
 
