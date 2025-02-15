@@ -27,7 +27,7 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
 
         Log.i(TAG, "packageName:" + lpparam.packageName + " processName: " + lpparam.processName);
         main(lpparam.classLoader, lpparam.processName, lpparam.packageName);
-        hookActivityOnResume(lpparam.classLoader);
+        trackActivityOnResume(lpparam.classLoader);
     }
 
     public Class findClass(String className) {
@@ -41,27 +41,6 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
     }
 
     abstract public void main(ClassLoader classLoader, String processName, String packageName);
-
-    public void trackExecStartActivity(String activityName) {
-        XposedHelpers.findAndHookMethod(
-                Instrumentation.class,
-                "execStartActivity",
-                Context.class, IBinder.class, IBinder.class, Activity.class,
-                Intent.class, int.class, Bundle.class,
-                new XC_MethodHook() {
-                    @Override
-                    protected void beforeHookedMethod(MethodHookParam param) {
-                        Intent intent = (Intent) param.args[4]; // 获取 Intent
-                        if (!intent.getComponent().toString().contains(activityName)) return;
-                        Log.i(TAG, "📌 Activity 启动: " + intent.getComponent());
-                        Log.i(TAG, "🔹 Intent Extras: " + intent.getExtras());
-
-                        // 打印调用堆栈
-                        Log.i(TAG, "🔸 调用栈:\n" + Log.getStackTraceString(new Throwable()));
-                    }
-                }
-        );
-    }
 
 
     /**
@@ -146,12 +125,6 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
         return signature.toString();
     }
 
-    public void hookFragment(ClassLoader classLoader) {
-        hookFragmentCreation(classLoader, "android.app.Fragment"); // 旧版 Fragment
-        hookFragmentCreation(classLoader, "androidx.fragment.app.Fragment"); // AndroidX Fragment
-
-    }
-
     public void runUi(Runnable action) {
         if (currentActivity == null) {
             Log.e(TAG, "runUi: currentActivity is null");
@@ -161,7 +134,34 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
         currentActivity.runOnUiThread(action);
     }
 
-    public void hookActivityOnResume(ClassLoader classLoader) {
+    public void trackFragment(ClassLoader classLoader) {
+        trackFragmentCreation(classLoader, "android.app.Fragment"); // 旧版 Fragment
+        trackFragmentCreation(classLoader, "androidx.fragment.app.Fragment"); // AndroidX Fragment
+
+    }
+
+    public void trackExecStartActivity(String activityName) {
+        XposedHelpers.findAndHookMethod(
+                Instrumentation.class,
+                "execStartActivity",
+                Context.class, IBinder.class, IBinder.class, Activity.class,
+                Intent.class, int.class, Bundle.class,
+                new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) {
+                        Intent intent = (Intent) param.args[4]; // 获取 Intent
+                        if (!intent.getComponent().toString().contains(activityName)) return;
+                        Log.i(TAG, "📌 Activity 启动: " + intent.getComponent());
+                        Log.i(TAG, "🔹 Intent Extras: " + intent.getExtras());
+
+                        // 打印调用堆栈
+                        Log.i(TAG, "🔸 调用栈:\n" + Log.getStackTraceString(new Throwable()));
+                    }
+                }
+        );
+    }
+
+    public void trackActivityOnResume(ClassLoader classLoader) {
         XposedHelpers.findAndHookMethod(Activity.class, "onResume", new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) {
@@ -184,7 +184,7 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
     /**
      * Hook Fragment 构造方法和 onCreate()
      */
-    public void hookFragmentCreation(ClassLoader classLoader, String fragmentClass) {
+    public void trackFragmentCreation(ClassLoader classLoader, String fragmentClass) {
         try {
             // Hook Fragment 构造方法
             XposedHelpers.findAndHookConstructor(fragmentClass, classLoader, new XC_MethodHook() {
