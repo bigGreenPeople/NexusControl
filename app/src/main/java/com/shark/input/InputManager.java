@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class InputManager {
     public static final String TAG = "SharkChilli";
-    public IInputService iInputService;
+    private IInputService iInputService;
     public Gson mGson = new Gson();
 
     // 静态私有实例，确保单例
@@ -39,7 +39,7 @@ public class InputManager {
         iInputService = IInputService.Stub.asInterface(requestBinder);
     }
 
-    public void handleEvent(ControlMessage controlMessage) {
+    private void handleEvent(ControlMessage controlMessage) {
         String msg = mGson.toJson(controlMessage);
         try {
             iInputService.handleEvent(msg);
@@ -189,7 +189,7 @@ public class InputManager {
 //{type=2, text='null', metaState=0, action=0, keycode=0, actionButton=1, buttons=1, pointerId=-1, pressure=1.5258789E-5, position=Position{point=Point{x=230, y=451}, screenSize=Size{width=376, height=816}}, hScroll=0.0, vScroll=0.0, copyKey=0, paste=false, repeat=0, sequence=0}
 //{type=2, text='null', metaState=0, action=1, keycode=0, actionButton=1, buttons=0, pointerId=-1, pressure=0.0,          position=Position{point=Point{x=230, y=451}, screenSize=Size{width=376, height=816}}, hScroll=0.0, vScroll=0.0, copyKey=0, paste=false, repeat=0, sequence=0}
 
-    public static IBinder requestBinder(Context context, String niceName) {
+    private static IBinder requestBinder(Context context, String niceName) {
         int BRIDGE_ACTION_GET_BINDER = 3;
         String BRIDGE_SERVICE_NAME = "activity";
         int BRIDGE_TRANSACTION_CODE = 1598837584;
@@ -257,9 +257,4 @@ public class InputManager {
         return instance;
     }
 
-    // 添加其他方法和功能
-    public void someMethod() {
-        // 示例方法
-        System.out.println("Executing someMethod...");
-    }
 }

@@ -54,10 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 viewById.requestFocus();
             });
             InputManager inputManager = InputManager.getInstance();
-            ControlMessage controlMessage = ControlMessage.createInjectText("765456456");
-
-            inputManager.handleEvent(controlMessage);
-
+//            ControlMessage controlMessage = ControlMessage.createInjectText("765456456");
+//            inputManager.handleEvent(controlMessage);
+            inputManager.inputText("765456456");
         }).start();
     }
 
