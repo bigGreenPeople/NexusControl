@@ -17,4 +17,7 @@ set KEY_TARGET=/data/adb/lspd/key
 %ADB_PATH% push %KEY_FILE% %KEY_TEMP%
 %ADB_PATH% shell "su -c 'mv %KEY_TEMP% %KEY_TARGET%'"
 
+echo Rebooting device...
+adb reboot
+
 endlocal
