@@ -8,6 +8,8 @@ public class DemoMain extends SuperModule {
     public void main(ClassLoader classLoader, String processName, String packageName) {
         trackActivityOnResume(classLoader);
         InputManager inputManager = InputManager.getInstance();
-        inputManager.inputText("Hello NexusControl!!");
+//        inputManager.inputText("Hello NexusControl!!");
+        InputManager.getInstance().swipe(241, 97, 235, 541);
+
     }
 }
