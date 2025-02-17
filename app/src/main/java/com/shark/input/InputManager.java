@@ -232,7 +232,9 @@ public class InputManager {
                     // 检查异常
                     reply.readException();
                     // 获取返回的 Binder
-                    return reply.readStrongBinder();
+                    IBinder readStrongBinder = reply.readStrongBinder();
+                    Log.e(TAG, "get requestBinder result: " + readStrongBinder);
+                    return readStrongBinder;
                 }
             } finally {
                 // 回收 Parcel
