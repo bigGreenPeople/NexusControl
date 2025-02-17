@@ -83,7 +83,7 @@ task pushApkRunDevice(dependsOn: 'assembleDebug') {
 
         println "Package Name: $applicationId"
 
-        def executeCmd = "adb shell service call shark_service 6 s16 \"$applicationId\" s16 \"$targetPackage\" s16 \"$jarName\""
+        def executeCmd = "adb shell su -c service call shark_service 6 s16 \"$applicationId\" s16 \"$targetPackage\" s16 \"$jarName\""
         println "executeCmd: $executeCmd"
 
         info = executeCmd.execute().text
