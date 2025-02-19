@@ -31,7 +31,7 @@ NexusControl 是一款基于 Android 系统的 远程群控解决方案，旨在
 
 
 ### 脚本自动安装 NexusControl 模块
-本模块是一个Magisk模块你可以直接在releases下载，手动安装。
+本模块是一个Magisk模块你可以直接在[releases下载](https://github.com/bigGreenPeople/NexusControl/releases)，手动安装。
 
 如果您希望通过自动化脚本快速安装 **NexusControl** 模块，请按照以下步骤操作：
 
