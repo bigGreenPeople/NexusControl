@@ -1,12 +1,16 @@
 package com.shark;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.shark.context.ContextUtils;
+import com.shark.view.ViewManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -21,13 +25,25 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
     public static final String TAG = "SharkMod";
     public Activity currentActivity;
     public ClassLoader mClassLoader;
+    public ViewManager mViewManager;
+    public ContextUtils mContextUtils;
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
         Log.i(TAG, "packageName:" + lpparam.packageName + " processName: " + lpparam.processName);
+        mClassLoader = lpparam.classLoader;
+
+        mViewManager = ViewManager.getInstance(lpparam.classLoader);
+        mContextUtils = ContextUtils.getInstance(lpparam.classLoader, null);
+
+        hookApplication();
         main(lpparam.classLoader, lpparam.processName, lpparam.packageName);
         trackActivityOnResume(lpparam.classLoader);
+    }
+
+    public void hookApplication() {
+
     }
 
     public Class findClass(String className) {

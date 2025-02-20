@@ -58,7 +58,7 @@ ext {
     //push的路径
     pushPath = "/data/local/tmp/"
     jarName = "test.apk"
-    targetPackage = "com.mh.test"
+    targetPackage = "com.autonavi.minimap"
 }
 
 
