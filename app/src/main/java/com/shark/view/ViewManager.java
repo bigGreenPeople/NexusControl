@@ -1,5 +1,7 @@
 package com.shark.view;
 
+import static com.shark.SuperModule.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Resources;
@@ -39,6 +41,7 @@ public class ViewManager {
     @SuppressLint({"PrivateApi", "DiscouragedPrivateApi"})
     public ArrayList<View> getWindowsView(Activity activity) {
         try {
+            Log.i(TAG, "getWindowsView: " + activity);
             Class WindowManagerGlobalClass = activity.getClassLoader().loadClass("android.view.WindowManagerGlobal");
             Method getInstance = WindowManagerGlobalClass.getDeclaredMethod("getInstance");
             getInstance.setAccessible(true);
@@ -88,7 +91,7 @@ public class ViewManager {
 
             for (int i = 0; i < mViews.size(); i++) {
                 View viewById = mViews.get(i);
-                if (i == 0){
+                if (i == 0) {
                     viewById = viewById.findViewById(Window.ID_ANDROID_CONTENT);
                 }
                 viewInfos.add(getViewInfo(viewById, statusBarHeight));
@@ -115,6 +118,7 @@ public class ViewManager {
         viewInfo.setShown(view.isShown());
         viewInfo.setHeight(view.getHeight());
         viewInfo.setWidth(view.getWidth());
+        viewInfo.setView(view);
         int[] viewLocation = getViewLocation(view);
         viewInfo.setX(viewLocation[0]);
         viewInfo.setY(viewLocation[1] - statusBarHeight);
