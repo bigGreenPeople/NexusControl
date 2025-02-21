@@ -28,8 +28,12 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
     public ViewManager mViewManager;
     public ContextUtils mContextUtils;
 
+
+    protected abstract String getTargetPackageName();
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+        if (!lpparam.packageName.equals(getTargetPackageName())) return;
+        if (!lpparam.processName.equals(getTargetPackageName())) return;
 
         Log.i(TAG, "packageName:" + lpparam.packageName + " processName: " + lpparam.processName);
         mClassLoader = lpparam.classLoader;

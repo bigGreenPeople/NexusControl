@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.shark.aidl.IInputService;
@@ -84,6 +85,29 @@ public class InputManager {
         SleepUtil.randomSleep(50, 150);
         ControlMessage controlMessage2 = ControlMessage.createInjectTouchEvent(Input.AKEY_EVENT_ACTION_UP, -1, position, (float) 0.0f, 1, 0);
         handleEvent(controlMessage2);
+    }
+
+    /**
+     * 计算 View 的中心点，并模拟触摸点击
+     *
+     * @param view 需要点击的 View
+     */
+    public void click(View view) {
+        if (view == null) {
+            return;
+        }
+
+        // 计算 View 中心点坐标
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        int centerX = location[0] + view.getWidth() / 2;
+        int centerY = location[1] + view.getHeight() / 2;
+
+        Log.i(TAG, "centerX: "+centerX);
+        Log.i(TAG, "centerY: "+centerY);
+
+        // 触发点击事件
+        touch(centerX, centerY);
     }
 
     public void swipe(int startX, int startY, int endX, int endY) {
