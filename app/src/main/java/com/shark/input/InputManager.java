@@ -38,6 +38,7 @@ public class InputManager {
         }
 
         iInputService = IInputService.Stub.asInterface(requestBinder);
+        Log.i(TAG, "InputManager iInputService: " + iInputService);
     }
 
     private void handleEvent(ControlMessage controlMessage) {
@@ -103,8 +104,8 @@ public class InputManager {
         int centerX = location[0] + view.getWidth() / 2;
         int centerY = location[1] + view.getHeight() / 2;
 
-        Log.i(TAG, "centerX: "+centerX);
-        Log.i(TAG, "centerY: "+centerY);
+        Log.i(TAG, "centerX: " + centerX);
+        Log.i(TAG, "centerY: " + centerY);
 
         // 触发点击事件
         touch(centerX, centerY);

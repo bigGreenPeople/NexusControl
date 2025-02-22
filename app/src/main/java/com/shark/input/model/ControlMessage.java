@@ -40,6 +40,7 @@ public final class ControlMessage {
     private boolean paste;
     private int repeat;
     private long sequence;
+    private boolean isConvert = true;
 
     @Override
     public String toString() {
@@ -59,6 +60,8 @@ public final class ControlMessage {
                 ", copyKey=" + copyKey +
                 ", paste=" + paste +
                 ", repeat=" + repeat +
+                ", isConvert=" + isConvert +
+
                 ", sequence=" + sequence +
                 '}';
     }
@@ -93,6 +96,7 @@ public final class ControlMessage {
         msg.position = position;
         msg.actionButton = actionButton;
         msg.buttons = buttons;
+        msg.isConvert = false;
         return msg;
     }
 
@@ -143,6 +147,14 @@ public final class ControlMessage {
         ControlMessage msg = new ControlMessage();
         msg.type = type;
         return msg;
+    }
+
+    public boolean isConvert() {
+        return isConvert;
+    }
+
+    public void setConvert(boolean convert) {
+        isConvert = convert;
     }
 
     public int getType() {

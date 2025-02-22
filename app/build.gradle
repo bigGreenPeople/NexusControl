@@ -50,6 +50,7 @@ dependencies {
     implementation("com.github.kyuubiran:EzXHelper:2.2.0")
 
     implementation("dev.rikka.hidden:stub:4.3.3")
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
 
 //    compileOnly 'de.robv.android.xposed:api:82:sources'
 }
