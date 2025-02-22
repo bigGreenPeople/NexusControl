@@ -41,7 +41,6 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
         mViewManager = ViewManager.getInstance(lpparam.classLoader);
         mContextUtils = ContextUtils.getInstance(lpparam.classLoader, null);
 
-        hookApplication();
         main(lpparam.classLoader, lpparam.processName, lpparam.packageName);
         trackActivityOnResume(lpparam.classLoader);
     }
