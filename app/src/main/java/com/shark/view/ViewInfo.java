@@ -1,9 +1,12 @@
 package com.shark.view;
 
+import android.app.Activity;
 import android.view.View;
 
 import com.google.gson.annotations.Expose;
+import com.shark.input.InputManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -123,16 +126,53 @@ public class ViewInfo {
         this.childList = childList;
     }
 
-    public ViewInfo findViewById(int targetId) {
-        // 如果当前 ViewInfo 的 ID 符合条件，直接返回
-        if (this.id == targetId) {
+    public void click() {
+        InputManager.getInstance().click(getView());
+    }
+
+    public void click(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        InputManager.getInstance().click(getView());
+    }
+
+    public void clickByActivity(String clazzName) {
+    }
+
+
+
+    public ViewInfo findViewById(Integer targetId) {
+        return findView(targetId, null, null);
+
+    }
+
+    public ViewInfo findViewByText(String text) {
+        return findView(null, text, null);
+    }
+
+    public ViewInfo findViewByClass(String clazzName) {
+        return findView(null, null, clazzName);
+    }
+
+
+    public ViewInfo findView(Integer id, String text, String clazzName) {
+        // 如果 id, text, clazzName 不为 null，则进行匹配判断；如果为 null，则跳过该条件
+        boolean idMatches = (id == null || this.id == id);
+        boolean textMatches = (text == null || text.equals(this.getText()));
+        boolean classMatches = (clazzName == null || clazzName.equals(this.getClassName()));
+
+        // 如果都匹配，返回当前 ViewInfo
+        if (idMatches && textMatches && classMatches) {
             return this;
         }
 
         // 遍历子 ViewInfo 列表
         if (childList != null) {
             for (ViewInfo child : childList) {
-                ViewInfo result = child.findViewById(targetId);
+                ViewInfo result = child.findView(id, text, clazzName);
                 if (result != null) {
                     return result;
                 }
@@ -142,23 +182,29 @@ public class ViewInfo {
         // 如果没有找到，则返回 null
         return null;
     }
-    public ViewInfo findViewById(String text) {
-        // 如果当前 ViewInfo 的 ID 符合条件，直接返回
-        if (this.getText()!=null && this.getText().equals(text)) {
-            return this;
+
+
+    public List<ViewInfo> findViewList(Integer id, String text, String clazzName) {
+        List<ViewInfo> matchingViews = new ArrayList<>();
+
+        // 根据条件检查当前 View 是否符合要求
+        boolean idMatches = (id == null || this.id == id);
+        boolean textMatches = (text == null || text.equals(this.getText()));
+        boolean classMatches = (clazzName == null || clazzName.equals(this.getClassName()));
+
+        // 如果当前 View 符合条件，添加到结果列表
+        if (idMatches && textMatches && classMatches) {
+            matchingViews.add(this);
         }
 
-        // 遍历子 ViewInfo 列表
+        // 遍历子 ViewInfo 列表，递归查找符合条件的 View
         if (childList != null) {
             for (ViewInfo child : childList) {
-                ViewInfo result = child.findViewById(text);
-                if (result != null) {
-                    return result;
-                }
+                matchingViews.addAll(child.findViewList(id, text, clazzName));
             }
         }
 
-        // 如果没有找到，则返回 null
-        return null;
+        return matchingViews;
     }
+
 }

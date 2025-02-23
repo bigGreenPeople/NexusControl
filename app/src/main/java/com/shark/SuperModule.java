@@ -30,6 +30,7 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
 
 
     protected abstract String getTargetPackageName();
+
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (!lpparam.packageName.equals(getTargetPackageName())) return;
@@ -235,4 +236,5 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
             Log.i(TAG, "[ERROR] Hook Fragment 失败：" + e.getMessage());
         }
     }
+
 }
