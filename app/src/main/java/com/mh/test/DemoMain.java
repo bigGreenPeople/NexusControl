@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.shark.SuperModule;
+import com.shark.ViewModule;
 import com.shark.context.ContextUtils;
 import com.shark.input.InputManager;
 import com.shark.signal.IRecvListener;
@@ -11,6 +12,7 @@ import com.shark.socket.JWebSocketClient;
 import com.shark.socket.WebSocketMessage;
 import com.shark.tools.ScreenShot;
 import com.shark.utils.LogUtils;
+import com.shark.utils.ThreadUtils;
 import com.shark.view.ViewInfo;
 import com.shark.view.ViewManager;
 
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class DemoMain extends SuperModule implements IRecvListener {
+public class DemoMain extends ViewModule implements IRecvListener {
 
     @Override
     protected String getTargetPackageName() {
@@ -35,6 +37,13 @@ public class DemoMain extends SuperModule implements IRecvListener {
 //        InputManager.getInstance().swipe(241, 97, 235, 541);2263
 //        InputManager.getInstance().touchHold(972, 127);
 
+        if (ThreadUtils.isMainThread()) {
+            // 当前是 UI 线程
+            Log.d(TAG, "Running on the main thread.");
+        } else {
+            // 当前不是 UI 线程
+            Log.d(TAG, "Not running on the main thread.");
+        }
 
         new Thread(() -> {
             try {
@@ -42,18 +51,27 @@ public class DemoMain extends SuperModule implements IRecvListener {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            ArrayList<ViewInfo> windowViewInfo = mViewManager.getWindowViewInfo(currentActivity);
-            Gson gson = new Gson();
-            Log.i(TAG, "windowViewInfo: " + gson.toJson(windowViewInfo));
-//            LogUtils.logLongString(gson.toJson(windowViewInfo));
-            windowViewInfo.forEach(viewInfo -> {
-                ViewInfo viewById = viewInfo.findViewById("未登录");
-                Log.i(TAG, "windowViewInfo: " + gson.toJson(viewById));
-                if (viewById != null) {
-                    InputManager.getInstance().click(viewById.getView());
+            if (ThreadUtils.isMainThread()) {
+                // 当前是 UI 线程
+                Log.d(TAG, "Running on the main thread.");
+            } else {
+                // 当前不是 UI 线程
+                Log.d(TAG, "Not running on the main thread.");
+            }
+
+            runUi(new Runnable() {
+                @Override
+                public void run() {
+                    if (ThreadUtils.isMainThread()) {
+                        // 当前是 UI 线程
+                        Log.d(TAG, "Running on the main thread.");
+                    } else {
+                        // 当前不是 UI 线程
+                        Log.d(TAG, "Not running on the main thread.");
+                    }
                 }
             });
-
+            clickByText("我的");
 //            entry();
         }).start();
 
