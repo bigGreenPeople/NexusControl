@@ -18,15 +18,11 @@ import com.shark.view.ViewManager;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class DemoMain extends ViewModule implements IRecvListener {
-
-    @Override
-    protected String getTargetPackageName() {
-        return "com.autonavi.minimap";
-    }
 
     @Override
     public void main(ClassLoader classLoader, String processName, String packageName) {
@@ -37,42 +33,46 @@ public class DemoMain extends ViewModule implements IRecvListener {
 //        InputManager.getInstance().swipe(241, 97, 235, 541);2263
 //        InputManager.getInstance().touchHold(972, 127);
 
-        if (ThreadUtils.isMainThread()) {
-            // 当前是 UI 线程
-            Log.d(TAG, "Running on the main thread.");
-        } else {
-            // 当前不是 UI 线程
-            Log.d(TAG, "Not running on the main thread.");
-        }
-
+//        if (ThreadUtils.isMainThread()) {
+//            // 当前是 UI 线程
+//            Log.d(TAG, "Running on the main thread.");
+//        } else {
+//            // 当前不是 UI 线程
+//            Log.d(TAG, "Not running on the main thread.");
+//        }
+//
         new Thread(() -> {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if (ThreadUtils.isMainThread()) {
-                // 当前是 UI 线程
-                Log.d(TAG, "Running on the main thread.");
-            } else {
-                // 当前不是 UI 线程
-                Log.d(TAG, "Not running on the main thread.");
-            }
 
-            runUi(new Runnable() {
-                @Override
-                public void run() {
-                    if (ThreadUtils.isMainThread()) {
-                        // 当前是 UI 线程
-                        Log.d(TAG, "Running on the main thread.");
-                    } else {
-                        // 当前不是 UI 线程
-                        Log.d(TAG, "Not running on the main thread.");
-                    }
-                }
-            });
-            clickByText("我的");
-//            entry();
+            Log.i(TAG, "main: *************");
+            List<ViewInfo> viewList = findViewList(null, null, "com.taobao.search.musie.MuiseContainer");
+            Log.i(TAG, "viewList size: " + viewList);
+//            if (ThreadUtils.isMainThread()) {
+//                // 当前是 UI 线程
+//                Log.d(TAG, "Running on the main thread.");
+//            } else {
+//                // 当前不是 UI 线程
+//                Log.d(TAG, "Not running on the main thread.");
+//            }
+//
+//            runUi(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (ThreadUtils.isMainThread()) {
+//                        // 当前是 UI 线程
+//                        Log.d(TAG, "Running on the main thread.");
+//                    } else {
+//                        // 当前不是 UI 线程
+//                        Log.d(TAG, "Not running on the main thread.");
+//                    }
+//                }
+//            });
+//            clickByText("我的");
+            entry();
         }).start();
 
     }
@@ -111,6 +111,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
             }
 
             mContextUtils.getRunningActivitys().forEach(activity -> {
+                Log.i(TAG, "recvMessage activity: " + activity);
                 byte[] activityScreenBytes = ScreenShot.getActivityScreenBytes(activity);
                 mJWebSocketClient.send(activityScreenBytes);
             });
