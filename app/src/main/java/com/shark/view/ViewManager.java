@@ -59,6 +59,7 @@ public class ViewManager {
 
     public Map<String, ViewInfo> getActivitysLayout(List<Activity> activities) {
         HashMap<String, ViewInfo> layoutMap = new HashMap<>();
+        Log.i(TAG, "getActivitysLayout: " + activities);
 
         activities.forEach(activity -> {
 //            layoutMap.put(activity.getClass().getName(), getActivityViewInfo(activity));
@@ -66,9 +67,11 @@ public class ViewManager {
             ArrayList<ViewInfo> windowViewInfo = getWindowViewInfo(activity);
 
             for (int i = 0; i < windowViewInfo.size(); i++) {
+                Log.i(TAG, "windowViewInfo.get: " + windowViewInfo.get(i));
                 layoutMap.put(activity.getClass().getName() + i, windowViewInfo.get(i));
             }
         });
+        Log.i(TAG, "layoutMap: " + layoutMap.keySet());
 
         return layoutMap;
     }

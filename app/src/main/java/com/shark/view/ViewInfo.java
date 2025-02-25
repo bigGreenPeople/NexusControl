@@ -207,4 +207,22 @@ public class ViewInfo {
         return matchingViews;
     }
 
+
+    @Override
+    public String toString() {
+        return "ViewInfo{" +
+                "className='" + className + '\'' +
+                ", enabled=" + enabled +
+                ", shown=" + shown +
+                ", id=" + id +
+                ", text='" + text + '\'' +
+                ", description='" + description + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                ", mView=" + mView +
+                ", childList=" + childList +
+                '}';
+    }
 }
