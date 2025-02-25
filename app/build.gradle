@@ -5,6 +5,16 @@ plugins {
     id 'kotlin-kapt'
 }
 
+ext {
+    //push的路径
+    pushPath = "/data/local/tmp/"
+    jarName = "test.apk"
+    targetPackage = "com.taobao.taobao"
+//    targetPackage = "com.xingin.xhs"
+
+}
+
+
 android {
     namespace 'com.mh.test'
     compileSdk 31
@@ -17,6 +27,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "TARGET_PACKAGE", "\"${targetPackage}\""
+
     }
 
     buildFeatures {
@@ -53,13 +65,6 @@ dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.5.1"
 
 //    compileOnly 'de.robv.android.xposed:api:82:sources'
-}
-
-ext {
-    //push的路径
-    pushPath = "/data/local/tmp/"
-    jarName = "test.apk"
-    targetPackage = "com.autonavi.minimap"
 }
 
 

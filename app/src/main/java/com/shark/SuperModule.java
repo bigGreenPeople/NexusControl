@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.mh.test.BuildConfig;
 import com.shark.context.ContextUtils;
 import com.shark.view.ViewManager;
 
@@ -29,7 +30,9 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
     public ContextUtils mContextUtils;
 
 
-    protected abstract String getTargetPackageName();
+    protected String getTargetPackageName() {
+        return BuildConfig.TARGET_PACKAGE;
+    }
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
