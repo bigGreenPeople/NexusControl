@@ -43,7 +43,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
 //
         new Thread(() -> {
             try {
-                Thread.sleep(15000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -85,7 +85,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
         mContextUtils = ContextUtils.getInstance(mClassLoader, currentActivity.getApplication());
         mViewManager = ViewManager.getInstance(this.mClassLoader);
 
-        URI uri = URI.create("ws://192.168.31.52:9873");
+        URI uri = URI.create("ws://192.168.124.11:9873");
         mJWebSocketClient = new JWebSocketClient(uri, this);
         if (mJWebSocketClient != null) {
             try {

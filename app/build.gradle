@@ -9,8 +9,10 @@ ext {
     //push的路径
     pushPath = "/data/local/tmp/"
     jarName = "test.apk"
-    targetPackage = "com.taobao.taobao"
-//    targetPackage = "com.xingin.xhs"
+//    targetPackage = "com.taobao.taobao"
+    targetPackage = "com.xingin.xhs"
+//    targetPackage = "com.ss.android.ugc.aweme"
+//    targetPackage = "com.autonavi.minimap"
 
 }
 
