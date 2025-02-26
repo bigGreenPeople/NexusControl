@@ -1,6 +1,8 @@
 package com.mh.test;
 
+import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.shark.SuperModule;
@@ -20,6 +22,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class DemoMain extends ViewModule implements IRecvListener {
@@ -85,7 +88,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
         mContextUtils = ContextUtils.getInstance(mClassLoader, currentActivity.getApplication());
         mViewManager = ViewManager.getInstance(this.mClassLoader);
 
-        URI uri = URI.create("ws://192.168.124.11:9873");
+        URI uri = URI.create("ws://192.168.31.52:9873");
         mJWebSocketClient = new JWebSocketClient(uri, this);
         if (mJWebSocketClient != null) {
             try {
@@ -110,16 +113,27 @@ public class DemoMain extends ViewModule implements IRecvListener {
                 return;
             }
 
-            mContextUtils.getRunningActivitys().forEach(activity -> {
-                Log.i(TAG, "recvMessage activity: " + activity);
-                byte[] activityScreenBytes = ScreenShot.getActivityScreenBytes(activity);
-                mJWebSocketClient.send(activityScreenBytes);
+            ArrayList<View> windowsView = mViewManager.getWindowsView(currentActivity);
+
+
+            windowsView.forEach(view -> {
+                Log.i(TAG, "recvMessage view: " + view);
+                byte[] activityScreenBytes = ScreenShot.getActivityScreenBytes(currentActivity, view);
+//                mJWebSocketClient.send(activityScreenBytes);
             });
             // 发送完毕
             WebSocketMessage textMessage = WebSocketMessage.createMessage(WebSocketMessage.Type.GET_LAYOUT_IMG_END);
             mJWebSocketClient.send(textMessage);
         } else if (WebSocketMessage.Type.GET_LAYOUT.equals(webSocketMessage.getType())) {
-            Map<String, ViewInfo> activitysLayout = mViewManager.getActivitysLayout(mContextUtils.getRunningActivitys());
+            Map<String, ViewInfo> activitysLayout = mViewManager.getActivitysLayout(currentActivity);
+
+            activitysLayout.forEach((key, viewInfo) -> {
+                byte[] activityScreenBytes = ScreenShot.getActivityScreenBytes(currentActivity, viewInfo.getView());
+
+                Log.i(TAG, "setImgData: " + viewInfo);
+                viewInfo.setImgData(Base64.encodeToString(activityScreenBytes, Base64.NO_WRAP));
+            });
+
             String activitysLayoutInfo = new Gson().toJson(activitysLayout);
             WebSocketMessage textMessage = WebSocketMessage.createLayoutMessage("0", activitysLayoutInfo);
             mJWebSocketClient.send(textMessage);

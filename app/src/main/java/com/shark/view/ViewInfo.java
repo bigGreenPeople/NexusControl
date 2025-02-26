@@ -20,6 +20,8 @@ public class ViewInfo {
     private String text;
     private String description;
 
+    private String imgData;
+
     private int x;
     private int y;
     private int width;
@@ -29,6 +31,15 @@ public class ViewInfo {
 
 
     private List<ViewInfo> childList;
+
+
+    public String getImgData() {
+        return imgData;
+    }
+
+    public void setImgData(String imgData) {
+        this.imgData = imgData;
+    }
 
     public View getView() {
         return mView;

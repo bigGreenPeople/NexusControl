@@ -39,6 +39,37 @@ public class ViewManager {
     }
 
     @SuppressLint({"PrivateApi", "DiscouragedPrivateApi"})
+    public View getActivityWindowsView(Activity activity) {
+        try {
+            // 通过反射获取 WindowManagerGlobal 实例
+            Class<?> windowManagerGlobalClass = Class.forName("android.view.WindowManagerGlobal");
+            Method getInstanceMethod = windowManagerGlobalClass.getDeclaredMethod("getInstance");
+            getInstanceMethod.setAccessible(true);
+            Object mGlobal = getInstanceMethod.invoke(null);
+
+            // 访问 mViews 字段，获取所有窗口的 View
+            Field mViewsField = windowManagerGlobalClass.getDeclaredField("mViews");
+            mViewsField.setAccessible(true);
+            List<View> mViews = (List<View>) mViewsField.get(mGlobal);
+
+            // 获取当前 Activity 的 DecorView
+            View decorView = activity.getWindow().getDecorView();
+
+            // 在 mViews 里查找相同的 DecorView
+            for (View view : mViews) {
+                if (view == decorView) {
+                    return view;  // 找到当前 Activity 对应的 View
+                }
+            }
+
+        } catch (Exception e) {
+            Log.e("SharkChilli", "getActivityDecorView: ", e);
+        }
+        return null;
+    }
+
+
+    @SuppressLint({"PrivateApi", "DiscouragedPrivateApi"})
     public ArrayList<View> getWindowsView(Activity activity) {
         try {
             Log.i(TAG, "getWindowsView: " + activity);
@@ -57,20 +88,20 @@ public class ViewManager {
         return null;
     }
 
-    public Map<String, ViewInfo> getActivitysLayout(List<Activity> activities) {
+    public Map<String, ViewInfo> getActivitysLayout(Activity activity) {
         HashMap<String, ViewInfo> layoutMap = new HashMap<>();
-        Log.i(TAG, "getActivitysLayout: " + activities);
+        Log.i(TAG, "getActivitysLayout: " + activity);
 
-        activities.forEach(activity -> {
+//        activities.forEach(activity -> {
 //            layoutMap.put(activity.getClass().getName(), getActivityViewInfo(activity));
-            // 添加每个activity 的windows
-            ArrayList<ViewInfo> windowViewInfo = getWindowViewInfo(activity);
+        // 添加每个activity 的windows
+        ArrayList<ViewInfo> windowViewInfo = getWindowViewInfo(activity);
 
-            for (int i = 0; i < windowViewInfo.size(); i++) {
-                Log.i(TAG, "windowViewInfo.get: " + windowViewInfo.get(i));
-                layoutMap.put(activity.getClass().getName() + i, windowViewInfo.get(i));
-            }
-        });
+        for (int i = 0; i < windowViewInfo.size(); i++) {
+            Log.i(TAG, "windowViewInfo.get: " + windowViewInfo.get(i));
+            layoutMap.put(windowViewInfo.get(i).getView().toString(), windowViewInfo.get(i));
+        }
+//        });
         Log.i(TAG, "layoutMap: " + layoutMap.keySet());
 
         return layoutMap;
@@ -91,7 +122,7 @@ public class ViewManager {
             ArrayList<View> mViews = getWindowsView(activity);
             Log.i("SharkChilli", "mViews size is:" + mViews.size());
             int statusBarHeight = getStatusBarHeight(activity);
-
+            statusBarHeight = 0;
             for (int i = 0; i < mViews.size(); i++) {
                 View viewById = mViews.get(i);
                 if (i == 0) {
