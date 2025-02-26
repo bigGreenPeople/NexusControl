@@ -39,6 +39,29 @@ public class ScreenShot {
         return b;
     }
 
+    private static Bitmap takeScreenShot(Activity activity, View view) {
+        // View是你需要截图的View
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap b1 = view.getDrawingCache();
+
+        // 获取状态栏高度
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+//        Log.i(TAG, "" + statusBarHeight);
+
+        // 获取屏幕长和高
+        int width = view.getWidth();
+        int height = view.getHeight();
+        // 去掉标题栏
+        // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
+        Bitmap b = Bitmap.createBitmap(b1, 0, 0, width, height
+                - statusBarHeight);
+        view.destroyDrawingCache();
+        return b;
+    }
+
     // 保存到sdcard
     private static void savePic(Bitmap b, String strFileName) {
         FileOutputStream fos = null;
@@ -66,6 +89,15 @@ public class ScreenShot {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         Bitmap bitmap = ScreenShot.takeScreenShot(activity);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return bytes;
+    }
+
+    public static byte[] getActivityScreenBytes(Activity activity, View view) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        Bitmap bitmap = ScreenShot.takeScreenShot(activity, view);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] bytes = byteArrayOutputStream.toByteArray();
         return bytes;
