@@ -1,9 +1,19 @@
 package com.mh.test;
 
+import android.annotation.SuppressLint;
+import android.text.Editable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+
+import com.github.kyuubiran.ezxhelper.HookFactory;
+import com.github.kyuubiran.ezxhelper.finders.ConstructorFinder;
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder;
+import com.github.kyuubiran.ezxhelper.interfaces.IMethodHookCallback;
 import com.google.gson.Gson;
 import com.shark.SuperModule;
 import com.shark.ViewModule;
@@ -18,6 +28,8 @@ import com.shark.utils.ThreadUtils;
 import com.shark.view.ViewInfo;
 import com.shark.view.ViewManager;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +37,17 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedHelpers;
+
 public class DemoMain extends ViewModule implements IRecvListener {
+    public static List<Object> sessionList = new ArrayList<>();
+    public static Object lastSession;
 
     @Override
     public void main(ClassLoader classLoader, String processName, String packageName) {
-        trackActivityOnResume(classLoader);
+//        trackActivityOnResume(classLoader);
+//        trackFragment(classLoader);
         Log.i(TAG, "main: DemoMain");
 //        InputManager inputManager = InputManager.getInstance();
 //        inputManager.inputText("Hello NexusControl!!");
@@ -44,38 +62,39 @@ public class DemoMain extends ViewModule implements IRecvListener {
 //            Log.d(TAG, "Not running on the main thread.");
 //        }
 //
+
         new Thread(() -> {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
-            Log.i(TAG, "main: *************");
-            List<ViewInfo> viewList = findViewList(null, null, "com.taobao.search.musie.MuiseContainer");
-            Log.i(TAG, "viewList size: " + viewList);
-//            if (ThreadUtils.isMainThread()) {
-//                // 当前是 UI 线程
-//                Log.d(TAG, "Running on the main thread.");
-//            } else {
-//                // 当前不是 UI 线程
-//                Log.d(TAG, "Not running on the main thread.");
-//            }
+//            List<Method> methods = MethodFinder.fromClass(findClass("d3r")).filterNonAbstract().toList();
 //
-//            runUi(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (ThreadUtils.isMainThread()) {
-//                        // 当前是 UI 线程
-//                        Log.d(TAG, "Running on the main thread.");
-//                    } else {
-//                        // 当前不是 UI 线程
-//                        Log.d(TAG, "Not running on the main thread.");
-//                    }
-//                }
+//
+//            HookFactory.createMethodBeforeHooks(methods, methodHookParam -> {
+//                Log.i(TAG, "d3r: " + methodHookParam.thisObject);
+//                logBefore(methodHookParam);
 //            });
-//            clickByText("我的");
-            entry();
+
+            List<Constructor<?>> d3r = ConstructorFinder.fromClass(findClass("d3r")).toList();
+
+            HookFactory.createConstructorAfterHooks(d3r, new IMethodHookCallback() {
+                @Override
+                public void onMethodHooked(@NonNull XC_MethodHook.MethodHookParam methodHookParam) {
+                    sessionList.add(methodHookParam.thisObject);
+                    lastSession = methodHookParam.thisObject;
+                }
+            });
+            hookBeforeClazzsMethod(new IMethodHookCallback() {
+                @Override
+                public void onMethodHooked(@NonNull XC_MethodHook.MethodHookParam methodHookParam) {
+                    if (lastSession != methodHookParam.thisObject) return;
+                    Log.i(TAG, "thisObject: " + methodHookParam.thisObject);
+                    logBefore(methodHookParam);
+                }
+            }, "d3r", "yzq", "xzq");
         }).start();
 
     }
@@ -88,7 +107,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
         mContextUtils = ContextUtils.getInstance(mClassLoader, currentActivity.getApplication());
         mViewManager = ViewManager.getInstance(this.mClassLoader);
 
-        URI uri = URI.create("ws://192.168.31.52:9873");
+        URI uri = URI.create("ws://192.168.124.11:9873");
         mJWebSocketClient = new JWebSocketClient(uri, this);
         if (mJWebSocketClient != null) {
             try {
