@@ -9,13 +9,20 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.github.kyuubiran.ezxhelper.HookFactory;
+import com.github.kyuubiran.ezxhelper.finders.MethodFinder;
+import com.github.kyuubiran.ezxhelper.interfaces.IMethodHookCallback;
 import com.mh.test.BuildConfig;
 import com.shark.context.ContextUtils;
 import com.shark.view.ViewManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
@@ -102,6 +109,19 @@ public abstract class SuperModule implements IXposedHookLoadPackage {
                 "🔸 返回值  ：" + (param.getResult() != null ? param.getResult().toString() : "null") + "\n" +
                 "====================================";
         Log.i(TAG, log);
+    }
+
+
+    public void hookBeforeClazzsMethod(IMethodHookCallback iMethodHookCallback, String... classList) {
+
+        List<Method> allMethods = new ArrayList<>();
+
+        for (String clazz : classList) {
+            List<Method> methods = MethodFinder.fromClass(findClass(clazz)).filterNonAbstract().toList();
+            allMethods.addAll(methods);
+        }
+
+        HookFactory.createMethodBeforeHooks(allMethods, iMethodHookCallback);
     }
 
     /**
