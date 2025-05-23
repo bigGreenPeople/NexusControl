@@ -88,6 +88,29 @@ public class ViewManager {
         return null;
     }
 
+    private static final int MAX_LENGTH = 3500; // 每段最多输出的长度（安全值）
+
+    public static void printLongLog(String tag, String message) {
+        if (message == null || message.isEmpty()) {
+            Log.d(tag, "message is empty");
+            return;
+        }
+
+        int length = message.length();
+        int start = 0;
+        int end = MAX_LENGTH;
+
+        while (start < length) {
+            // 避免 end 越界
+            if (length < end) {
+                end = length;
+            }
+            Log.d(tag, message.substring(start, end));
+            start = end;
+            end += MAX_LENGTH;
+        }
+    }
+
     public Map<String, ViewInfo> getActivitysLayout(Activity activity) {
         HashMap<String, ViewInfo> layoutMap = new HashMap<>();
         Log.i(TAG, "getActivitysLayout: " + activity);
@@ -99,6 +122,9 @@ public class ViewManager {
 
         for (int i = 0; i < windowViewInfo.size(); i++) {
             Log.i(TAG, "windowViewInfo.get: " + windowViewInfo.get(i));
+            printLongLog(TAG, windowViewInfo.get(i).toString());
+
+
             layoutMap.put(windowViewInfo.get(i).getView().toString(), windowViewInfo.get(i));
         }
 //        });
