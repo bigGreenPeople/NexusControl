@@ -11,9 +11,9 @@ ext {
     jarName = "test.apk"
 //    targetPackage = "com.taobao.taobao"
 //    targetPackage = "com.xingin.xhs"
-    targetPackage = "com.tencent.wework"
+//    targetPackage = "com.hellotalk"
 //    targetPackage = "com.ss.android.ugc.aweme"
-//    targetPackage = "com.autonavi.minimap"
+    targetPackage = "com.tencent.mm"
 
 }
 

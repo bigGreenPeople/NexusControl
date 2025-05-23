@@ -1,6 +1,7 @@
 package com.mh.test;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.text.Editable;
 import android.util.Base64;
 import android.util.Log;
@@ -48,6 +49,9 @@ public class DemoMain extends ViewModule implements IRecvListener {
     public void main(ClassLoader classLoader, String processName, String packageName) {
 //        trackActivityOnResume(classLoader);
 //        trackFragment(classLoader);
+
+        // 106.13.210.172:80
+
         Log.i(TAG, "main: DemoMain");
 //        InputManager inputManager = InputManager.getInstance();
 //        inputManager.inputText("Hello NexusControl!!");
@@ -65,7 +69,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
 
         new Thread(() -> {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -78,7 +82,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
 //                logBefore(methodHookParam);
 //            });
 
-            List<Constructor<?>> d3r = ConstructorFinder.fromClass(findClass("d3r")).toList();
+          /*  List<Constructor<?>> d3r = ConstructorFinder.fromClass(findClass("d3r")).toList();
 
             HookFactory.createConstructorAfterHooks(d3r, new IMethodHookCallback() {
                 @Override
@@ -94,7 +98,8 @@ public class DemoMain extends ViewModule implements IRecvListener {
                     Log.i(TAG, "thisObject: " + methodHookParam.thisObject);
                     logBefore(methodHookParam);
                 }
-            }, "d3r", "yzq", "xzq");
+            }, "d3r", "yzq", "xzq");*/
+            entry();
         }).start();
 
     }
@@ -103,11 +108,11 @@ public class DemoMain extends ViewModule implements IRecvListener {
 
 
     public void entry() {
-        Log.i(TAG, "entry: ");
+        Log.i(TAG, "entry 222: ");
         mContextUtils = ContextUtils.getInstance(mClassLoader, currentActivity.getApplication());
         mViewManager = ViewManager.getInstance(this.mClassLoader);
 
-        URI uri = URI.create("ws://192.168.124.11:9873");
+        URI uri = URI.create("ws://192.168.124.16:9873");
         mJWebSocketClient = new JWebSocketClient(uri, this);
         if (mJWebSocketClient != null) {
             try {
@@ -147,6 +152,8 @@ public class DemoMain extends ViewModule implements IRecvListener {
             Map<String, ViewInfo> activitysLayout = mViewManager.getActivitysLayout(currentActivity);
 
             activitysLayout.forEach((key, viewInfo) -> {
+                Log.i(TAG, "key: " + key);
+
                 byte[] activityScreenBytes = ScreenShot.getActivityScreenBytes(currentActivity, viewInfo.getView());
 
                 Log.i(TAG, "setImgData: " + viewInfo);

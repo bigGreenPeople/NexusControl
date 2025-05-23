@@ -3,6 +3,7 @@ package com.shark.tools;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 
 import java.io.ByteArrayOutputStream;
@@ -53,9 +54,14 @@ public class ScreenShot {
 
         // 获取屏幕长和高
         int width = view.getWidth();
+        if (width<=0) return null;
         int height = view.getHeight();
+
         // 去掉标题栏
         // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
+        Log.i(TAG, "width: "+width);
+        Log.i(TAG, "height: "+height);
+
         Bitmap b = Bitmap.createBitmap(b1, 0, 0, width, height
                 - statusBarHeight);
         view.destroyDrawingCache();
