@@ -112,7 +112,7 @@ public class DemoMain extends ViewModule implements IRecvListener {
         mContextUtils = ContextUtils.getInstance(mClassLoader, currentActivity.getApplication());
         mViewManager = ViewManager.getInstance(this.mClassLoader);
 
-        URI uri = URI.create("ws://192.168.124.16:9873");
+        URI uri = URI.create("ws://192.168.124.11:9873");
         mJWebSocketClient = new JWebSocketClient(uri, this);
         if (mJWebSocketClient != null) {
             try {
