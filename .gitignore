@@ -2,5 +2,8 @@
 SharkPosed/
 shark-server/
 shark-vue/
-docs/
 CLAUDE.md
+
+# docs 目录只提交图片，其余不提交
+docs/*
+!docs/images
