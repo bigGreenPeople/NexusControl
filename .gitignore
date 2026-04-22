@@ -1,16 +1,6 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-/bin/NexusControl.zip
+# 本地项目目录，不提交到远端
+SharkPosed/
+shark-server/
+shark-vue/
+docs/
+CLAUDE.md
