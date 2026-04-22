@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 900px; height: 480px;
+    background: #080d18;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,158,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,158,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scene {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 操作员端 */
+  .operator {
+    position: absolute;
+    left: 60px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .laptop {
+    width: 120px;
+    position: relative;
+  }
+  .laptop-screen {
+    width: 120px; height: 76px;
+    background: #0c1222;
+    border: 2px solid rgba(74,158,255,0.4);
+    border-radius: 6px 6px 0 0;
+    padding: 8px;
+    box-shadow: 0 0 16px rgba(74,158,255,0.15);
+    overflow: hidden;
+  }
+  .terminal-line {
+    height: 7px; border-radius: 2px;
+    background: rgba(74,158,255,0.2);
+    margin-bottom: 5px;
+  }
+  .terminal-line.active {
+    background: rgba(74,158,255,0.6);
+    animation: type 1.5s steps(1) infinite;
+  }
+  .terminal-line.green { background: rgba(34,214,138,0.5); }
+  @keyframes type { 0%,49%{opacity:1} 50%,100%{opacity:0.3} }
+  .laptop-base {
+    width: 130px; height: 8px;
+    background: rgba(74,158,255,0.15);
+    border-radius: 0 0 6px 6px;
+    border: 1px solid rgba(74,158,255,0.2);
+    border-top: none;
+    margin-left: -5px;
+  }
+  .operator-label { color: #8fa4bf; font-size: 10px; letter-spacing: 1px; }
+  .operator-sublabel { color: #506580; font-size: 8px; }
+
+  /* 云节点 */
+  .cloud-node {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px; height: 90px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 5px;
+  }
+  .cloud-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 2px solid rgba(74,158,255,0.4);
+    background: radial-gradient(circle, rgba(74,158,255,0.1), rgba(8,13,24,0.8));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 0 30px rgba(74,158,255,0.15);
+    animation: cloudPulse 3s ease-in-out infinite;
+  }
+  @keyframes cloudPulse {
+    0%,100% { box-shadow: 0 0 30px rgba(74,158,255,0.15); }
+    50% { box-shadow: 0 0 50px rgba(74,158,255,0.3); }
+  }
+  .cloud-icon { font-size: 22px; }
+  .cloud-lbl { color: #4a9eff; font-size: 8px; letter-spacing: 2px; font-weight: 700; }
+  .cloud-badge {
+    position: absolute;
+    top: -8px;
+    background: rgba(74,158,255,0.15);
+    border: 1px solid rgba(74,158,255,0.4);
+    color: #4a9eff;
+    font-size: 7px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* 远端设备 */
+  .remote-device {
+    position: absolute;
+    right: 65px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .phone {
+    width: 64px; height: 110px;
+    background: #0c1222;
+    border: 2px solid rgba(34,214,138,0.5);
+    border-radius: 12px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: space-between;
+    padding: 10px 8px;
+    box-shadow: 0 0 20px rgba(34,214,138,0.15);
+    position: relative;
+  }
+  .phone::before {
+    content: '';
+    width: 22px; height: 4px;
+    background: rgba(34,214,138,0.3);
+    border-radius: 2px;
+  }
+  .phone-screen {
+    width: 44px; height: 58px;
+    background: rgba(34,214,138,0.05);
+    border: 1px solid rgba(34,214,138,0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .phone::after {
+    content: '';
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(34,214,138,0.3);
+  }
+  .phone-dot {
+    position: absolute;
+    top: 7px; right: 7px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22d68a;
+    box-shadow: 0 0 6px #22d68a;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .remote-label { color: #8fa4bf; font-size: 10px; letter-spacing: 1px; }
+  .remote-sublabel { color: #22d68a; font-size: 8px; letter-spacing: 1px; font-weight: 700; }
+
+  /* 连线 SVG */
+  .lines-svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* 步骤标注 */
+  .steps {
+    position: absolute;
+    bottom: 22px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 6px;
+  }
+  .step {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(12,18,34,0.85);
+    border: 1px solid rgba(74,158,255,0.2);
+    border-radius: 4px;
+    padding: 5px 10px;
+  }
+  .step-num {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: rgba(74,158,255,0.2);
+    border: 1px solid rgba(74,158,255,0.5);
+    color: #4a9eff;
+    font-size: 8px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-text { color: #8fa4bf; font-size: 9px; letter-spacing: 0.5px; white-space: nowrap; }
+
+  /* 顶部标题 */
+  .top-title {
+    position: absolute;
+    top: 20px; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .top-title h2 { color: #e0f0ff; font-size: 16px; letter-spacing: 3px; font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+  .top-title p { color: #506580; font-size: 9px; letter-spacing: 2px; margin-top: 4px; }
+
+  /* ADB 命令展示 */
+  .adb-cmd {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -95%);
+    background: rgba(8,13,24,0.9);
+    border: 1px solid rgba(74,158,255,0.3);
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 10px;
+    color: #22d68a;
+    white-space: nowrap;
+    box-shadow: 0 0 12px rgba(74,158,255,0.1);
+  }
+  .adb-cmd .prompt { color: #4a9eff; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scene">
+  <!-- 顶部标题 -->
+  <div class="top-title">
+    <h2>远程 ADB 调试 · 三百公里外一键接入</h2>
+    <p>CLICK DEBUG → FRP TUNNEL → ADB CONNECT · DONE</p>
+  </div>
+
+  <!-- ADB 命令 -->
+  <div class="adb-cmd">
+    <span class="prompt">$ </span>adb connect 8.155.172.116:<span style="color:#4a9eff">6821</span>
+    <span style="color:#22d68a;margin-left:8px">✓ connected</span>
+  </div>
+
+  <!-- 连线 -->
+  <svg class="lines-svg" viewBox="0 0 900 480">
+    <defs>
+      <linearGradient id="tun-left" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="#4a9eff" stop-opacity="0.6"/>
+      </linearGradient>
+      <linearGradient id="tun-right" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#22d68a" stop-opacity="0.5"/>
+      </linearGradient>
+    </defs>
+
+    <!-- 左段（操作端 → 云） 上下两条隧道线 -->
+    <line x1="185" y1="228" x2="410" y2="228" stroke="url(#tun-left)" stroke-width="2" stroke-dasharray="8,5"/>
+    <line x1="185" y1="252" x2="410" y2="252" stroke="url(#tun-left)" stroke-width="2" stroke-dasharray="8,5"/>
+    <!-- 隧道封口 -->
+    <line x1="410" y1="222" x2="410" y2="258" stroke="rgba(74,158,255,0.4)" stroke-width="1.5"/>
+    <line x1="185" y1="222" x2="185" y2="258" stroke="rgba(74,158,255,0.2)" stroke-width="1.5"/>
+
+    <!-- 右段（云 → 设备） -->
+    <line x1="490" y1="228" x2="715" y2="228" stroke="url(#tun-right)" stroke-width="2" stroke-dasharray="8,5"/>
+    <line x1="490" y1="252" x2="715" y2="252" stroke="url(#tun-right)" stroke-width="2" stroke-dasharray="8,5"/>
+    <line x1="490" y1="222" x2="490" y2="258" stroke="rgba(74,158,255,0.4)" stroke-width="1.5"/>
+    <line x1="715" y1="222" x2="715" y2="258" stroke="rgba(34,214,138,0.4)" stroke-width="1.5"/>
+
+    <!-- 动态数据包 左→右 -->
+    <rect width="14" height="8" rx="2" fill="#4a9eff" opacity="0.8">
+      <animateMotion dur="2s" repeatCount="indefinite" path="M185,237 L715,237"/>
+    </rect>
+    <rect width="10" height="6" rx="2" fill="#22d68a" opacity="0.7">
+      <animateMotion dur="2s" repeatCount="indefinite" begin="0.6s" path="M715,245 L185,245"/>
+    </rect>
+    <rect width="12" height="7" rx="2" fill="#4a9eff" opacity="0.6">
+      <animateMotion dur="2s" repeatCount="indefinite" begin="1.1s" path="M185,237 L715,237"/>
+    </rect>
+
+    <!-- FRP 标注 -->
+    <text x="450" y="218" text-anchor="middle" fill="rgba(74,158,255,0.6)" font-size="9" font-family="JetBrains Mono" letter-spacing="2">FRP TUNNEL</text>
+  </svg>
+
+  <!-- 操作员端 -->
+  <div class="operator">
+    <div class="laptop">
+      <div class="laptop-screen">
+        <div class="terminal-line" style="width:85%"></div>
+        <div class="terminal-line green" style="width:65%"></div>
+        <div class="terminal-line active" style="width:75%"></div>
+        <div class="terminal-line" style="width:40%"></div>
+        <div class="terminal-line green" style="width:55%"></div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+    <div class="operator-label">操作人员</div>
+    <div class="operator-sublabel">任意地点 · 浏览器</div>
+  </div>
+
+  <!-- 云节点 -->
+  <div class="cloud-node">
+    <div class="cloud-badge">NEXUSCONTROL</div>
+    <div class="cloud-circle">
+      <div class="cloud-icon">☁</div>
+      <div class="cloud-lbl">SERVER</div>
+    </div>
+  </div>
+
+  <!-- 远端设备 -->
+  <div class="remote-device">
+    <div class="phone">
+      <div class="phone-dot"></div>
+      <div class="phone-screen">📱</div>
+    </div>
+    <div class="remote-label">远端设备</div>
+    <div class="remote-sublabel">● DEBUG</div>
+  </div>
+
+  <!-- 步骤 -->
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-text">点击「调试」</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">FRP 隧道建立</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">复制 ADB 命令</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">终端连接成功</div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-text">调试完毕关闭</div></div>
+  </div>
+</div>
+</body>
+</html>

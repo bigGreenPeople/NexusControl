@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 900px; height: 480px;
+    background: #080d18;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* 网格背景 */
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,158,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,158,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scene {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 中心控制台 */
+  .hub {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    border: 2px solid rgba(74,158,255,0.5);
+    box-shadow: 0 0 40px rgba(74,158,255,0.2), inset 0 0 30px rgba(74,158,255,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(74,158,255,0.08) 0%, rgba(8,13,24,0.9) 70%);
+    z-index: 10;
+  }
+  .hub::before {
+    content: '';
+    position: absolute;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    border: 1px solid rgba(74,158,255,0.15);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  .hub::after {
+    content: '';
+    position: absolute;
+    width: 170px; height: 170px;
+    border-radius: 50%;
+    border: 1px solid rgba(74,158,255,0.08);
+    animation: pulse 2.5s ease-in-out infinite 0.8s;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.5; }
+  }
+  .hub-icon { font-size: 28px; margin-bottom: 6px; }
+  .hub-label { color: #4a9eff; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+  .hub-sub { color: #506580; font-size: 9px; letter-spacing: 1px; margin-top: 2px; }
+
+  /* SVG 连线层 */
+  .lines-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* 设备节点 */
+  .device {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    z-index: 10;
+  }
+  .device-box {
+    width: 54px; height: 72px;
+    border-radius: 7px;
+    border: 1.5px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    position: relative;
+    background: rgba(12,18,34,0.9);
+  }
+  .device-box .screen {
+    width: 36px; height: 42px;
+    border-radius: 3px;
+    background: rgba(74,158,255,0.06);
+    border: 1px solid rgba(74,158,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .device-box .btn-row {
+    width: 14px; height: 4px;
+    border-radius: 2px;
+    background: rgba(74,158,255,0.2);
+  }
+  .device.online .device-box { border-color: rgba(34,214,138,0.5); box-shadow: 0 0 12px rgba(34,214,138,0.15); }
+  .device.offline .device-box { border-color: rgba(80,101,128,0.4); }
+  .device.debug .device-box { border-color: rgba(74,158,255,0.6); box-shadow: 0 0 12px rgba(74,158,255,0.2); }
+
+  .device-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px; right: 5px;
+  }
+  .device.online .device-dot { background: #22d68a; box-shadow: 0 0 6px #22d68a; }
+  .device.offline .device-dot { background: #506580; }
+  .device.debug .device-dot { background: #4a9eff; box-shadow: 0 0 6px #4a9eff; animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .device-label { color: #8fa4bf; font-size: 9px; letter-spacing: 0.5px; text-align: center; }
+  .device-status { font-size: 8px; letter-spacing: 1px; font-weight: 700; }
+  .device.online .device-status { color: #22d68a; }
+  .device.offline .device-status { color: #506580; }
+  .device.debug .device-status { color: #4a9eff; }
+
+  /* 统计卡片 */
+  .stats {
+    position: absolute;
+    top: 20px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 20;
+  }
+  .stat-card {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid;
+    text-align: center;
+    background: rgba(12,18,34,0.85);
+    backdrop-filter: blur(4px);
+    min-width: 70px;
+  }
+  .stat-card.total { border-color: rgba(74,158,255,0.3); }
+  .stat-card.online-c { border-color: rgba(34,214,138,0.35); }
+  .stat-card.offline-c { border-color: rgba(80,101,128,0.3); }
+  .stat-card.debug-c { border-color: rgba(74,158,255,0.5); }
+
+  .stat-num { font-size: 22px; font-weight: 700; line-height: 1; }
+  .stat-card.total .stat-num { color: #e0f0ff; }
+  .stat-card.online-c .stat-num { color: #22d68a; }
+  .stat-card.offline-c .stat-num { color: #506580; }
+  .stat-card.debug-c .stat-num { color: #4a9eff; }
+  .stat-lbl { font-size: 8px; letter-spacing: 2px; color: #506580; margin-top: 3px; }
+
+  /* 标题 */
+  .title-bar {
+    position: absolute;
+    bottom: 18px; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 20;
+  }
+  .title-bar h2 { color: #e0f0ff; font-size: 15px; letter-spacing: 3px; font-weight: 600; font-family: 'Rajdhani', sans-serif; }
+  .title-bar p { color: #506580; font-size: 9px; letter-spacing: 2px; margin-top: 4px; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scene">
+
+  <!-- 统计卡 -->
+  <div class="stats">
+    <div class="stat-card total"><div class="stat-num">247</div><div class="stat-lbl">TOTAL</div></div>
+    <div class="stat-card online-c"><div class="stat-num">189</div><div class="stat-lbl">ONLINE</div></div>
+    <div class="stat-card offline-c"><div class="stat-num">52</div><div class="stat-lbl">OFFLINE</div></div>
+    <div class="stat-card debug-c"><div class="stat-num">6</div><div class="stat-lbl">DEBUG</div></div>
+  </div>
+
+  <!-- 连线 SVG -->
+  <svg class="lines-svg" viewBox="0 0 900 480">
+    <defs>
+      <linearGradient id="lg-online" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#22d68a" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#22d68a" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="lg-offline" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#506580" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#506580" stop-opacity="0.05"/>
+      </linearGradient>
+      <linearGradient id="lg-debug" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#4a9eff" stop-opacity="0.1"/>
+      </linearGradient>
+      <!-- 动态光点 -->
+      <circle id="dot-on" r="4" fill="#22d68a" opacity="0.9"/>
+      <circle id="dot-off" r="3" fill="#506580" opacity="0.5"/>
+      <circle id="dot-dbg" r="4" fill="#4a9eff" opacity="0.9"/>
+    </defs>
+
+    <!-- 在线设备连线 -->
+    <line x1="130" y1="160" x2="450" y2="240" stroke="url(#lg-online)" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="100" y1="320" x2="450" y2="240" stroke="url(#lg-online)" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="290" y1="90" x2="450" y2="240" stroke="url(#lg-online)" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="760" y1="130" x2="450" y2="240" stroke="url(#lg-online)" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="800" y1="350" x2="450" y2="240" stroke="url(#lg-online)" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- 离线连线 -->
+    <line x1="200" y1="400" x2="450" y2="240" stroke="url(#lg-offline)" stroke-width="1" stroke-dasharray="3,6"/>
+    <line x1="680" y1="400" x2="450" y2="240" stroke="url(#lg-offline)" stroke-width="1" stroke-dasharray="3,6"/>
+
+    <!-- Debug 连线（更亮） -->
+    <line x1="610" y1="100" x2="450" y2="240" stroke="url(#lg-debug)" stroke-width="2" stroke-dasharray="6,3"/>
+
+    <!-- 动态光点 (animateMotion) -->
+    <circle r="3.5" fill="#22d68a" opacity="0.9">
+      <animateMotion dur="2.2s" repeatCount="indefinite" path="M130,160 L450,240"/>
+    </circle>
+    <circle r="3.5" fill="#22d68a" opacity="0.9">
+      <animateMotion dur="2.8s" repeatCount="indefinite" path="M760,130 L450,240" begin="0.5s"/>
+    </circle>
+    <circle r="3.5" fill="#22d68a" opacity="0.9">
+      <animateMotion dur="2.5s" repeatCount="indefinite" path="M100,320 L450,240" begin="1s"/>
+    </circle>
+    <circle r="3.5" fill="#22d68a" opacity="0.9">
+      <animateMotion dur="3s" repeatCount="indefinite" path="M290,90 L450,240" begin="1.4s"/>
+    </circle>
+    <circle r="3.5" fill="#22d68a" opacity="0.9">
+      <animateMotion dur="2.6s" repeatCount="indefinite" path="M800,350 L450,240" begin="0.7s"/>
+    </circle>
+    <circle r="4" fill="#4a9eff" opacity="0.95">
+      <animateMotion dur="1.8s" repeatCount="indefinite" path="M610,100 L450,240"/>
+    </circle>
+  </svg>
+
+  <!-- 中心 Hub -->
+  <div class="hub">
+    <div class="hub-icon">🖥</div>
+    <div class="hub-label">NEXUS</div>
+    <div class="hub-sub">CONTROL</div>
+  </div>
+
+  <!-- 设备节点 -->
+  <div class="device online" style="left:88px;top:120px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">上海</div>
+    <div class="device-status">ONLINE</div>
+  </div>
+
+  <div class="device online" style="left:55px;top:278px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">广州</div>
+    <div class="device-status">ONLINE</div>
+  </div>
+
+  <div class="device online" style="left:245px;top:48px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">北京</div>
+    <div class="device-status">ONLINE</div>
+  </div>
+
+  <div class="device debug" style="left:560px;top:58px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">成都</div>
+    <div class="device-status">DEBUG</div>
+  </div>
+
+  <div class="device online" style="left:708px;top:90px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">武汉</div>
+    <div class="device-status">ONLINE</div>
+  </div>
+
+  <div class="device online" style="left:748px;top:308px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">杭州</div>
+    <div class="device-status">ONLINE</div>
+  </div>
+
+  <div class="device offline" style="left:148px;top:358px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">深圳</div>
+    <div class="device-status">OFFLINE</div>
+  </div>
+
+  <div class="device offline" style="left:628px;top:358px">
+    <div class="device-box"><div class="device-dot"></div><div class="screen">📱</div><div class="btn-row"></div></div>
+    <div class="device-label">西安</div>
+    <div class="device-status">OFFLINE</div>
+  </div>
+
+  <!-- 底部标题 -->
+  <div class="title-bar">
+    <h2>设备遍布全国 · 一端统一掌控</h2>
+    <p>NEXUSCONTROL · ENTERPRISE DEVICE MANAGEMENT</p>
+  </div>
+</div>
+</body>
+</html>

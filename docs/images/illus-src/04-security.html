@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 900px; height: 480px;
+    background: #080d18;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,158,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,158,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scene { position: relative; width: 100%; height: 100%; }
+
+  /* ── 顶部标题 ── */
+  .top-banner {
+    position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    text-align: center;
+  }
+  .top-banner h2 { color: #e0f0ff; font-size: 16px; letter-spacing: 3px; font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+  .top-banner p { color: #506580; font-size: 9px; letter-spacing: 2px; margin-top: 4px; }
+
+  /* ── 三列布局 ── */
+  .col { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+  /* ── 左列：未授权设备尝试接入 ── */
+  .col-left { left: 45px; top: 80px; }
+
+  .unknown-device {
+    width: 60px; height: 98px;
+    background: rgba(12,18,34,0.9);
+    border: 2px solid rgba(255,80,80,0.45);
+    border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: space-between; padding: 8px 6px;
+    box-shadow: 0 0 14px rgba(255,80,80,0.12);
+    position: relative;
+  }
+  .unknown-device .notch { width: 18px; height: 4px; background: rgba(255,80,80,0.2); border-radius: 2px; }
+  .unknown-device .body { width: 40px; height: 56px; background: rgba(255,80,80,0.04); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .unknown-device .home { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(255,80,80,0.3); }
+  .block-x {
+    position: absolute; top: -10px; right: -10px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,80,80,0.9);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .rejected-label { color: rgba(255,80,80,0.8); font-size: 8px; letter-spacing: 1px; font-weight: 700; }
+
+  /* 多个未知设备 */
+  .unknown-row { display: flex; gap: 12px; }
+
+  /* ── 中列：门控系统 ── */
+  .col-mid { left: 50%; top: 70px; transform: translateX(-50%); }
+
+  .gate {
+    width: 160px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .gate-title { color: #4a9eff; font-size: 10px; letter-spacing: 3px; font-weight: 700; }
+
+  /* Key 激活门 */
+  .key-gate {
+    width: 150px;
+    background: rgba(12,18,34,0.9);
+    border: 1.5px solid rgba(74,158,255,0.4);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 8px;
+    box-shadow: 0 0 20px rgba(74,158,255,0.12);
+  }
+  .gate-row { display: flex; align-items: center; gap: 8px; }
+  .gate-icon { font-size: 14px; }
+  .gate-text { font-size: 9px; color: #8fa4bf; letter-spacing: 0.5px; flex: 1; }
+  .gate-badge {
+    font-size: 7px; padding: 2px 6px; border-radius: 3px;
+    letter-spacing: 1px; font-weight: 700; white-space: nowrap;
+  }
+  .gate-badge.ok { background: rgba(34,214,138,0.15); color: #22d68a; border: 1px solid rgba(34,214,138,0.3); }
+  .gate-badge.block { background: rgba(255,80,80,0.12); color: rgba(255,80,80,0.8); border: 1px solid rgba(255,80,80,0.25); }
+
+  .divider-line { width: 100%; height: 1px; background: rgba(74,158,255,0.1); }
+
+  /* 盾牌 */
+  .shield-wrap {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    width: 70px; height: 80px;
+    margin: 4px auto;
+  }
+  .shield-svg { width: 70px; height: 80px; }
+  .shield-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    font-size: 22px;
+  }
+  .shield-glow {
+    position: absolute;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,158,255,0.15), transparent 70%);
+    animation: shieldPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes shieldPulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+  /* ── 右列：授权设备 ── */
+  .col-right { right: 45px; top: 80px; }
+
+  .auth-device {
+    width: 58px; height: 94px;
+    background: rgba(12,18,34,0.9);
+    border: 2px solid rgba(34,214,138,0.5);
+    border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: space-between; padding: 8px 6px;
+    box-shadow: 0 0 14px rgba(34,214,138,0.15);
+    position: relative;
+  }
+  .auth-device .notch { width: 16px; height: 4px; background: rgba(34,214,138,0.2); border-radius: 2px; }
+  .auth-device .body { width: 38px; height: 52px; background: rgba(34,214,138,0.05); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .auth-device .home { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(34,214,138,0.4); }
+  .auth-check { position: absolute; top: -8px; right: -8px; width: 18px; height: 18px; border-radius: 50%; background: #22d68a; display: flex; align-items: center; justify-content: center; color: #080d18; font-size: 10px; font-weight: 700; }
+  .auth-label { color: #22d68a; font-size: 8px; letter-spacing: 1px; font-weight: 700; }
+  .auth-row { display: flex; gap: 10px; }
+
+  /* ── 箭头 SVG ── */
+  .lines-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* ── 底部 key 说明 ── */
+  .key-hint {
+    position: absolute;
+    bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 18px;
+    align-items: center;
+  }
+  .hint-item {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(12,18,34,0.85);
+    border: 1px solid rgba(74,158,255,0.15);
+    border-radius: 5px;
+    padding: 5px 12px;
+  }
+  .hint-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .hint-dot.green { background: #22d68a; box-shadow: 0 0 5px #22d68a; }
+  .hint-dot.red { background: rgba(255,80,80,0.8); }
+  .hint-dot.blue { background: #4a9eff; box-shadow: 0 0 5px #4a9eff; }
+  .hint-text { color: #8fa4bf; font-size: 9px; letter-spacing: 0.5px; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scene">
+
+  <div class="top-banner">
+    <h2>Key 门控 + 应用拦截 · 双重安全防线</h2>
+    <p>UNAUTHORIZED DEVICE BLOCKED · PROHIBITED APP INTERCEPTED</p>
+  </div>
+
+  <!-- 连线 -->
+  <svg class="lines-svg" viewBox="0 0 900 480">
+    <defs>
+      <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="rgba(255,80,80,0.7)"/>
+      </marker>
+      <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="rgba(34,214,138,0.7)"/>
+      </marker>
+    </defs>
+
+    <!-- 左侧未授权 → 门控（红色，被拦截） -->
+    <line x1="180" y1="240" x2="340" y2="240" stroke="rgba(255,80,80,0.5)" stroke-width="1.5"
+          stroke-dasharray="6,4" marker-end="url(#arr-red)"/>
+    <!-- 被弹回的 X -->
+    <text x="255" y="230" text-anchor="middle" fill="rgba(255,80,80,0.7)" font-size="11" font-family="JetBrains Mono">BLOCKED</text>
+
+    <!-- 门控 → 右侧授权（绿色，放行） -->
+    <line x1="560" y1="240" x2="700" y2="240" stroke="rgba(34,214,138,0.5)" stroke-width="1.5"
+          stroke-dasharray="6,4" marker-end="url(#arr-green)"/>
+    <text x="630" y="230" text-anchor="middle" fill="rgba(34,214,138,0.7)" font-size="11" font-family="JetBrains Mono">PASSED</text>
+
+    <!-- 动态粒子（通过） -->
+    <circle r="4" fill="#22d68a" opacity="0.9">
+      <animateMotion dur="1.8s" repeatCount="indefinite" path="M560,240 L700,240"/>
+    </circle>
+    <circle r="4" fill="#22d68a" opacity="0.7">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.6s" path="M560,240 L700,240"/>
+    </circle>
+  </svg>
+
+  <!-- 左列：未授权设备 -->
+  <div class="col col-left">
+    <div style="color:#506580;font-size:9px;letter-spacing:2px;margin-bottom:4px">未授权设备</div>
+    <div class="unknown-row">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="unknown-device"><div class="notch"></div><div class="body">📱</div><div class="home"></div><div class="block-x">✕</div></div>
+        <div class="rejected-label">无 KEY</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="unknown-device"><div class="notch"></div><div class="body">📱</div><div class="home"></div><div class="block-x">✕</div></div>
+        <div class="rejected-label">陌生设备</div>
+      </div>
+    </div>
+    <!-- 禁止应用图示 -->
+    <div style="margin-top:10px;width:140px;background:rgba(12,18,34,0.85);border:1px solid rgba(255,80,80,0.25);border-radius:6px;padding:8px 10px;">
+      <div style="color:rgba(255,80,80,0.7);font-size:8px;letter-spacing:2px;margin-bottom:6px">禁止安装</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px">🚫</span><span style="color:#506580;font-size:8px">com.social.app</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px">🚫</span><span style="color:#506580;font-size:8px">com.game.xyz</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px">🚫</span><span style="color:#506580;font-size:8px">com.other.app</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中列：门控 -->
+  <div class="col col-mid">
+    <div class="gate">
+      <div class="gate-title">· NEXUS GUARD ·</div>
+
+      <!-- 盾牌 -->
+      <div class="shield-wrap">
+        <div class="shield-glow"></div>
+        <svg class="shield-svg" viewBox="0 0 70 80">
+          <path d="M35 4 L62 16 L62 42 Q62 62 35 76 Q8 62 8 42 L8 16 Z"
+                fill="rgba(74,158,255,0.08)"
+                stroke="rgba(74,158,255,0.5)" stroke-width="1.5"/>
+          <path d="M35 10 L57 20 L57 42 Q57 58 35 70 Q13 58 13 42 L13 20 Z"
+                fill="rgba(74,158,255,0.05)"
+                stroke="rgba(74,158,255,0.2)" stroke-width="1"/>
+        </svg>
+        <div class="shield-inner">🛡</div>
+      </div>
+
+      <div class="key-gate">
+        <div class="gate-row">
+          <div class="gate-icon">🔑</div>
+          <div class="gate-text">激活 Key 验证</div>
+          <div class="gate-badge ok">一次一用</div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="gate-row">
+          <div class="gate-icon">👁</div>
+          <div class="gate-text">应用隐藏规则</div>
+          <div class="gate-badge ok">已下发</div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="gate-row">
+          <div class="gate-icon">🚫</div>
+          <div class="gate-text">禁止安装拦截</div>
+          <div class="gate-badge block">实时阻断</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右列：授权设备 -->
+  <div class="col col-right">
+    <div style="color:#22d68a;font-size:9px;letter-spacing:2px;margin-bottom:4px">授权设备</div>
+    <div class="auth-row">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="auth-device"><div class="notch"></div><div class="body">✅</div><div class="home"></div><div class="auth-check">✓</div></div>
+        <div class="auth-label">已激活</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="auth-device"><div class="notch"></div><div class="body">✅</div><div class="home"></div><div class="auth-check">✓</div></div>
+        <div class="auth-label">受管控</div>
+      </div>
+    </div>
+    <!-- 已隐藏应用 -->
+    <div style="margin-top:10px;width:140px;background:rgba(12,18,34,0.85);border:1px solid rgba(34,214,138,0.25);border-radius:6px;padding:8px 10px;">
+      <div style="color:#22d68a;font-size:8px;letter-spacing:2px;margin-bottom:6px">策略已生效</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px">👁‍🗨</span><span style="color:#506580;font-size:8px">应用已隐藏</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px">🔒</span><span style="color:#506580;font-size:8px">安装被拦截</span></div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:12px">📋</span><span style="color:#506580;font-size:8px">策略统一下发</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部说明 -->
+  <div class="key-hint">
+    <div class="hint-item"><div class="hint-dot green"></div><div class="hint-text">有效 Key → 设备激活入网</div></div>
+    <div class="hint-item"><div class="hint-dot red"></div><div class="hint-text">无 Key → 拒绝注册</div></div>
+    <div class="hint-item"><div class="hint-dot blue"></div><div class="hint-text">应用策略实时推送生效</div></div>
+  </div>
+
+</div>
+</body>
+</html>

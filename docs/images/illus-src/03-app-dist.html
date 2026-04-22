@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 900px; height: 480px;
+    background: #080d18;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,158,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,158,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scene { position: relative; width: 100%; height: 100%; }
+
+  /* 中心服务器 */
+  .server {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .server-box {
+    width: 110px;
+    background: rgba(12,18,34,0.9);
+    border: 2px solid rgba(74,158,255,0.5);
+    border-radius: 10px;
+    padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 7px;
+    box-shadow: 0 0 30px rgba(74,158,255,0.2);
+  }
+  .server-row {
+    height: 8px; border-radius: 2px;
+    background: rgba(74,158,255,0.15);
+    border: 1px solid rgba(74,158,255,0.25);
+    display: flex; align-items: center; padding: 0 5px; gap: 3px;
+  }
+  .server-row .led {
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .server-row .led.g { background: #22d68a; box-shadow: 0 0 4px #22d68a; }
+  .server-row .led.b { background: #4a9eff; box-shadow: 0 0 4px #4a9eff; }
+  .server-row .led.y { background: #f5a623; }
+  .apk-badge {
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    background: rgba(74,158,255,0.1);
+    border: 1px solid rgba(74,158,255,0.3);
+    border-radius: 5px;
+    padding: 5px 8px;
+    color: #4a9eff; font-size: 9px; letter-spacing: 1px;
+  }
+  .server-label { color: #8fa4bf; font-size: 10px; letter-spacing: 1px; }
+
+  /* APK 图标 */
+  .apk-float {
+    position: absolute;
+    left: 50%; top: 50%;
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(8,13,24,0.9);
+    border: 1px solid rgba(74,158,255,0.35);
+    border-radius: 5px;
+    padding: 4px 9px;
+    font-size: 9px; color: #e0f0ff;
+    white-space: nowrap;
+    animation: floatBadge 3s ease-in-out infinite;
+  }
+  @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+  /* 设备 */
+  .device {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
+  }
+  .phone {
+    width: 52px; height: 88px;
+    background: rgba(12,18,34,0.9);
+    border: 2px solid;
+    border-radius: 10px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: space-between;
+    padding: 8px 6px;
+    position: relative;
+  }
+  .phone-notch {
+    width: 18px; height: 4px;
+    background: rgba(80,101,128,0.3);
+    border-radius: 2px;
+  }
+  .phone-body {
+    width: 36px; height: 50px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .phone-home {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid;
+  }
+  /* 状态变体 */
+  .device.idle .phone { border-color: rgba(80,101,128,0.35); }
+  .device.idle .phone-body { background: rgba(80,101,128,0.05); }
+  .device.idle .phone-home { border-color: rgba(80,101,128,0.3); }
+  .device.installed .phone { border-color: rgba(34,214,138,0.5); box-shadow: 0 0 14px rgba(34,214,138,0.15); }
+  .device.installed .phone-body { background: rgba(34,214,138,0.06); }
+  .device.installed .phone-home { border-color: rgba(34,214,138,0.4); }
+  .device.installing .phone { border-color: rgba(74,158,255,0.5); box-shadow: 0 0 14px rgba(74,158,255,0.15); }
+  .device.installing .phone-body { background: rgba(74,158,255,0.06); }
+  .device.installing .phone-home { border-color: rgba(74,158,255,0.4); }
+
+  /* 安装进度条（installing 状态） */
+  .install-bar {
+    position: absolute;
+    bottom: 20px;
+    width: 36px; height: 3px;
+    background: rgba(74,158,255,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .install-bar-fill {
+    height: 100%; width: 60%;
+    background: #4a9eff;
+    border-radius: 2px;
+    animation: progress 1.8s ease-in-out infinite;
+  }
+  @keyframes progress { 0%{width:10%} 100%{width:90%} }
+
+  /* 安装完成对勾 */
+  .check-badge {
+    position: absolute;
+    top: -8px; right: -8px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #22d68a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: #080d18; font-weight: 700;
+  }
+
+  .device-lbl { color: #8fa4bf; font-size: 9px; letter-spacing: 0.5px; }
+  .device-status { font-size: 8px; letter-spacing: 1px; font-weight: 700; }
+  .device.idle .device-status { color: #506580; }
+  .device.installed .device-status { color: #22d68a; }
+  .device.installing .device-status { color: #4a9eff; }
+
+  /* 连线 SVG */
+  .lines-svg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* 顶部信息 */
+  .top-banner {
+    position: absolute;
+    top: 18px; left: 50%; transform: translateX(-50%);
+    text-align: center;
+  }
+  .top-banner h2 { color: #e0f0ff; font-size: 16px; letter-spacing: 3px; font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+  .top-banner p { color: #506580; font-size: 9px; letter-spacing: 2px; margin-top: 4px; }
+
+  /* 底部 */
+  .bottom-bar {
+    position: absolute;
+    bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 24px;
+  }
+  .b-stat { text-align: center; }
+  .b-stat .num { font-size: 20px; font-weight: 700; }
+  .b-stat .lbl { font-size: 8px; letter-spacing: 2px; color: #506580; }
+  .b-stat.total .num { color: #e0f0ff; }
+  .b-stat.done .num { color: #22d68a; }
+  .b-stat.ing .num { color: #4a9eff; }
+  .divider { width: 1px; background: rgba(74,158,255,0.15); }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scene">
+
+  <div class="top-banner">
+    <h2>一键推送 · 全部设备统一安装</h2>
+    <p>UPLOAD APK ONCE · PUSH TO ALL DEVICES · NO MANUAL OPERATION</p>
+  </div>
+
+  <!-- 连线 -->
+  <svg class="lines-svg" viewBox="0 0 900 480">
+    <defs>
+      <linearGradient id="push-line" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#22d68a" stop-opacity="0.3"/>
+      </linearGradient>
+    </defs>
+    <!-- 左上 -->
+    <line x1="450" y1="240" x2="145" y2="140" stroke="rgba(74,158,255,0.35)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 左中 -->
+    <line x1="450" y1="240" x2="95" y2="240" stroke="rgba(74,158,255,0.35)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 左下 -->
+    <line x1="450" y1="240" x2="145" y2="350" stroke="rgba(34,214,138,0.35)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 右上 -->
+    <line x1="450" y1="240" x2="720" y2="130" stroke="rgba(34,214,138,0.4)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 右中上 -->
+    <line x1="450" y1="240" x2="760" y2="240" stroke="rgba(74,158,255,0.35)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 右中下 -->
+    <line x1="450" y1="240" x2="720" y2="345" stroke="rgba(34,214,138,0.35)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- 右下 -->
+    <line x1="450" y1="240" x2="660" y2="420" stroke="rgba(80,101,128,0.3)" stroke-width="1.5" stroke-dasharray="4,6"/>
+
+    <!-- APK 动态粒子 -->
+    <rect width="12" height="8" rx="2" fill="#4a9eff" opacity="0.85">
+      <animateMotion dur="1.5s" repeatCount="indefinite" path="M450,240 L145,140"/>
+    </rect>
+    <rect width="12" height="8" rx="2" fill="#22d68a" opacity="0.85">
+      <animateMotion dur="1.7s" repeatCount="indefinite" begin="0.3s" path="M450,240 L720,130"/>
+    </rect>
+    <rect width="12" height="8" rx="2" fill="#4a9eff" opacity="0.8">
+      <animateMotion dur="1.6s" repeatCount="indefinite" begin="0.7s" path="M450,240 L95,240"/>
+    </rect>
+    <rect width="12" height="8" rx="2" fill="#22d68a" opacity="0.8">
+      <animateMotion dur="1.4s" repeatCount="indefinite" begin="0.2s" path="M450,240 L760,240"/>
+    </rect>
+    <rect width="12" height="8" rx="2" fill="#22d68a" opacity="0.75">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.9s" path="M450,240 L145,350"/>
+    </rect>
+    <rect width="12" height="8" rx="2" fill="#22d68a" opacity="0.75">
+      <animateMotion dur="1.9s" repeatCount="indefinite" begin="0.5s" path="M450,240 L720,345"/>
+    </rect>
+  </svg>
+
+  <!-- 中心服务器 -->
+  <div class="server">
+    <div class="server-box">
+      <div class="server-row"><div class="led g"></div><div class="led b"></div><div class="led y"></div></div>
+      <div class="server-row"><div class="led g"></div><div class="led g"></div></div>
+      <div class="server-row"><div class="led b"></div></div>
+      <div class="apk-badge">📦 v2.1.0.apk</div>
+      <div class="server-row"><div class="led g"></div><div class="led g"></div><div class="led g"></div></div>
+    </div>
+    <div class="server-label">App 包管理</div>
+  </div>
+
+  <!-- 设备们 -->
+  <div class="device installed" style="left:80px;top:96px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📦</div><div class="phone-home"></div><div class="check-badge">✓</div></div>
+    <div class="device-lbl">设备 A</div><div class="device-status">已安装</div>
+  </div>
+
+  <div class="device installing" style="left:30px;top:196px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📦</div><div class="phone-home"></div><div class="install-bar"><div class="install-bar-fill"></div></div></div>
+    <div class="device-lbl">设备 B</div><div class="device-status">安装中</div>
+  </div>
+
+  <div class="device installed" style="left:80px;top:300px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📦</div><div class="phone-home"></div><div class="check-badge">✓</div></div>
+    <div class="device-lbl">设备 C</div><div class="device-status">已安装</div>
+  </div>
+
+  <div class="device installed" style="left:654px;top:68px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📦</div><div class="phone-home"></div><div class="check-badge">✓</div></div>
+    <div class="device-lbl">设备 D</div><div class="device-status">已安装</div>
+  </div>
+
+  <div class="device installing" style="left:698px;top:196px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📦</div><div class="phone-home"></div><div class="install-bar"><div class="install-bar-fill" style="animation-delay:0.5s"></div></div></div>
+    <div class="device-lbl">设备 E</div><div class="device-status">安装中</div>
+  </div>
+
+  <div class="device installed" style="left:654px;top:300px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📦</div><div class="phone-home"></div><div class="check-badge">✓</div></div>
+    <div class="device-lbl">设备 F</div><div class="device-status">已安装</div>
+  </div>
+
+  <div class="device idle" style="left:594px;top:368px">
+    <div class="phone"><div class="phone-notch"></div><div class="phone-body">📱</div><div class="phone-home"></div></div>
+    <div class="device-lbl">设备 G</div><div class="device-status">排队中</div>
+  </div>
+
+  <!-- 底部统计 -->
+  <div class="bottom-bar">
+    <div class="b-stat total"><div class="num">247</div><div class="lbl">TOTAL</div></div>
+    <div class="divider"></div>
+    <div class="b-stat done"><div class="num">201</div><div class="lbl">INSTALLED</div></div>
+    <div class="divider"></div>
+    <div class="b-stat ing"><div class="num">38</div><div class="lbl">INSTALLING</div></div>
+  </div>
+
+</div>
+</body>
+</html>
