@@ -4,6 +4,7 @@ shark-server/
 shark-vue/
 CLAUDE.md
 
-# docs 目录只提交图片，其余不提交
+# docs 目录只提交图片和手册，其余不提交
 docs/*
 !docs/images
+!docs/NexusControl使用手册_v2.md
