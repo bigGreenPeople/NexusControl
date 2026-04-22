@@ -3,6 +3,7 @@ SharkPosed/
 shark-server/
 shark-vue/
 CLAUDE.md
+pricing/
 
 # docs 目录只提交图片和手册，其余不提交
 docs/*
