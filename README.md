@@ -4,9 +4,10 @@
 
 **企业级 Android 云设备远程管理平台**
 
-[![Vue](https://img.shields.io/badge/Vue-2.6-4FC08D?logo=vue.js)](https://vuejs.org/)
-[![Element UI](https://img.shields.io/badge/Element_UI-2.15-409EFF?logo=element)](https://element.eleme.io/)
-[![RuoYi](https://img.shields.io/badge/RuoYi--Vue--Plus-4.8.0-red)](https://gitee.com/dromara/RuoYi-Vue-Plus)
+[![Android](https://img.shields.io/badge/Android-10%2B-3DDC84?logo=android&logoColor=white)](https://www.android.com/)
+[![Magisk](https://img.shields.io/badge/Magisk-Required-000000)](https://github.com/topjohnwu/Magisk)
+[![LSPosed](https://img.shields.io/badge/LSPosed-Supported-6C5CE7)](https://github.com/LSPosed/LSPosed)
+[![Root](https://img.shields.io/badge/Root-Required-FF6347)](https://en.wikipedia.org/wiki/Rooting_(Android))
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 
 [官网](https://sharkposed.cn/) · [使用手册](docs/NexusControl使用手册_v2.md) · [English](README_EN.md)
