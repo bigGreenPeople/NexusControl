@@ -9,3 +9,4 @@ pricing/
 docs/*
 !docs/images
 !docs/NexusControl使用手册_v2.md
+!docs/specs
