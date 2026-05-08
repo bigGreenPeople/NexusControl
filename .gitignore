@@ -11,3 +11,4 @@ docs/*
 !docs/NexusControl使用手册_v2.md
 !docs/specs
 !docs/plans
+!docs/sql
