@@ -1,0 +1,1174 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "NexusControl" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - heading "NexusControl" [level=1] [ref=e8]
+        - menubar [ref=e12]:
+          - link "首页" [ref=e14] [cursor=pointer]:
+            - /url: /index
+            - menuitem "首页" [ref=e15]:
+              - img [ref=e16]
+              - text: 首页
+          - menuitem "脚本管理 " [ref=e19]:
+            - generic [ref=e20] [cursor=pointer]:
+              - img [ref=e21]
+              - text: 脚本管理
+              - generic [ref=e23]: 
+          - menuitem "应用管理 " [ref=e25]:
+            - generic [ref=e26] [cursor=pointer]:
+              - img [ref=e27]
+              - text: 应用管理
+              - generic [ref=e29]: 
+          - menuitem "设备管理 " [ref=e31]:
+            - generic [ref=e32] [cursor=pointer]:
+              - img [ref=e33]
+              - text: 设备管理
+              - generic [ref=e35]: 
+          - menuitem "系统管理 " [ref=e37]:
+            - generic [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+              - text: 系统管理
+              - generic [ref=e41]: 
+            - text: 
+          - menuitem "系统监控 " [ref=e43]:
+            - generic [ref=e44] [cursor=pointer]:
+              - img [ref=e45]
+              - text: 系统监控
+              - generic [ref=e47]: 
+          - menuitem "Magisk 管理 " [ref=e49]:
+            - generic [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+              - text: Magisk 管理
+              - generic [ref=e53]: 
+          - menuitem "系统工具 " [ref=e55]:
+            - generic [ref=e56] [cursor=pointer]:
+              - img [ref=e57]
+              - text: 系统工具
+              - generic [ref=e59]: 
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - img [ref=e65] [cursor=pointer]
+            - navigation "Breadcrumb" [ref=e67]:
+              - generic:
+                - generic [ref=e68]:
+                  - link "首页" [ref=e69]
+                  - text: /
+                - link "远程控制" [ref=e71]
+            - button "" [ref=e74] [cursor=pointer]:
+              - img [ref=e75]
+              - generic [ref=e76]: 
+          - generic [ref=e77]:
+            - generic [ref=e80]:
+              - generic [ref=e81] [cursor=pointer]: 首页
+              - generic [ref=e82] [cursor=pointer]:
+                - text: 远程控制
+                - generic [ref=e83]: 
+            - text:      
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - button " 返回" [ref=e89] [cursor=pointer]:
+              - generic [ref=e90]: 
+              - text: 返回
+            - generic [ref=e91]:
+              - generic [ref=e92]: 
+              - generic [ref=e93]: 远程控制
+              - generic [ref=e94]: "869810037732619"
+              - generic [ref=e95]: ONLINE
+              - generic [ref=e97]:
+                - generic [ref=e98]: 
+                - text: 环目测试、自己的设备
+              - generic [ref=e99]: "|M3"
+            - generic [ref=e100]:
+              - generic [ref=e102]: 已断开
+              - button " 重连" [ref=e103] [cursor=pointer]:
+                - generic [ref=e104]: 
+                - text: 重连
+          - generic [ref=e105]:
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - button "返回" [ref=e112] [cursor=pointer]:
+                  - img [ref=e113]
+                - button "主页" [ref=e115] [cursor=pointer]:
+                  - img [ref=e116]
+                - button "最近任务" [ref=e118] [cursor=pointer]:
+                  - img [ref=e119]
+                - button "音量+" [ref=e121] [cursor=pointer]:
+                  - img [ref=e122]
+                - button "音量-" [ref=e124] [cursor=pointer]:
+                  - img [ref=e125]
+                - button "电源" [ref=e127] [cursor=pointer]:
+                  - img [ref=e128]
+              - generic [ref=e130]:
+                - button "标准" [ref=e131] [cursor=pointer]
+                - button "高清" [ref=e132] [cursor=pointer]
+                - button "超清" [ref=e133] [cursor=pointer]
+            - generic [ref=e135]:
+              - tablist [ref=e139]:
+                - tab "终端" [ref=e141]
+                - tab "设备信息" [ref=e142]
+                - tab "应用列表" [active] [selected] [ref=e143] [cursor=pointer]
+                - tab "Magisk模块" [ref=e144]
+                - tab "LSP模块" [ref=e145]
+                - tab "任务" [ref=e146]
+              - tabpanel "应用列表" [ref=e211]:
+                - generic [ref=e212]:
+                  - generic [ref=e213]:
+                    - button " 刷新" [ref=e214] [cursor=pointer]:
+                      - generic [ref=e215]: 
+                      - text: 刷新
+                    - button " 安装应用" [ref=e216] [cursor=pointer]:
+                      - generic [ref=e217]: 
+                      - text: 安装应用
+                    - generic [ref=e218] [cursor=pointer]:
+                      - generic [ref=e219]:
+                        - checkbox "包含系统应用"
+                      - generic [ref=e221]: 包含系统应用
+                    - generic [ref=e222]:
+                      - textbox "搜索" [ref=e223]
+                      - generic [ref=e225]: 
+                    - generic [ref=e226]: 共 73 个
+                  - generic [ref=e227]:
+                    - table [ref=e229]:
+                      - rowgroup [ref=e236]:
+                        - row "应用名称 包名 版本 类型 操作" [ref=e237]:
+                          - columnheader "应用名称" [ref=e238]:
+                            - generic [ref=e239]: 应用名称
+                          - columnheader "包名" [ref=e240]:
+                            - generic [ref=e241]: 包名
+                          - columnheader "版本" [ref=e242]:
+                            - generic [ref=e243]: 版本
+                          - columnheader "类型" [ref=e244]:
+                            - generic [ref=e245]: 类型
+                          - columnheader "操作" [ref=e246]:
+                            - generic [ref=e247]: 操作
+                    - table [ref=e249]:
+                      - rowgroup [ref=e256]:
+                        - row "Shadowsocks com.github.shadowsocks 5.3.3-nightly 用户 启动 重启 卸载" [ref=e257]:
+                          - cell "Shadowsocks" [ref=e258]:
+                            - generic [ref=e259]: Shadowsocks
+                          - cell "com.github.shadowsocks" [ref=e260]:
+                            - generic [ref=e261]: com.github.shadowsocks
+                          - cell "5.3.3-nightly" [ref=e262]:
+                            - generic [ref=e263]: 5.3.3-nightly
+                          - cell "用户" [ref=e264]:
+                            - generic [ref=e265]: 用户
+                          - cell "启动 重启 卸载" [ref=e266]:
+                            - generic [ref=e267]:
+                              - button "启动" [ref=e268] [cursor=pointer]
+                              - button "重启" [ref=e269] [cursor=pointer]
+                              - button "卸载" [ref=e270] [cursor=pointer]
+                        - row "飞鸟加速 com.fnspeed.android 2.3.2 用户 启动 重启 卸载" [ref=e271]:
+                          - cell "飞鸟加速" [ref=e272]:
+                            - generic [ref=e273]: 飞鸟加速
+                          - cell "com.fnspeed.android" [ref=e274]:
+                            - generic [ref=e275]: com.fnspeed.android
+                          - cell "2.3.2" [ref=e276]:
+                            - generic [ref=e277]: 2.3.2
+                          - cell "用户" [ref=e278]:
+                            - generic [ref=e279]: 用户
+                          - cell "启动 重启 卸载" [ref=e280]:
+                            - generic [ref=e281]:
+                              - button "启动" [ref=e282] [cursor=pointer]
+                              - button "重启" [ref=e283] [cursor=pointer]
+                              - button "卸载" [ref=e284] [cursor=pointer]
+                        - row "小米直播助手 com.mi.liveassistant 4.51.3 用户 启动 重启 卸载" [ref=e285]:
+                          - cell "小米直播助手" [ref=e286]:
+                            - generic [ref=e287]: 小米直播助手
+                          - cell "com.mi.liveassistant" [ref=e288]:
+                            - generic [ref=e289]: com.mi.liveassistant
+                          - cell "4.51.3" [ref=e290]:
+                            - generic [ref=e291]: 4.51.3
+                          - cell "用户" [ref=e292]:
+                            - generic [ref=e293]: 用户
+                          - cell "启动 重启 卸载" [ref=e294]:
+                            - generic [ref=e295]:
+                              - button "启动" [ref=e296] [cursor=pointer]
+                              - button "重启" [ref=e297] [cursor=pointer]
+                              - button "卸载" [ref=e298] [cursor=pointer]
+                        - row "小米社区 com.xiaomi.vipaccount 5.1.0 用户 启动 重启 卸载" [ref=e299]:
+                          - cell "小米社区" [ref=e300]:
+                            - generic [ref=e301]: 小米社区
+                          - cell "com.xiaomi.vipaccount" [ref=e302]:
+                            - generic [ref=e303]: com.xiaomi.vipaccount
+                          - cell "5.1.0" [ref=e304]:
+                            - generic [ref=e305]: 5.1.0
+                          - cell "用户" [ref=e306]:
+                            - generic [ref=e307]: 用户
+                          - cell "启动 重启 卸载" [ref=e308]:
+                            - generic [ref=e309]:
+                              - button "启动" [ref=e310] [cursor=pointer]
+                              - button "重启" [ref=e311] [cursor=pointer]
+                              - button "卸载" [ref=e312] [cursor=pointer]
+                        - row "DozeOff com.dosse.dozeoff 1.2 用户 启动 重启 卸载" [ref=e313]:
+                          - cell "DozeOff" [ref=e314]:
+                            - generic [ref=e315]: DozeOff
+                          - cell "com.dosse.dozeoff" [ref=e316]:
+                            - generic [ref=e317]: com.dosse.dozeoff
+                          - cell "1.2" [ref=e318]:
+                            - generic [ref=e319]: "1.2"
+                          - cell "用户" [ref=e320]:
+                            - generic [ref=e321]: 用户
+                          - cell "启动 重启 卸载" [ref=e322]:
+                            - generic [ref=e323]:
+                              - button "启动" [ref=e324] [cursor=pointer]
+                              - button "重启" [ref=e325] [cursor=pointer]
+                              - button "卸载" [ref=e326] [cursor=pointer]
+                        - row "嗅觉浏览器 com.hiker.youtoo 6.80 用户 启动 重启 卸载" [ref=e327]:
+                          - cell "嗅觉浏览器" [ref=e328]:
+                            - generic [ref=e329]: 嗅觉浏览器
+                          - cell "com.hiker.youtoo" [ref=e330]:
+                            - generic [ref=e331]: com.hiker.youtoo
+                          - cell "6.80" [ref=e332]:
+                            - generic [ref=e333]: "6.80"
+                          - cell "用户" [ref=e334]:
+                            - generic [ref=e335]: 用户
+                          - cell "启动 重启 卸载" [ref=e336]:
+                            - generic [ref=e337]:
+                              - button "启动" [ref=e338] [cursor=pointer]
+                              - button "重启" [ref=e339] [cursor=pointer]
+                              - button "卸载" [ref=e340] [cursor=pointer]
+                        - row "WAuxiliary me.hd.wauxv 1.2.1 用户 启动 重启 卸载" [ref=e341]:
+                          - cell "WAuxiliary" [ref=e342]:
+                            - generic [ref=e343]: WAuxiliary
+                          - cell "me.hd.wauxv" [ref=e344]:
+                            - generic [ref=e345]: me.hd.wauxv
+                          - cell "1.2.1" [ref=e346]:
+                            - generic [ref=e347]: 1.2.1
+                          - cell "用户" [ref=e348]:
+                            - generic [ref=e349]: 用户
+                          - cell "启动 重启 卸载" [ref=e350]:
+                            - generic [ref=e351]:
+                              - button "启动" [ref=e352] [cursor=pointer]
+                              - button "重启" [ref=e353] [cursor=pointer]
+                              - button "卸载" [ref=e354] [cursor=pointer]
+                        - row "JsBridge com.github.lzyzsd.jsbridge.example 1.0 用户 启动 重启 卸载" [ref=e355]:
+                          - cell "JsBridge" [ref=e356]:
+                            - generic [ref=e357]: JsBridge
+                          - cell "com.github.lzyzsd.jsbridge.example" [ref=e358]:
+                            - generic [ref=e359]: com.github.lzyzsd.jsbridge.example
+                          - cell "1.0" [ref=e360]:
+                            - generic [ref=e361]: "1.0"
+                          - cell "用户" [ref=e362]:
+                            - generic [ref=e363]: 用户
+                          - cell "启动 重启 卸载" [ref=e364]:
+                            - generic [ref=e365]:
+                              - button "启动" [ref=e366] [cursor=pointer]
+                              - button "重启" [ref=e367] [cursor=pointer]
+                              - button "卸载" [ref=e368] [cursor=pointer]
+                        - row "聊天助手 com.hm.wechat 2.0.6 用户 启动 重启 卸载" [ref=e369]:
+                          - cell "聊天助手" [ref=e370]:
+                            - generic [ref=e371]: 聊天助手
+                          - cell "com.hm.wechat" [ref=e372]:
+                            - generic [ref=e373]: com.hm.wechat
+                          - cell "2.0.6" [ref=e374]:
+                            - generic [ref=e375]: 2.0.6
+                          - cell "用户" [ref=e376]:
+                            - generic [ref=e377]: 用户
+                          - cell "启动 重启 卸载" [ref=e378]:
+                            - generic [ref=e379]:
+                              - button "启动" [ref=e380] [cursor=pointer]
+                              - button "重启" [ref=e381] [cursor=pointer]
+                              - button "卸载" [ref=e382] [cursor=pointer]
+                        - row "NexusControl com.shark.controller 1.0.2 用户 启动 重启 卸载" [ref=e383]:
+                          - cell "NexusControl" [ref=e384]:
+                            - generic [ref=e385]: NexusControl
+                          - cell "com.shark.controller" [ref=e386]:
+                            - generic [ref=e387]: com.shark.controller
+                          - cell "1.0.2" [ref=e388]:
+                            - generic [ref=e389]: 1.0.2
+                          - cell "用户" [ref=e390]:
+                            - generic [ref=e391]: 用户
+                          - cell "启动 重启 卸载" [ref=e392]:
+                            - generic [ref=e393]:
+                              - button "启动" [ref=e394] [cursor=pointer]
+                              - button "重启" [ref=e395] [cursor=pointer]
+                              - button "卸载" [ref=e396] [cursor=pointer]
+                        - row "LSPatch org.lsposed.lspatch 0.6 用户 启动 重启 卸载" [ref=e397]:
+                          - cell "LSPatch" [ref=e398]:
+                            - generic [ref=e399]: LSPatch
+                          - cell "org.lsposed.lspatch" [ref=e400]:
+                            - generic [ref=e401]: org.lsposed.lspatch
+                          - cell "0.6" [ref=e402]:
+                            - generic [ref=e403]: "0.6"
+                          - cell "用户" [ref=e404]:
+                            - generic [ref=e405]: 用户
+                          - cell "启动 重启 卸载" [ref=e406]:
+                            - generic [ref=e407]:
+                              - button "启动" [ref=e408] [cursor=pointer]
+                              - button "重启" [ref=e409] [cursor=pointer]
+                              - button "卸载" [ref=e410] [cursor=pointer]
+                        - row "课堂笔记 com.classnotes V1.0 用户 启动 重启 卸载" [ref=e411]:
+                          - cell "课堂笔记" [ref=e412]:
+                            - generic [ref=e413]: 课堂笔记
+                          - cell "com.classnotes" [ref=e414]:
+                            - generic [ref=e415]: com.classnotes
+                          - cell "V1.0" [ref=e416]:
+                            - generic [ref=e417]: V1.0
+                          - cell "用户" [ref=e418]:
+                            - generic [ref=e419]: 用户
+                          - cell "启动 重启 卸载" [ref=e420]:
+                            - generic [ref=e421]:
+                              - button "启动" [ref=e422] [cursor=pointer]
+                              - button "重启" [ref=e423] [cursor=pointer]
+                              - button "卸载" [ref=e424] [cursor=pointer]
+                        - row "百度输入法小米版 com.baidu.input_mi 8.2.4.101 用户 启动 重启 卸载" [ref=e425]:
+                          - cell "百度输入法小米版" [ref=e426]:
+                            - generic [ref=e427]: 百度输入法小米版
+                          - cell "com.baidu.input_mi" [ref=e428]:
+                            - generic [ref=e429]: com.baidu.input_mi
+                          - cell "8.2.4.101" [ref=e430]:
+                            - generic [ref=e431]: 8.2.4.101
+                          - cell "用户" [ref=e432]:
+                            - generic [ref=e433]: 用户
+                          - cell "启动 重启 卸载" [ref=e434]:
+                            - generic [ref=e435]:
+                              - button "启动" [ref=e436] [cursor=pointer]
+                              - button "重启" [ref=e437] [cursor=pointer]
+                              - button "卸载" [ref=e438] [cursor=pointer]
+                        - row "Shizuku moe.shizuku.privileged.api 13.5.4.r1049.0e53409 用户 启动 重启 卸载" [ref=e439]:
+                          - cell "Shizuku" [ref=e440]:
+                            - generic [ref=e441]: Shizuku
+                          - cell "moe.shizuku.privileged.api" [ref=e442]:
+                            - generic [ref=e443]: moe.shizuku.privileged.api
+                          - cell "13.5.4.r1049.0e53409" [ref=e444]:
+                            - generic [ref=e445]: 13.5.4.r1049.0e53409
+                          - cell "用户" [ref=e446]:
+                            - generic [ref=e447]: 用户
+                          - cell "启动 重启 卸载" [ref=e448]:
+                            - generic [ref=e449]:
+                              - button "启动" [ref=e450] [cursor=pointer]
+                              - button "重启" [ref=e451] [cursor=pointer]
+                              - button "卸载" [ref=e452] [cursor=pointer]
+                        - row "用户手册 com.miui.userguide 10.4.1.2 用户 启动 重启 卸载" [ref=e453]:
+                          - cell "用户手册" [ref=e454]:
+                            - generic [ref=e455]: 用户手册
+                          - cell "com.miui.userguide" [ref=e456]:
+                            - generic [ref=e457]: com.miui.userguide
+                          - cell "10.4.1.2" [ref=e458]:
+                            - generic [ref=e459]: 10.4.1.2
+                          - cell "用户" [ref=e460]:
+                            - generic [ref=e461]: 用户
+                          - cell "启动 重启 卸载" [ref=e462]:
+                            - generic [ref=e463]:
+                              - button "启动" [ref=e464] [cursor=pointer]
+                              - button "重启" [ref=e465] [cursor=pointer]
+                              - button "卸载" [ref=e466] [cursor=pointer]
+                        - row "小红书 com.xingin.xhs 8.72.0 用户 启动 重启 卸载" [ref=e467]:
+                          - cell "小红书" [ref=e468]:
+                            - generic [ref=e469]: 小红书
+                          - cell "com.xingin.xhs" [ref=e470]:
+                            - generic [ref=e471]: com.xingin.xhs
+                          - cell "8.72.0" [ref=e472]:
+                            - generic [ref=e473]: 8.72.0
+                          - cell "用户" [ref=e474]:
+                            - generic [ref=e475]: 用户
+                          - cell "启动 重启 卸载" [ref=e476]:
+                            - generic [ref=e477]:
+                              - button "启动" [ref=e478] [cursor=pointer]
+                              - button "重启" [ref=e479] [cursor=pointer]
+                              - button "卸载" [ref=e480] [cursor=pointer]
+                        - row "微信 com.tencent.mm 8.0.69 用户 启动 重启 卸载" [ref=e481]:
+                          - cell "微信" [ref=e482]:
+                            - generic [ref=e483]: 微信
+                          - cell "com.tencent.mm" [ref=e484]:
+                            - generic [ref=e485]: com.tencent.mm
+                          - cell "8.0.69" [ref=e486]:
+                            - generic [ref=e487]: 8.0.69
+                          - cell "用户" [ref=e488]:
+                            - generic [ref=e489]: 用户
+                          - cell "启动 重启 卸载" [ref=e490]:
+                            - generic [ref=e491]:
+                              - button "启动" [ref=e492] [cursor=pointer]
+                              - button "重启" [ref=e493] [cursor=pointer]
+                              - button "卸载" [ref=e494] [cursor=pointer]
+                        - row "小米金融 com.xiaomi.jr 7.4.6.2733 用户 启动 重启 卸载" [ref=e495]:
+                          - cell "小米金融" [ref=e496]:
+                            - generic [ref=e497]: 小米金融
+                          - cell "com.xiaomi.jr" [ref=e498]:
+                            - generic [ref=e499]: com.xiaomi.jr
+                          - cell "7.4.6.2733" [ref=e500]:
+                            - generic [ref=e501]: 7.4.6.2733
+                          - cell "用户" [ref=e502]:
+                            - generic [ref=e503]: 用户
+                          - cell "启动 重启 卸载" [ref=e504]:
+                            - generic [ref=e505]:
+                              - button "启动" [ref=e506] [cursor=pointer]
+                              - button "重启" [ref=e507] [cursor=pointer]
+                              - button "卸载" [ref=e508] [cursor=pointer]
+                        - row "小爱语音引擎 com.xiaomi.mibrain.speech 1.1.5 用户 启动 重启 卸载" [ref=e509]:
+                          - cell "小爱语音引擎" [ref=e510]:
+                            - generic [ref=e511]: 小爱语音引擎
+                          - cell "com.xiaomi.mibrain.speech" [ref=e512]:
+                            - generic [ref=e513]: com.xiaomi.mibrain.speech
+                          - cell "1.1.5" [ref=e514]:
+                            - generic [ref=e515]: 1.1.5
+                          - cell "用户" [ref=e516]:
+                            - generic [ref=e517]: 用户
+                          - cell "启动 重启 卸载" [ref=e518]:
+                            - generic [ref=e519]:
+                              - button "启动" [ref=e520] [cursor=pointer]
+                              - button "重启" [ref=e521] [cursor=pointer]
+                              - button "卸载" [ref=e522] [cursor=pointer]
+                        - row "小米换机 com.miui.huanji 2.0.9 用户 启动 重启 卸载" [ref=e523]:
+                          - cell "小米换机" [ref=e524]:
+                            - generic [ref=e525]: 小米换机
+                          - cell "com.miui.huanji" [ref=e526]:
+                            - generic [ref=e527]: com.miui.huanji
+                          - cell "2.0.9" [ref=e528]:
+                            - generic [ref=e529]: 2.0.9
+                          - cell "用户" [ref=e530]:
+                            - generic [ref=e531]: 用户
+                          - cell "启动 重启 卸载" [ref=e532]:
+                            - generic [ref=e533]:
+                              - button "启动" [ref=e534] [cursor=pointer]
+                              - button "重启" [ref=e535] [cursor=pointer]
+                              - button "卸载" [ref=e536] [cursor=pointer]
+                        - row "健康 com.mi.health 2.2.14 用户 启动 重启 卸载" [ref=e537]:
+                          - cell "健康" [ref=e538]:
+                            - generic [ref=e539]: 健康
+                          - cell "com.mi.health" [ref=e540]:
+                            - generic [ref=e541]: com.mi.health
+                          - cell "2.2.14" [ref=e542]:
+                            - generic [ref=e543]: 2.2.14
+                          - cell "用户" [ref=e544]:
+                            - generic [ref=e545]: 用户
+                          - cell "启动 重启 卸载" [ref=e546]:
+                            - generic [ref=e547]:
+                              - button "启动" [ref=e548] [cursor=pointer]
+                              - button "重启" [ref=e549] [cursor=pointer]
+                              - button "卸载" [ref=e550] [cursor=pointer]
+                        - row "小米文档查看器（WPS定制） cn.wps.moffice_eng.xiaomi.lite 2.0.3 用户 启动 重启 卸载" [ref=e551]:
+                          - cell "小米文档查看器（WPS定制）" [ref=e552]:
+                            - generic [ref=e553]: 小米文档查看器（WPS定制）
+                          - cell "cn.wps.moffice_eng.xiaomi.lite" [ref=e554]:
+                            - generic [ref=e555]: cn.wps.moffice_eng.xiaomi.lite
+                          - cell "2.0.3" [ref=e556]:
+                            - generic [ref=e557]: 2.0.3
+                          - cell "用户" [ref=e558]:
+                            - generic [ref=e559]: 用户
+                          - cell "启动 重启 卸载" [ref=e560]:
+                            - generic [ref=e561]:
+                              - button "启动" [ref=e562] [cursor=pointer]
+                              - button "重启" [ref=e563] [cursor=pointer]
+                              - button "卸载" [ref=e564] [cursor=pointer]
+                        - row "Telegram org.telegram.messenger.web 11.9.0 用户 启动 重启 卸载" [ref=e565]:
+                          - cell "Telegram" [ref=e566]:
+                            - generic [ref=e567]: Telegram
+                          - cell "org.telegram.messenger.web" [ref=e568]:
+                            - generic [ref=e569]: org.telegram.messenger.web
+                          - cell "11.9.0" [ref=e570]:
+                            - generic [ref=e571]: 11.9.0
+                          - cell "用户" [ref=e572]:
+                            - generic [ref=e573]: 用户
+                          - cell "启动 重启 卸载" [ref=e574]:
+                            - generic [ref=e575]:
+                              - button "启动" [ref=e576] [cursor=pointer]
+                              - button "重启" [ref=e577] [cursor=pointer]
+                              - button "卸载" [ref=e578] [cursor=pointer]
+                        - row "小米画报 com.mfashiongallery.emag M920051500-S 用户 启动 重启 卸载" [ref=e579]:
+                          - cell "小米画报" [ref=e580]:
+                            - generic [ref=e581]: 小米画报
+                          - cell "com.mfashiongallery.emag" [ref=e582]:
+                            - generic [ref=e583]: com.mfashiongallery.emag
+                          - cell "M920051500-S" [ref=e584]:
+                            - generic [ref=e585]: M920051500-S
+                          - cell "用户" [ref=e586]:
+                            - generic [ref=e587]: 用户
+                          - cell "启动 重启 卸载" [ref=e588]:
+                            - generic [ref=e589]:
+                              - button "启动" [ref=e590] [cursor=pointer]
+                              - button "重启" [ref=e591] [cursor=pointer]
+                              - button "卸载" [ref=e592] [cursor=pointer]
+                        - row "MT管理器 bin.mt.plus 2.13.7 用户 启动 重启 卸载" [ref=e593]:
+                          - cell "MT管理器" [ref=e594]:
+                            - generic [ref=e595]: MT管理器
+                          - cell "bin.mt.plus" [ref=e596]:
+                            - generic [ref=e597]: bin.mt.plus
+                          - cell "2.13.7" [ref=e598]:
+                            - generic [ref=e599]: 2.13.7
+                          - cell "用户" [ref=e600]:
+                            - generic [ref=e601]: 用户
+                          - cell "启动 重启 卸载" [ref=e602]:
+                            - generic [ref=e603]:
+                              - button "启动" [ref=e604] [cursor=pointer]
+                              - button "重启" [ref=e605] [cursor=pointer]
+                              - button "卸载" [ref=e606] [cursor=pointer]
+                        - row "Edge com.microsoft.emmx 137.0.3296.65 用户 启动 重启 卸载" [ref=e607]:
+                          - cell "Edge" [ref=e608]:
+                            - generic [ref=e609]: Edge
+                          - cell "com.microsoft.emmx" [ref=e610]:
+                            - generic [ref=e611]: com.microsoft.emmx
+                          - cell "137.0.3296.65" [ref=e612]:
+                            - generic [ref=e613]: 137.0.3296.65
+                          - cell "用户" [ref=e614]:
+                            - generic [ref=e615]: 用户
+                          - cell "启动 重启 卸载" [ref=e616]:
+                            - generic [ref=e617]:
+                              - button "启动" [ref=e618] [cursor=pointer]
+                              - button "重启" [ref=e619] [cursor=pointer]
+                              - button "卸载" [ref=e620] [cursor=pointer]
+                        - row "VietinBank iPay com.vietinbank.ipay 5.6.4 用户 启动 重启 卸载" [ref=e621]:
+                          - cell "VietinBank iPay" [ref=e622]:
+                            - generic [ref=e623]: VietinBank iPay
+                          - cell "com.vietinbank.ipay" [ref=e624]:
+                            - generic [ref=e625]: com.vietinbank.ipay
+                          - cell "5.6.4" [ref=e626]:
+                            - generic [ref=e627]: 5.6.4
+                          - cell "用户" [ref=e628]:
+                            - generic [ref=e629]: 用户
+                          - cell "启动 重启 卸载" [ref=e630]:
+                            - generic [ref=e631]:
+                              - button "启动" [ref=e632] [cursor=pointer]
+                              - button "重启" [ref=e633] [cursor=pointer]
+                              - button "卸载" [ref=e634] [cursor=pointer]
+                        - row "ARServer com.standardar.service 1.8.9.9 用户 启动 重启 卸载" [ref=e635]:
+                          - cell "ARServer" [ref=e636]:
+                            - generic [ref=e637]: ARServer
+                          - cell "com.standardar.service" [ref=e638]:
+                            - generic [ref=e639]: com.standardar.service
+                          - cell "1.8.9.9" [ref=e640]:
+                            - generic [ref=e641]: 1.8.9.9
+                          - cell "用户" [ref=e642]:
+                            - generic [ref=e643]: 用户
+                          - cell "启动 重启 卸载" [ref=e644]:
+                            - generic [ref=e645]:
+                              - button "启动" [ref=e646] [cursor=pointer]
+                              - button "重启" [ref=e647] [cursor=pointer]
+                              - button "卸载" [ref=e648] [cursor=pointer]
+                        - row "全球上网 com.miui.virtualsim 5.6.6 用户 启动 重启 卸载" [ref=e649]:
+                          - cell "全球上网" [ref=e650]:
+                            - generic [ref=e651]: 全球上网
+                          - cell "com.miui.virtualsim" [ref=e652]:
+                            - generic [ref=e653]: com.miui.virtualsim
+                          - cell "5.6.6" [ref=e654]:
+                            - generic [ref=e655]: 5.6.6
+                          - cell "用户" [ref=e656]:
+                            - generic [ref=e657]: 用户
+                          - cell "启动 重启 卸载" [ref=e658]:
+                            - generic [ref=e659]:
+                              - button "启动" [ref=e660] [cursor=pointer]
+                              - button "重启" [ref=e661] [cursor=pointer]
+                              - button "卸载" [ref=e662] [cursor=pointer]
+                        - row "指南针 com.miui.compass 9.3.9 用户 启动 重启 卸载" [ref=e663]:
+                          - cell "指南针" [ref=e664]:
+                            - generic [ref=e665]: 指南针
+                          - cell "com.miui.compass" [ref=e666]:
+                            - generic [ref=e667]: com.miui.compass
+                          - cell "9.3.9" [ref=e668]:
+                            - generic [ref=e669]: 9.3.9
+                          - cell "用户" [ref=e670]:
+                            - generic [ref=e671]: 用户
+                          - cell "启动 重启 卸载" [ref=e672]:
+                            - generic [ref=e673]:
+                              - button "启动" [ref=e674] [cursor=pointer]
+                              - button "重启" [ref=e675] [cursor=pointer]
+                              - button "卸载" [ref=e676] [cursor=pointer]
+                        - row "ANDY加速器 com.a1n2d3y.c73e1822 4.5.8 用户 启动 重启 卸载" [ref=e677]:
+                          - cell "ANDY加速器" [ref=e678]:
+                            - generic [ref=e679]: ANDY加速器
+                          - cell "com.a1n2d3y.c73e1822" [ref=e680]:
+                            - generic [ref=e681]: com.a1n2d3y.c73e1822
+                          - cell "4.5.8" [ref=e682]:
+                            - generic [ref=e683]: 4.5.8
+                          - cell "用户" [ref=e684]:
+                            - generic [ref=e685]: 用户
+                          - cell "启动 重启 卸载" [ref=e686]:
+                            - generic [ref=e687]:
+                              - button "启动" [ref=e688] [cursor=pointer]
+                              - button "重启" [ref=e689] [cursor=pointer]
+                              - button "卸载" [ref=e690] [cursor=pointer]
+                        - row "万能遥控 com.duokan.phone.remotecontroller 5.8.0M 用户 启动 重启 卸载" [ref=e691]:
+                          - cell "万能遥控" [ref=e692]:
+                            - generic [ref=e693]: 万能遥控
+                          - cell "com.duokan.phone.remotecontroller" [ref=e694]:
+                            - generic [ref=e695]: com.duokan.phone.remotecontroller
+                          - cell "5.8.0M" [ref=e696]:
+                            - generic [ref=e697]: 5.8.0M
+                          - cell "用户" [ref=e698]:
+                            - generic [ref=e699]: 用户
+                          - cell "启动 重启 卸载" [ref=e700]:
+                            - generic [ref=e701]:
+                              - button "启动" [ref=e702] [cursor=pointer]
+                              - button "重启" [ref=e703] [cursor=pointer]
+                              - button "卸载" [ref=e704] [cursor=pointer]
+                        - row "拼多多 com.xunmeng.pinduoduo 7.30.0 用户 启动 重启 卸载" [ref=e705]:
+                          - cell "拼多多" [ref=e706]:
+                            - generic [ref=e707]: 拼多多
+                          - cell "com.xunmeng.pinduoduo" [ref=e708]:
+                            - generic [ref=e709]: com.xunmeng.pinduoduo
+                          - cell "7.30.0" [ref=e710]:
+                            - generic [ref=e711]: 7.30.0
+                          - cell "用户" [ref=e712]:
+                            - generic [ref=e713]: 用户
+                          - cell "启动 重启 卸载" [ref=e714]:
+                            - generic [ref=e715]:
+                              - button "启动" [ref=e716] [cursor=pointer]
+                              - button "重启" [ref=e717] [cursor=pointer]
+                              - button "卸载" [ref=e718] [cursor=pointer]
+                        - row "企业微信 com.tencent.wework 4.1.28 用户 启动 重启 卸载" [ref=e719]:
+                          - cell "企业微信" [ref=e720]:
+                            - generic [ref=e721]: 企业微信
+                          - cell "com.tencent.wework" [ref=e722]:
+                            - generic [ref=e723]: com.tencent.wework
+                          - cell "4.1.28" [ref=e724]:
+                            - generic [ref=e725]: 4.1.28
+                          - cell "用户" [ref=e726]:
+                            - generic [ref=e727]: 用户
+                          - cell "启动 重启 卸载" [ref=e728]:
+                            - generic [ref=e729]:
+                              - button "启动" [ref=e730] [cursor=pointer]
+                              - button "重启" [ref=e731] [cursor=pointer]
+                              - button "卸载" [ref=e732] [cursor=pointer]
+                        - row "USB文件管理器 com.panruyiapp.usbfilemanager.cn 2.3.7 用户 启动 重启 卸载" [ref=e733]:
+                          - cell "USB文件管理器" [ref=e734]:
+                            - generic [ref=e735]: USB文件管理器
+                          - cell "com.panruyiapp.usbfilemanager.cn" [ref=e736]:
+                            - generic [ref=e737]: com.panruyiapp.usbfilemanager.cn
+                          - cell "2.3.7" [ref=e738]:
+                            - generic [ref=e739]: 2.3.7
+                          - cell "用户" [ref=e740]:
+                            - generic [ref=e741]: 用户
+                          - cell "启动 重启 卸载" [ref=e742]:
+                            - generic [ref=e743]:
+                              - button "启动" [ref=e744] [cursor=pointer]
+                              - button "重启" [ref=e745] [cursor=pointer]
+                              - button "卸载" [ref=e746] [cursor=pointer]
+                        - row "抖音商城 com.ss.android.ugc.livelite 32.2.0 用户 启动 重启 卸载" [ref=e747]:
+                          - cell "抖音商城" [ref=e748]:
+                            - generic [ref=e749]: 抖音商城
+                          - cell "com.ss.android.ugc.livelite" [ref=e750]:
+                            - generic [ref=e751]: com.ss.android.ugc.livelite
+                          - cell "32.2.0" [ref=e752]:
+                            - generic [ref=e753]: 32.2.0
+                          - cell "用户" [ref=e754]:
+                            - generic [ref=e755]: 用户
+                          - cell "启动 重启 卸载" [ref=e756]:
+                            - generic [ref=e757]:
+                              - button "启动" [ref=e758] [cursor=pointer]
+                              - button "重启" [ref=e759] [cursor=pointer]
+                              - button "卸载" [ref=e760] [cursor=pointer]
+                        - row "小游戏服务 com.xiaomi.minigame 1.31.4.1 用户 启动 重启 卸载" [ref=e761]:
+                          - cell "小游戏服务" [ref=e762]:
+                            - generic [ref=e763]: 小游戏服务
+                          - cell "com.xiaomi.minigame" [ref=e764]:
+                            - generic [ref=e765]: com.xiaomi.minigame
+                          - cell "1.31.4.1" [ref=e766]:
+                            - generic [ref=e767]: 1.31.4.1
+                          - cell "用户" [ref=e768]:
+                            - generic [ref=e769]: 用户
+                          - cell "启动 重启 卸载" [ref=e770]:
+                            - generic [ref=e771]:
+                              - button "启动" [ref=e772] [cursor=pointer]
+                              - button "重启" [ref=e773] [cursor=pointer]
+                              - button "卸载" [ref=e774] [cursor=pointer]
+                        - row "Google通讯录同步 com.google.android.syncadapters.contacts 10-5771379 用户 启动 重启 卸载" [ref=e775]:
+                          - cell "Google通讯录同步" [ref=e776]:
+                            - generic [ref=e777]: Google通讯录同步
+                          - cell "com.google.android.syncadapters.contacts" [ref=e778]:
+                            - generic [ref=e779]: com.google.android.syncadapters.contacts
+                          - cell "10-5771379" [ref=e780]:
+                            - generic [ref=e781]: 10-5771379
+                          - cell "用户" [ref=e782]:
+                            - generic [ref=e783]: 用户
+                          - cell "启动 重启 卸载" [ref=e784]:
+                            - generic [ref=e785]:
+                              - button "启动" [ref=e786] [cursor=pointer]
+                              - button "重启" [ref=e787] [cursor=pointer]
+                              - button "卸载" [ref=e788] [cursor=pointer]
+                        - row "Chrome com.android.chrome 134.0.6998.95 用户 启动 重启 卸载" [ref=e789]:
+                          - cell "Chrome" [ref=e790]:
+                            - generic [ref=e791]: Chrome
+                          - cell "com.android.chrome" [ref=e792]:
+                            - generic [ref=e793]: com.android.chrome
+                          - cell "134.0.6998.95" [ref=e794]:
+                            - generic [ref=e795]: 134.0.6998.95
+                          - cell "用户" [ref=e796]:
+                            - generic [ref=e797]: 用户
+                          - cell "启动 重启 卸载" [ref=e798]:
+                            - generic [ref=e799]:
+                              - button "启动" [ref=e800] [cursor=pointer]
+                              - button "重启" [ref=e801] [cursor=pointer]
+                              - button "卸载" [ref=e802] [cursor=pointer]
+                        - row "小米商城 com.xiaomi.shop 5.0.6.20200304.r1 用户 启动 重启 卸载" [ref=e803]:
+                          - cell "小米商城" [ref=e804]:
+                            - generic [ref=e805]: 小米商城
+                          - cell "com.xiaomi.shop" [ref=e806]:
+                            - generic [ref=e807]: com.xiaomi.shop
+                          - cell "5.0.6.20200304.r1" [ref=e808]:
+                            - generic [ref=e809]: 5.0.6.20200304.r1
+                          - cell "用户" [ref=e810]:
+                            - generic [ref=e811]: 用户
+                          - cell "启动 重启 卸载" [ref=e812]:
+                            - generic [ref=e813]:
+                              - button "启动" [ref=e814] [cursor=pointer]
+                              - button "重启" [ref=e815] [cursor=pointer]
+                              - button "卸载" [ref=e816] [cursor=pointer]
+                        - row "抖音 com.ss.android.ugc.aweme 33.2.0 用户 启动 重启 卸载" [ref=e817]:
+                          - cell "抖音" [ref=e818]:
+                            - generic [ref=e819]: 抖音
+                          - cell "com.ss.android.ugc.aweme" [ref=e820]:
+                            - generic [ref=e821]: com.ss.android.ugc.aweme
+                          - cell "33.2.0" [ref=e822]:
+                            - generic [ref=e823]: 33.2.0
+                          - cell "用户" [ref=e824]:
+                            - generic [ref=e825]: 用户
+                          - cell "启动 重启 卸载" [ref=e826]:
+                            - generic [ref=e827]:
+                              - button "启动" [ref=e828] [cursor=pointer]
+                              - button "重启" [ref=e829] [cursor=pointer]
+                              - button "卸载" [ref=e830] [cursor=pointer]
+                        - row "TikTok com.ss.android.ugc.trill 37.5.21 用户 启动 重启 卸载" [ref=e831]:
+                          - cell "TikTok" [ref=e832]:
+                            - generic [ref=e833]: TikTok
+                          - cell "com.ss.android.ugc.trill" [ref=e834]:
+                            - generic [ref=e835]: com.ss.android.ugc.trill
+                          - cell "37.5.21" [ref=e836]:
+                            - generic [ref=e837]: 37.5.21
+                          - cell "用户" [ref=e838]:
+                            - generic [ref=e839]: 用户
+                          - cell "启动 重启 卸载" [ref=e840]:
+                            - generic [ref=e841]:
+                              - button "启动" [ref=e842] [cursor=pointer]
+                              - button "重启" [ref=e843] [cursor=pointer]
+                              - button "卸载" [ref=e844] [cursor=pointer]
+                        - row "QQ com.tencent.mobileqq 9.1.55 用户 启动 重启 卸载" [ref=e845]:
+                          - cell "QQ" [ref=e846]:
+                            - generic [ref=e847]: QQ
+                          - cell "com.tencent.mobileqq" [ref=e848]:
+                            - generic [ref=e849]: com.tencent.mobileqq
+                          - cell "9.1.55" [ref=e850]:
+                            - generic [ref=e851]: 9.1.55
+                          - cell "用户" [ref=e852]:
+                            - generic [ref=e853]: 用户
+                          - cell "启动 重启 卸载" [ref=e854]:
+                            - generic [ref=e855]:
+                              - button "启动" [ref=e856] [cursor=pointer]
+                              - button "重启" [ref=e857] [cursor=pointer]
+                              - button "卸载" [ref=e858] [cursor=pointer]
+                        - row "讯飞输入法小米版 com.iflytek.inputmethod.miui 8.1.7922 用户 启动 重启 卸载" [ref=e859]:
+                          - cell "讯飞输入法小米版" [ref=e860]:
+                            - generic [ref=e861]: 讯飞输入法小米版
+                          - cell "com.iflytek.inputmethod.miui" [ref=e862]:
+                            - generic [ref=e863]: com.iflytek.inputmethod.miui
+                          - cell "8.1.7922" [ref=e864]:
+                            - generic [ref=e865]: 8.1.7922
+                          - cell "用户" [ref=e866]:
+                            - generic [ref=e867]: 用户
+                          - cell "启动 重启 卸载" [ref=e868]:
+                            - generic [ref=e869]:
+                              - button "启动" [ref=e870] [cursor=pointer]
+                              - button "重启" [ref=e871] [cursor=pointer]
+                              - button "卸载" [ref=e872] [cursor=pointer]
+                        - row "XUIDemo com.xuexiang.xuidemo 1.2.1 用户 启动 重启 卸载" [ref=e873]:
+                          - cell "XUIDemo" [ref=e874]:
+                            - generic [ref=e875]: XUIDemo
+                          - cell "com.xuexiang.xuidemo" [ref=e876]:
+                            - generic [ref=e877]: com.xuexiang.xuidemo
+                          - cell "1.2.1" [ref=e878]:
+                            - generic [ref=e879]: 1.2.1
+                          - cell "用户" [ref=e880]:
+                            - generic [ref=e881]: 用户
+                          - cell "启动 重启 卸载" [ref=e882]:
+                            - generic [ref=e883]:
+                              - button "启动" [ref=e884] [cursor=pointer]
+                              - button "重启" [ref=e885] [cursor=pointer]
+                              - button "卸载" [ref=e886] [cursor=pointer]
+                        - row "便签 com.miui.notes 2.1.7 用户 启动 重启 卸载" [ref=e887]:
+                          - cell "便签" [ref=e888]:
+                            - generic [ref=e889]: 便签
+                          - cell "com.miui.notes" [ref=e890]:
+                            - generic [ref=e891]: com.miui.notes
+                          - cell "2.1.7" [ref=e892]:
+                            - generic [ref=e893]: 2.1.7
+                          - cell "用户" [ref=e894]:
+                            - generic [ref=e895]: 用户
+                          - cell "启动 重启 卸载" [ref=e896]:
+                            - generic [ref=e897]:
+                              - button "启动" [ref=e898] [cursor=pointer]
+                              - button "重启" [ref=e899] [cursor=pointer]
+                              - button "卸载" [ref=e900] [cursor=pointer]
+                        - row "DnfAuto com.mh.dnfauto 1.0 用户 启动 重启 卸载" [ref=e901]:
+                          - cell "DnfAuto" [ref=e902]:
+                            - generic [ref=e903]: DnfAuto
+                          - cell "com.mh.dnfauto" [ref=e904]:
+                            - generic [ref=e905]: com.mh.dnfauto
+                          - cell "1.0" [ref=e906]:
+                            - generic [ref=e907]: "1.0"
+                          - cell "用户" [ref=e908]:
+                            - generic [ref=e909]: 用户
+                          - cell "启动 重启 卸载" [ref=e910]:
+                            - generic [ref=e911]:
+                              - button "启动" [ref=e912] [cursor=pointer]
+                              - button "重启" [ref=e913] [cursor=pointer]
+                              - button "卸载" [ref=e914] [cursor=pointer]
+                        - row "TikTok com.zhiliaoapp.musically 35.5.4 用户 启动 重启 卸载" [ref=e915]:
+                          - cell "TikTok" [ref=e916]:
+                            - generic [ref=e917]: TikTok
+                          - cell "com.zhiliaoapp.musically" [ref=e918]:
+                            - generic [ref=e919]: com.zhiliaoapp.musically
+                          - cell "35.5.4" [ref=e920]:
+                            - generic [ref=e921]: 35.5.4
+                          - cell "用户" [ref=e922]:
+                            - generic [ref=e923]: 用户
+                          - cell "启动 重启 卸载" [ref=e924]:
+                            - generic [ref=e925]:
+                              - button "启动" [ref=e926] [cursor=pointer]
+                              - button "重启" [ref=e927] [cursor=pointer]
+                              - button "卸载" [ref=e928] [cursor=pointer]
+                        - row "Magisk com.topjohnwu.magisk 28.1 用户 启动 重启 卸载" [ref=e929]:
+                          - cell "Magisk" [ref=e930]:
+                            - generic [ref=e931]: Magisk
+                          - cell "com.topjohnwu.magisk" [ref=e932]:
+                            - generic [ref=e933]: com.topjohnwu.magisk
+                          - cell "28.1" [ref=e934]:
+                            - generic [ref=e935]: "28.1"
+                          - cell "用户" [ref=e936]:
+                            - generic [ref=e937]: 用户
+                          - cell "启动 重启 卸载" [ref=e938]:
+                            - generic [ref=e939]:
+                              - button "启动" [ref=e940] [cursor=pointer]
+                              - button "重启" [ref=e941] [cursor=pointer]
+                              - button "卸载" [ref=e942] [cursor=pointer]
+                        - row "HelloTalk com.hellotalk 6.0.70 用户 启动 重启 卸载" [ref=e943]:
+                          - cell "HelloTalk" [ref=e944]:
+                            - generic [ref=e945]: HelloTalk
+                          - cell "com.hellotalk" [ref=e946]:
+                            - generic [ref=e947]: com.hellotalk
+                          - cell "6.0.70" [ref=e948]:
+                            - generic [ref=e949]: 6.0.70
+                          - cell "用户" [ref=e950]:
+                            - generic [ref=e951]: 用户
+                          - cell "启动 重启 卸载" [ref=e952]:
+                            - generic [ref=e953]:
+                              - button "启动" [ref=e954] [cursor=pointer]
+                              - button "重启" [ref=e955] [cursor=pointer]
+                              - button "卸载" [ref=e956] [cursor=pointer]
+                        - row "计算器 com.miui.calculator 12.0.19 用户 启动 重启 卸载" [ref=e957]:
+                          - cell "计算器" [ref=e958]:
+                            - generic [ref=e959]: 计算器
+                          - cell "com.miui.calculator" [ref=e960]:
+                            - generic [ref=e961]: com.miui.calculator
+                          - cell "12.0.19" [ref=e962]:
+                            - generic [ref=e963]: 12.0.19
+                          - cell "用户" [ref=e964]:
+                            - generic [ref=e965]: 用户
+                          - cell "启动 重启 卸载" [ref=e966]:
+                            - generic [ref=e967]:
+                              - button "启动" [ref=e968] [cursor=pointer]
+                              - button "重启" [ref=e969] [cursor=pointer]
+                              - button "卸载" [ref=e970] [cursor=pointer]
+                        - row "SharkWechat com.shark.template 1.2.4 用户 启动 重启 卸载" [ref=e971]:
+                          - cell "SharkWechat" [ref=e972]:
+                            - generic [ref=e973]: SharkWechat
+                          - cell "com.shark.template" [ref=e974]:
+                            - generic [ref=e975]: com.shark.template
+                          - cell "1.2.4" [ref=e976]:
+                            - generic [ref=e977]: 1.2.4
+                          - cell "用户" [ref=e978]:
+                            - generic [ref=e979]: 用户
+                          - cell "启动 重启 卸载" [ref=e980]:
+                            - generic [ref=e981]:
+                              - button "启动" [ref=e982] [cursor=pointer]
+                              - button "重启" [ref=e983] [cursor=pointer]
+                              - button "卸载" [ref=e984] [cursor=pointer]
+                        - row "小米有品 com.xiaomi.youpin 2.11.4 用户 启动 重启 卸载" [ref=e985]:
+                          - cell "小米有品" [ref=e986]:
+                            - generic [ref=e987]: 小米有品
+                          - cell "com.xiaomi.youpin" [ref=e988]:
+                            - generic [ref=e989]: com.xiaomi.youpin
+                          - cell "2.11.4" [ref=e990]:
+                            - generic [ref=e991]: 2.11.4
+                          - cell "用户" [ref=e992]:
+                            - generic [ref=e993]: 用户
+                          - cell "启动 重启 卸载" [ref=e994]:
+                            - generic [ref=e995]:
+                              - button "启动" [ref=e996] [cursor=pointer]
+                              - button "重启" [ref=e997] [cursor=pointer]
+                              - button "卸载" [ref=e998] [cursor=pointer]
+                        - row "游戏中心 com.xiaomi.gamecenter 10.0.0.300 用户 启动 重启 卸载" [ref=e999]:
+                          - cell "游戏中心" [ref=e1000]:
+                            - generic [ref=e1001]: 游戏中心
+                          - cell "com.xiaomi.gamecenter" [ref=e1002]:
+                            - generic [ref=e1003]: com.xiaomi.gamecenter
+                          - cell "10.0.0.300" [ref=e1004]:
+                            - generic [ref=e1005]: 10.0.0.300
+                          - cell "用户" [ref=e1006]:
+                            - generic [ref=e1007]: 用户
+                          - cell "启动 重启 卸载" [ref=e1008]:
+                            - generic [ref=e1009]:
+                              - button "启动" [ref=e1010] [cursor=pointer]
+                              - button "重启" [ref=e1011] [cursor=pointer]
+                              - button "卸载" [ref=e1012] [cursor=pointer]
+                        - row "垃圾清理 com.miui.cleanmaster 4.3.8 用户 启动 重启 卸载" [ref=e1013]:
+                          - cell "垃圾清理" [ref=e1014]:
+                            - generic [ref=e1015]: 垃圾清理
+                          - cell "com.miui.cleanmaster" [ref=e1016]:
+                            - generic [ref=e1017]: com.miui.cleanmaster
+                          - cell "4.3.8" [ref=e1018]:
+                            - generic [ref=e1019]: 4.3.8
+                          - cell "用户" [ref=e1020]:
+                            - generic [ref=e1021]: 用户
+                          - cell "启动 重启 卸载" [ref=e1022]:
+                            - generic [ref=e1023]:
+                              - button "启动" [ref=e1024] [cursor=pointer]
+                              - button "重启" [ref=e1025] [cursor=pointer]
+                              - button "卸载" [ref=e1026] [cursor=pointer]
+                        - row "XposedDemp com.example.xposeddemp 1.0 用户 启动 重启 卸载" [ref=e1027]:
+                          - cell "XposedDemp" [ref=e1028]:
+                            - generic [ref=e1029]: XposedDemp
+                          - cell "com.example.xposeddemp" [ref=e1030]:
+                            - generic [ref=e1031]: com.example.xposeddemp
+                          - cell "1.0" [ref=e1032]:
+                            - generic [ref=e1033]: "1.0"
+                          - cell "用户" [ref=e1034]:
+                            - generic [ref=e1035]: 用户
+                          - cell "启动 重启 卸载" [ref=e1036]:
+                            - generic [ref=e1037]:
+                              - button "启动" [ref=e1038] [cursor=pointer]
+                              - button "重启" [ref=e1039] [cursor=pointer]
+                              - button "卸载" [ref=e1040] [cursor=pointer]
+                        - row "天气 com.miui.weather2 12.2.3.0 用户 启动 重启 卸载" [ref=e1041]:
+                          - cell "天气" [ref=e1042]:
+                            - generic [ref=e1043]: 天气
+                          - cell "com.miui.weather2" [ref=e1044]:
+                            - generic [ref=e1045]: com.miui.weather2
+                          - cell "12.2.3.0" [ref=e1046]:
+                            - generic [ref=e1047]: 12.2.3.0
+                          - cell "用户" [ref=e1048]:
+                            - generic [ref=e1049]: 用户
+                          - cell "启动 重启 卸载" [ref=e1050]:
+                            - generic [ref=e1051]:
+                              - button "启动" [ref=e1052] [cursor=pointer]
+                              - button "重启" [ref=e1053] [cursor=pointer]
+                              - button "卸载" [ref=e1054] [cursor=pointer]
+                        - row "高德地图 com.autonavi.minimap 10.25.0.3213 用户 启动 重启 卸载" [ref=e1055]:
+                          - cell "高德地图" [ref=e1056]:
+                            - generic [ref=e1057]: 高德地图
+                          - cell "com.autonavi.minimap" [ref=e1058]:
+                            - generic [ref=e1059]: com.autonavi.minimap
+                          - cell "10.25.0.3213" [ref=e1060]:
+                            - generic [ref=e1061]: 10.25.0.3213
+                          - cell "用户" [ref=e1062]:
+                            - generic [ref=e1063]: 用户
+                          - cell "启动 重启 卸载" [ref=e1064]:
+                            - generic [ref=e1065]:
+                              - button "启动" [ref=e1066] [cursor=pointer]
+                              - button "重启" [ref=e1067] [cursor=pointer]
+                              - button "卸载" [ref=e1068] [cursor=pointer]
+                        - row "扫一扫 com.xiaomi.scanner 12.05.20 用户 启动 重启 卸载" [ref=e1069]:
+                          - cell "扫一扫" [ref=e1070]:
+                            - generic [ref=e1071]: 扫一扫
+                          - cell "com.xiaomi.scanner" [ref=e1072]:
+                            - generic [ref=e1073]: com.xiaomi.scanner
+                          - cell "12.05.20" [ref=e1074]:
+                            - generic [ref=e1075]: 12.05.20
+                          - cell "用户" [ref=e1076]:
+                            - generic [ref=e1077]: 用户
+                          - cell "启动 重启 卸载" [ref=e1078]:
+                            - generic [ref=e1079]:
+                              - button "启动" [ref=e1080] [cursor=pointer]
+                              - button "重启" [ref=e1081] [cursor=pointer]
+                              - button "卸载" [ref=e1082] [cursor=pointer]
+                        - row "阅读 com.duokan.reader 6.2.1.3 用户 启动 重启 卸载" [ref=e1083]:
+                          - cell "阅读" [ref=e1084]:
+                            - generic [ref=e1085]: 阅读
+                          - cell "com.duokan.reader" [ref=e1086]:
+                            - generic [ref=e1087]: com.duokan.reader
+                          - cell "6.2.1.3" [ref=e1088]:
+                            - generic [ref=e1089]: 6.2.1.3
+                          - cell "用户" [ref=e1090]:
+                            - generic [ref=e1091]: 用户
+                          - cell "启动 重启 卸载" [ref=e1092]:
+                            - generic [ref=e1093]:
+                              - button "启动" [ref=e1094] [cursor=pointer]
+                              - button "重启" [ref=e1095] [cursor=pointer]
+                              - button "卸载" [ref=e1096] [cursor=pointer]
+                        - row "SharkWework com.wework 1.0.0 用户 启动 重启 卸载" [ref=e1097]:
+                          - cell "SharkWework" [ref=e1098]:
+                            - generic [ref=e1099]: SharkWework
+                          - cell "com.wework" [ref=e1100]:
+                            - generic [ref=e1101]: com.wework
+                          - cell "1.0.0" [ref=e1102]:
+                            - generic [ref=e1103]: 1.0.0
+                          - cell "用户" [ref=e1104]:
+                            - generic [ref=e1105]: 用户
+                          - cell "启动 重启 卸载" [ref=e1106]:
+                            - generic [ref=e1107]:
+                              - button "启动" [ref=e1108] [cursor=pointer]
+                              - button "重启" [ref=e1109] [cursor=pointer]
+                              - button "卸载" [ref=e1110] [cursor=pointer]
+                        - row "电子邮件 com.android.email V12_20200620_b3 用户 启动 重启 卸载" [ref=e1111]:
+                          - cell "电子邮件" [ref=e1112]:
+                            - generic [ref=e1113]: 电子邮件
+                          - cell "com.android.email" [ref=e1114]:
+                            - generic [ref=e1115]: com.android.email
+                          - cell "V12_20200620_b3" [ref=e1116]:
+                            - generic [ref=e1117]: V12_20200620_b3
+                          - cell "用户" [ref=e1118]:
+                            - generic [ref=e1119]: 用户
+                          - cell "启动 重启 卸载" [ref=e1120]:
+                            - generic [ref=e1121]:
+                              - button "启动" [ref=e1122] [cursor=pointer]
+                              - button "重启" [ref=e1123] [cursor=pointer]
+                              - button "卸载" [ref=e1124] [cursor=pointer]
+                        - row "智能出行 com.miui.smarttravel 12.0.0.3 用户 启动 重启 卸载" [ref=e1125]:
+                          - cell "智能出行" [ref=e1126]:
+                            - generic [ref=e1127]: 智能出行
+                          - cell "com.miui.smarttravel" [ref=e1128]:
+                            - generic [ref=e1129]: com.miui.smarttravel
+                          - cell "12.0.0.3" [ref=e1130]:
+                            - generic [ref=e1131]: 12.0.0.3
+                          - cell "用户" [ref=e1132]:
+                            - generic [ref=e1133]: 用户
+                          - cell "启动 重启 卸载" [ref=e1134]:
+                            - generic [ref=e1135]:
+                              - button "启动" [ref=e1136] [cursor=pointer]
+                              - button "重启" [ref=e1137] [cursor=pointer]
+                              - button "卸载" [ref=e1138] [cursor=pointer]
+                        - row "快手 com.smile.gifmaker 13.4.10.41735 用户 启动 重启 卸载" [ref=e1139]:
+                          - cell "快手" [ref=e1140]:
+                            - generic [ref=e1141]: 快手
+                          - cell "com.smile.gifmaker" [ref=e1142]:
+                            - generic [ref=e1143]: com.smile.gifmaker
+                          - cell "13.4.10.41735" [ref=e1144]:
+                            - generic [ref=e1145]: 13.4.10.41735
+                          - cell "用户" [ref=e1146]:
+                            - generic [ref=e1147]: 用户
+                          - cell "启动 重启 卸载" [ref=e1148]:
+                            - generic [ref=e1149]:
+                              - button "启动" [ref=e1150] [cursor=pointer]
+                              - button "重启" [ref=e1151] [cursor=pointer]
+                              - button "卸载" [ref=e1152] [cursor=pointer]
+                        - row "课堂笔记 Bate com.classnotes.debug V1.0 用户 启动 重启 卸载" [ref=e1153]:
+                          - cell "课堂笔记 Bate" [ref=e1154]:
+                            - generic [ref=e1155]: 课堂笔记 Bate
+                          - cell "com.classnotes.debug" [ref=e1156]:
+                            - generic [ref=e1157]: com.classnotes.debug
+                          - cell "V1.0" [ref=e1158]:
+                            - generic [ref=e1159]: V1.0
+                          - cell "用户" [ref=e1160]:
+                            - generic [ref=e1161]: 用户
+                          - cell "启动 重启 卸载" [ref=e1162]:
+                            - generic [ref=e1163]:
+                              - button "启动" [ref=e1164] [cursor=pointer]
+                              - button "重启" [ref=e1165] [cursor=pointer]
+                              - button "卸载" [ref=e1166] [cursor=pointer]
+                        - row "Royal Match com.dreamgames.royalmatch 29998 用户 启动 重启 卸载" [ref=e1167]:
+                          - cell "Royal Match" [ref=e1168]:
+                            - generic [ref=e1169]: Royal Match
+                          - cell "com.dreamgames.royalmatch" [ref=e1170]:
+                            - generic [ref=e1171]: com.dreamgames.royalmatch
+                          - cell "29998" [ref=e1172]:
+                            - generic [ref=e1173]: "29998"
+                          - cell "用户" [ref=e1174]:
+                            - generic [ref=e1175]: 用户
+                          - cell "启动 重启 卸载" [ref=e1176]:
+                            - generic [ref=e1177]:
+                              - button "启动" [ref=e1178] [cursor=pointer]
+                              - button "重启" [ref=e1179] [cursor=pointer]
+                              - button "卸载" [ref=e1180] [cursor=pointer]
+                        - row "全球上网工具插件 com.xiaomi.mimobile.noti 1.4.4 用户 启动 重启 卸载" [ref=e1181]:
+                          - cell "全球上网工具插件" [ref=e1182]:
+                            - generic [ref=e1183]: 全球上网工具插件
+                          - cell "com.xiaomi.mimobile.noti" [ref=e1184]:
+                            - generic [ref=e1185]: com.xiaomi.mimobile.noti
+                          - cell "1.4.4" [ref=e1186]:
+                            - generic [ref=e1187]: 1.4.4
+                          - cell "用户" [ref=e1188]:
+                            - generic [ref=e1189]: 用户
+                          - cell "启动 重启 卸载" [ref=e1190]:
+                            - generic [ref=e1191]:
+                              - button "启动" [ref=e1192] [cursor=pointer]
+                              - button "重启" [ref=e1193] [cursor=pointer]
+                              - button "卸载" [ref=e1194] [cursor=pointer]
+                        - row "米家 com.xiaomi.smarthome 5.5.48 用户 启动 重启 卸载" [ref=e1195]:
+                          - cell "米家" [ref=e1196]:
+                            - generic [ref=e1197]: 米家
+                          - cell "com.xiaomi.smarthome" [ref=e1198]:
+                            - generic [ref=e1199]: com.xiaomi.smarthome
+                          - cell "5.5.48" [ref=e1200]:
+                            - generic [ref=e1201]: 5.5.48
+                          - cell "用户" [ref=e1202]:
+                            - generic [ref=e1203]: 用户
+                          - cell "启动 重启 卸载" [ref=e1204]:
+                            - generic [ref=e1205]:
+                              - button "启动" [ref=e1206] [cursor=pointer]
+                              - button "重启" [ref=e1207] [cursor=pointer]
+                              - button "卸载" [ref=e1208] [cursor=pointer]
+                        - row "XAPK Installer com.wuliang.xapkinstaller 4.6.4.1 用户 启动 重启 卸载" [ref=e1209]:
+                          - cell "XAPK Installer" [ref=e1210]:
+                            - generic [ref=e1211]: XAPK Installer
+                          - cell "com.wuliang.xapkinstaller" [ref=e1212]:
+                            - generic [ref=e1213]: com.wuliang.xapkinstaller
+                          - cell "4.6.4.1" [ref=e1214]:
+                            - generic [ref=e1215]: 4.6.4.1
+                          - cell "用户" [ref=e1216]:
+                            - generic [ref=e1217]: 用户
+                          - cell "启动 重启 卸载" [ref=e1218]:
+                            - generic [ref=e1219]:
+                              - button "启动" [ref=e1220] [cursor=pointer]
+                              - button "重启" [ref=e1221] [cursor=pointer]
+                              - button "卸载" [ref=e1222] [cursor=pointer]
+                        - row "小米云盘 com.miui.newmidrive 12.0.0.0 用户 启动 重启 卸载" [ref=e1223]:
+                          - cell "小米云盘" [ref=e1224]:
+                            - generic [ref=e1225]: 小米云盘
+                          - cell "com.miui.newmidrive" [ref=e1226]:
+                            - generic [ref=e1227]: com.miui.newmidrive
+                          - cell "12.0.0.0" [ref=e1228]:
+                            - generic [ref=e1229]: 12.0.0.0
+                          - cell "用户" [ref=e1230]:
+                            - generic [ref=e1231]: 用户
+                          - cell "启动 重启 卸载" [ref=e1232]:
+                            - generic [ref=e1233]:
+                              - button "启动" [ref=e1234] [cursor=pointer]
+                              - button "重启" [ref=e1235] [cursor=pointer]
+                              - button "卸载" [ref=e1236] [cursor=pointer]
+                        - row "YoYo com.fun.share 3.9.5 用户 启动 重启 卸载" [ref=e1237]:
+                          - cell "YoYo" [ref=e1238]:
+                            - generic [ref=e1239]: YoYo
+                          - cell "com.fun.share" [ref=e1240]:
+                            - generic [ref=e1241]: com.fun.share
+                          - cell "3.9.5" [ref=e1242]:
+                            - generic [ref=e1243]: 3.9.5
+                          - cell "用户" [ref=e1244]:
+                            - generic [ref=e1245]: 用户
+                          - cell "启动 重启 卸载" [ref=e1246]:
+                            - generic [ref=e1247]:
+                              - button "启动" [ref=e1248] [cursor=pointer]
+                              - button "重启" [ref=e1249] [cursor=pointer]
+                              - button "卸载" [ref=e1250] [cursor=pointer]
+                        - row "捞月狗浏览器 com.shark.web 1.0.7 用户 启动 重启 卸载" [ref=e1251]:
+                          - cell "捞月狗浏览器" [ref=e1252]:
+                            - generic [ref=e1253]: 捞月狗浏览器
+                          - cell "com.shark.web" [ref=e1254]:
+                            - generic [ref=e1255]: com.shark.web
+                          - cell "1.0.7" [ref=e1256]:
+                            - generic [ref=e1257]: 1.0.7
+                          - cell "用户" [ref=e1258]:
+                            - generic [ref=e1259]: 用户
+                          - cell "启动 重启 卸载" [ref=e1260]:
+                            - generic [ref=e1261]:
+                              - button "启动" [ref=e1262] [cursor=pointer]
+                              - button "重启" [ref=e1263] [cursor=pointer]
+                              - button "卸载" [ref=e1264] [cursor=pointer]
+                        - row "ZCT com.shark.zct 1.0.2 用户 启动 重启 卸载" [ref=e1265]:
+                          - cell "ZCT" [ref=e1266]:
+                            - generic [ref=e1267]: ZCT
+                          - cell "com.shark.zct" [ref=e1268]:
+                            - generic [ref=e1269]: com.shark.zct
+                          - cell "1.0.2" [ref=e1270]:
+                            - generic [ref=e1271]: 1.0.2
+                          - cell "用户" [ref=e1272]:
+                            - generic [ref=e1273]: 用户
+                          - cell "启动 重启 卸载" [ref=e1274]:
+                            - generic [ref=e1275]:
+                              - button "启动" [ref=e1276] [cursor=pointer]
+                              - button "重启" [ref=e1277] [cursor=pointer]
+                              - button "卸载" [ref=e1278] [cursor=pointer]
+          - text:   
+    - text: 
+  - generic [ref=e210]: 断断断断断断断断断断断断断断断断断断断断断断断断断断断断断断断断

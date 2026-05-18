@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>激活请求列表 — UI Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #080d18;
+    color: #c0cfdf;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 13px;
+    padding: 20px;
+  }
+
+  /* Page header */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .page-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e0f0ff;
+    letter-spacing: 1px;
+  }
+  .page-title span {
+    color: #4a9eff;
+    font-size: 12px;
+    margin-left: 10px;
+    background: rgba(74,158,255,0.12);
+    border: 1px solid rgba(74,158,255,0.3);
+    border-radius: 4px;
+    padding: 2px 8px;
+    vertical-align: middle;
+  }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    background: #0c1222;
+    border: 1px solid #1a2540;
+    border-radius: 6px;
+  }
+  .btn {
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: #4a9eff;
+    color: #080d18;
+  }
+  .btn-primary:hover { background: #6ab3ff; }
+  .btn-primary.disabled {
+    background: #1a2a40;
+    color: #4a6080;
+    cursor: not-allowed;
+  }
+  .btn-danger {
+    background: transparent;
+    color: #ff4d6d;
+    border: 1px solid rgba(255,77,109,0.4);
+  }
+  .btn-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  .selected-hint {
+    color: #4a9eff;
+    font-size: 12px;
+  }
+  .spacer { flex: 1; }
+  .refresh-btn {
+    background: transparent;
+    color: #506580;
+    border: 1px solid #1a2540;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* Table */
+  .table-wrap {
+    border: 1px solid #1a2540;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead {
+    background: #0c1222;
+    border-bottom: 1px solid #1a2540;
+  }
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    color: #506580;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  th.check-col { width: 36px; }
+  tbody tr {
+    border-bottom: 1px solid #111827;
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(74,158,255,0.04); }
+  tbody tr.selected { background: rgba(74,158,255,0.08); }
+  td {
+    padding: 11px 14px;
+    color: #c0cfdf;
+    vertical-align: middle;
+  }
+
+  /* Checkbox */
+  .check {
+    width: 16px; height: 16px;
+    border: 1.5px solid #2a3a55;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .check.checked {
+    background: #4a9eff;
+    border-color: #4a9eff;
+  }
+  .check.checked::after {
+    content: '✓';
+    color: #080d18;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  /* IMEI */
+  .imei-text {
+    font-family: 'JetBrains Mono', monospace;
+    color: #e0f0ff;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Time */
+  .time-text { color: #8fa4bf; font-size: 12px; }
+
+  /* Retry count badge */
+  .retry-badge {
+    display: inline-block;
+    background: rgba(74,158,255,0.12);
+    border: 1px solid rgba(74,158,255,0.25);
+    color: #4a9eff;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Action buttons */
+  .action-btn {
+    background: transparent;
+    color: #22d68a;
+    border: 1px solid rgba(34,214,138,0.35);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+  }
+  .action-btn:hover {
+    background: rgba(34,214,138,0.1);
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 48px 0;
+    color: #506580;
+    font-size: 13px;
+  }
+
+  /* Dialog overlay */
+  .dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,13,24,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .dialog {
+    background: #0c1222;
+    border: 1px solid #1a2540;
+    border-radius: 8px;
+    padding: 24px;
+    width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .dialog-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e0f0ff;
+    margin-bottom: 6px;
+  }
+  .dialog-sub {
+    color: #506580;
+    font-size: 12px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .form-label {
+    font-size: 11px;
+    color: #8fa4bf;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  .form-select {
+    width: 100%;
+    background: #141c2e;
+    border: 1px solid #1a2540;
+    color: #c0cfdf;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+    margin-bottom: 20px;
+    outline: none;
+  }
+  .form-select:focus { border-color: #4a9eff; }
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .btn-cancel {
+    background: transparent;
+    color: #8fa4bf;
+    border: 1px solid #1a2540;
+    padding: 7px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-confirm {
+    background: #4a9eff;
+    color: #080d18;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* Tab bar at top (simulating nav) */
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #1a2540;
+  }
+  .nav-tab {
+    padding: 8px 18px;
+    font-size: 12px;
+    color: #506580;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .nav-tab.active {
+    color: #4a9eff;
+    border-bottom-color: #4a9eff;
+  }
+
+  .state-indicator {
+    font-size: 11px;
+    color: #506580;
+    margin-left: auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- Simulated page nav -->
+<div class="nav-tabs">
+  <div class="nav-tab">设备列表</div>
+  <div class="nav-tab active">激活申请 <span style="background:rgba(255,77,109,0.15);color:#ff4d6d;border-radius:10px;padding:1px 7px;font-size:10px;margin-left:4px">3</span></div>
+  <div class="nav-tab">密钥管理</div>
+  <div class="state-indicator" id="stateHint">选中 <span id="selCount">0</span> 台设备</div>
+</div>
+
+<!-- Page header -->
+<div class="page-header">
+  <div class="page-title">
+    激活申请列表
+    <span>PENDING ACTIVATION</span>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <button class="btn btn-primary disabled" id="batchBtn" onclick="openDialog()">批量激活</button>
+  <button class="btn btn-danger btn-sm" id="ignoreBtn" style="display:none">忽略所选</button>
+  <span class="selected-hint" id="selHint" style="display:none"></span>
+  <div class="spacer"></div>
+  <button class="refresh-btn">↻ 刷新</button>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="check-col">
+          <div class="check" id="checkAll" onclick="toggleAll()"></div>
+        </th>
+        <th>IMEI</th>
+        <th>首次申请时间</th>
+        <th>重试次数</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr data-id="1">
+        <td><div class="check" onclick="toggleRow(this)"></div></td>
+        <td><span class="imei-text">862012053234001</span></td>
+        <td><span class="time-text">2026-05-08 14:23:11</span></td>
+        <td><span class="retry-badge">× 47</span></td>
+        <td><button class="action-btn" onclick="openDialogSingle('862012053234001')">激活</button></td>
+      </tr>
+      <tr data-id="2">
+        <td><div class="check" onclick="toggleRow(this)"></div></td>
+        <td><span class="imei-text">862012053234002</span></td>
+        <td><span class="time-text">2026-05-08 15:01:44</span></td>
+        <td><span class="retry-badge">× 23</span></td>
+        <td><button class="action-btn" onclick="openDialogSingle('862012053234002')">激活</button></td>
+      </tr>
+      <tr data-id="3">
+        <td><div class="check" onclick="toggleRow(this)"></div></td>
+        <td><span class="imei-text">862012053234003</span></td>
+        <td><span class="time-text">2026-05-08 15:47:09</span></td>
+        <td><span class="retry-badge">× 8</span></td>
+        <td><button class="action-btn" onclick="openDialogSingle('862012053234003')">激活</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Activate Dialog -->
+<div class="dialog-overlay" id="dialog" style="display:none">
+  <div class="dialog">
+    <div class="dialog-title">激活设备</div>
+    <div class="dialog-sub" id="dialogSub">已选中 <strong style="color:#4a9eff">2 台</strong>设备，请选择归属用户。激活后设备将使用该用户的 MQTT / FRPC 配置。</div>
+    <div class="form-label">归属用户</div>
+    <select class="form-select">
+      <option>请选择用户...</option>
+      <option>admin（超级管理员）</option>
+      <option>user_01（运营组）</option>
+      <option>user_02（测试组）</option>
+    </select>
+    <div class="dialog-footer">
+      <button class="btn-cancel" onclick="closeDialog()">取消</button>
+      <button class="btn-confirm">确认激活</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let selected = new Set();
+
+function toggleRow(el) {
+  const row = el.closest('tr');
+  const id = row.getAttribute('data-id');
+  if (selected.has(id)) {
+    selected.delete(id);
+    el.classList.remove('checked');
+    row.classList.remove('selected');
+  } else {
+    selected.add(id);
+    el.classList.add('checked');
+    row.classList.add('selected');
+  }
+  updateToolbar();
+}
+
+function toggleAll() {
+  const allChecks = document.querySelectorAll('tbody .check');
+  const rows = document.querySelectorAll('tbody tr');
+  const allSelected = selected.size === rows.length;
+  selected.clear();
+  allChecks.forEach((c, i) => {
+    if (!allSelected) {
+      const id = rows[i].getAttribute('data-id');
+      selected.add(id);
+      c.classList.add('checked');
+      rows[i].classList.add('selected');
+    } else {
+      c.classList.remove('checked');
+      rows[i].classList.remove('selected');
+    }
+  });
+  document.getElementById('checkAll').classList.toggle('checked', !allSelected);
+  updateToolbar();
+}
+
+function updateToolbar() {
+  const n = selected.size;
+  const batchBtn = document.getElementById('batchBtn');
+  const selHint = document.getElementById('selHint');
+  const ignoreBtn = document.getElementById('ignoreBtn');
+  const selCount = document.getElementById('selCount');
+  selCount.textContent = n;
+  if (n > 0) {
+    batchBtn.classList.remove('disabled');
+    selHint.style.display = 'inline';
+    selHint.textContent = `已选 ${n} 台`;
+    ignoreBtn.style.display = 'inline-block';
+  } else {
+    batchBtn.classList.add('disabled');
+    selHint.style.display = 'none';
+    ignoreBtn.style.display = 'none';
+  }
+}
+
+function openDialog() {
+  if (selected.size === 0) return;
+  document.getElementById('dialogSub').innerHTML =
+    `已选中 <strong style="color:#4a9eff">${selected.size} 台</strong>设备，请选择归属用户。激活后设备将使用该用户的 MQTT / FRPC 配置。`;
+  document.getElementById('dialog').style.display = 'flex';
+}
+
+function openDialogSingle(imei) {
+  document.getElementById('dialogSub').innerHTML =
+    `设备 <strong style="color:#4a9eff">${imei}</strong>，请选择归属用户。激活后设备将使用该用户的 MQTT / FRPC 配置。`;
+  document.getElementById('dialog').style.display = 'flex';
+}
+
+function closeDialog() {
+  document.getElementById('dialog').style.display = 'none';
+}
+</script>
+</body>
+</html>

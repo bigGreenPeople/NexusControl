@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp D:/NC/shark-vue/docs/manual/images/*.png D:/NC/docs/images/)",
+      "Bash(cp D:/NC/shark-vue/docs/manual/images/*.svg D:/NC/docs/images/)",
+      "Bash(cp D:/NC/shark-vue/docs/manual/images/illus-src/*.html D:/NC/docs/images/illus-src/)",
+      "Bash(sed -i 's|\\(images/|\\(../images/|g' \"D:/NC/docs/manual/NexusControl使用手册.md\")",
+      "Bash(sed -i 's|\\(images/|\\(../images/|g' \"D:/NC/docs/manual/NexusControl使用手册_v2.md\")",
+      "Bash(sed -i 's|\\(images/|\\(../images/|g' \"D:/NC/docs/marketing/NexusControl营销软文.md\")",
+      "Bash(sed -i 's|\\(images/|\\(../images/|g' \"D:/NC/docs/marketing/NexusControl营销软文_v2.md\")",
+      "Bash(sed -i 's|\\(../images/|\\(images/|g' \"D:/NC/docs/NexusControl使用手册.md\")",
+      "Bash(sed -i 's|\\(../images/|\\(images/|g' \"D:/NC/docs/NexusControl使用手册_v2.md\")",
+      "Bash(sed -i 's|\\(../images/|\\(images/|g' \"D:/NC/docs/NexusControl营销软文.md\")",
+      "Bash(sed -i 's|\\(../images/|\\(images/|g' \"D:/NC/docs/NexusControl营销软文_v2.md\")",
+      "WebSearch",
+      "Skill(update-config)",
+      "Bash(npx @playwright/mcp@latest --version)",
+      "Bash(claude mcp *)",
+      "PowerShell(claude mcp *)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_type",
+      "Bash(git *)",
+      "Bash(grep -v \"import\\\\|^\\\\s*//\")",
+      "Bash(grep -v \"^\\\\s*//\")",
+      "Bash(xargs grep *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python -m http.server 9988)",
+      "Bash(python -m http.server 9989)",
+      "mcp__playwright__browser_evaluate",
+      "Bash(python3 *)",
+      "Bash(xargs head *)",
+      "mcp__mysql__mysql_query",
+      "PowerShell(mvn *)",
+      "PowerShell(adb devices *)"
+    ]
+  }
+}

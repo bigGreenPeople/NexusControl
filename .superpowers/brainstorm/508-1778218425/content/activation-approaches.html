@@ -1,0 +1,64 @@
+<h2>待激活设备列表 — 方案对比</h2>
+<p class="subtitle">选择你偏好的整体方案</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>复用 shark_devices 表（加 pending 状态）</h3>
+      <p>设备发请求时直接写入 shark_devices，状态字段加一个新值 <code>pending</code>。激活后改为正常状态。</p>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>优点</h4><ul><li>改动最小，不加新表</li><li>设备列表可统一查看所有设备</li></ul></div>
+        <div class="cons"><h4>缺点</h4><ul><li>未激活设备混入设备主表</li><li>需过滤 pending 才能看到"已激活"列表</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>独立 shark_device_requests 表（推荐）</h3>
+      <p>新建申请表专门存待激活请求。管理员批准后，数据写入 shark_devices，申请记录标记为已处理。</p>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>优点</h4><ul><li>职责清晰，申请与设备分离</li><li>设备主表不被污染</li><li>方便查历史申请记录</li></ul></div>
+        <div class="cons"><h4>缺点</h4>
+          <ul><li>多一张表，多几个接口</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:32px">
+  <h3>两种方案的数据流对比</h3>
+  <div class="split">
+    <div class="mockup">
+      <div class="mockup-header">方案 A — 单表流程</div>
+      <div class="mockup-body" style="font-size:13px;line-height:2">
+        设备无 key 请求<br>
+        ↓<br>
+        shark_devices 写入 <code>status=pending</code><br>
+        ↓<br>
+        管理员点激活<br>
+        ↓<br>
+        shark_devices 更新 <code>status=active</code><br>
+        ↓<br>
+        设备下次轮询拿到配置
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-header">方案 B — 双表流程</div>
+      <div class="mockup-body" style="font-size:13px;line-height:2">
+        设备无 key 请求<br>
+        ↓<br>
+        shark_device_requests 写入申请<br>
+        ↓<br>
+        管理员批量选择 + 选归属用户<br>
+        ↓<br>
+        shark_devices 插入新设备记录<br>
+        ↓<br>
+        设备下次轮询拿到配置
+      </div>
+    </div>
+  </div>
+</div>

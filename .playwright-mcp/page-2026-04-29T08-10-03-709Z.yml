@@ -1,0 +1,544 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: NEXUSFLOW
+      - generic [ref=e5]: 一念流
+    - list [ref=e6]:
+      - listitem [ref=e7]:
+        - link "核心差异" [ref=e8] [cursor=pointer]:
+          - /url: "#why-sec"
+      - listitem [ref=e9]:
+        - link "架构" [ref=e10] [cursor=pointer]:
+          - /url: "#arch-sec"
+      - listitem [ref=e11]:
+        - link "功能" [ref=e12] [cursor=pointer]:
+          - /url: "#feat-sec"
+      - listitem [ref=e13]:
+        - link "效果" [ref=e14] [cursor=pointer]:
+          - /url: "#outcome-sec"
+      - listitem [ref=e15]:
+        - link "计划" [ref=e16] [cursor=pointer]:
+          - /url: "#road-sec"
+      - listitem [ref=e17]:
+        - link "对比" [ref=e18] [cursor=pointer]:
+          - /url: "#cmp-sec"
+    - generic [ref=e19]: V1.0 · PLANNING
+  - generic [ref=e20]:
+    - generic: 流
+    - generic [ref=e22]:
+      - generic [ref=e23]: NEXUSCONTROL AI MODULE · 2026
+      - generic [ref=e24]: NEXUSFLOW
+      - generic [ref=e25]: 一 念 流
+      - generic [ref=e26]:
+        - strong [ref=e27]: Think Once, Flow Everywhere
+        - emphasis [ref=e28]: 一念触发，流转万机
+      - generic [ref=e29]:
+        - button "查看功能" [ref=e30] [cursor=pointer]
+        - button "落地计划" [ref=e31] [cursor=pointer]
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - generic [ref=e34]: 100+
+          - generic [ref=e35]: 设备并发
+        - generic [ref=e36]:
+          - generic [ref=e37]: 55%
+          - generic [ref=e38]: Auto.js 兼容
+        - generic [ref=e39]:
+          - generic [ref=e40]: "4"
+          - generic [ref=e41]: AI 能力层
+        - generic [ref=e42]:
+          - generic [ref=e43]: "5"
+          - generic [ref=e44]: 落地阶段
+    - generic [ref=e45]: SCROLL
+  - separator [ref=e46]
+  - generic [ref=e48]:
+    - generic [ref=e49]:
+      - generic [ref=e50]: // CORE DIFFERENTIATION
+      - generic [ref=e51]: 为什么不用 ADB 和无障碍
+      - paragraph [ref=e52]:
+        - text: 市场上几乎所有同类产品都依赖 ADB 或无障碍服务——这是我们认为
+        - strong [ref=e53]: 根本错误的方向
+        - text: 。
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - generic [ref=e56]: ✗ 传统方案的困境
+        - generic [ref=e57]:
+          - generic [ref=e58]: 🔌
+          - generic [ref=e59]:
+            - generic [ref=e60]: ADB 依赖 · 必须连线
+            - generic [ref=e61]: 每台手机需开启开发者模式、配对 USB 或同局域网。手机离线或重启后连接即断，无法真正做到远程无人值守。服务器与设备必须保持持续网络通道，部署成本极高。
+        - generic [ref=e62]:
+          - generic [ref=e63]: 🚫
+          - generic [ref=e64]:
+            - generic [ref=e65]: 无障碍服务 · 脆弱且可被检测
+            - generic [ref=e66]:
+              - text: 用户必须手动进入系统设置逐一授权。系统低内存、省电模式会强制杀掉无障碍服务。更致命的是，微信、支付宝、抖音等主流 App
+              - strong [ref=e67]: 主动检测无障碍并拒绝运行或弹出警告
+              - text: ，导致脚本在最需要的场景下完全失效。
+        - generic [ref=e68]:
+          - generic [ref=e69]: 🐢
+          - generic [ref=e70]:
+            - generic [ref=e71]: 性能差 · 延迟高
+            - generic [ref=e72]: ADB 命令通过 shell 解析再下发，无障碍事件经过多层转发，两种方式的操作延迟均在 100–500ms 级别，批量并发时问题更严重。
+      - generic [ref=e73]:
+        - generic [ref=e74]: ✓ NexusFlow 的方式 · 系统级注入
+        - generic [ref=e75]:
+          - generic [ref=e76]: ⚡
+          - generic [ref=e77]:
+            - generic [ref=e78]: 运行在 system_process · 无需任何授权
+            - generic [ref=e79]: 基于 LSPosed / Riru 将代码注入 Android 系统进程本身。一次刷入 Magisk 模块，永久生效，重启后自动恢复，无需用户做任何操作。
+        - generic [ref=e80]:
+          - generic [ref=e81]: 📡
+          - generic [ref=e82]:
+            - generic [ref=e83]: 无需连线 · 只需联网
+            - generic [ref=e84]: 手机只需接入任意网络（4G / Wi-Fi），通过 MQTT 接收服务器指令，与服务器距离、是否在同一局域网完全无关。支持 FRPC 内网穿透，任何网络环境均可工作。
+        - generic [ref=e85]:
+          - generic [ref=e86]: 🥷
+          - generic [ref=e87]:
+            - generic [ref=e88]: App 无法感知 · 操作来自系统层
+            - generic [ref=e89]:
+              - text: 直接调用
+              - code [ref=e90]: InputManager.injectInputEvent()
+              - text: ，操作事件的来源与系统触屏完全一致，任何应用层的检测手段均无法区分真实触摸与 NexusFlow 注入的事件。
+  - separator [ref=e91]
+  - generic [ref=e93]:
+    - generic [ref=e94]:
+      - generic [ref=e95]: ⚡
+      - generic [ref=e96]: 系统级权限
+      - generic [ref=e97]: 基于 LSPosed 注入 system_process，直接调用 InputManager.injectInputEvent()，无需无障碍授权，无需用户确认
+    - generic [ref=e98]:
+      - generic [ref=e99]: 🧠
+      - generic [ref=e100]: AI 魔法生成
+      - generic [ref=e101]: 自然语言一句话生成可编辑 JS 脚本，Claude / GPT-4V 视觉理解屏幕，运行时 AI 自动处理异常弹框
+    - generic [ref=e102]:
+      - generic [ref=e103]: 📜
+      - generic [ref=e104]: Auto.js 兼容
+      - generic [ref=e105]: 内置 Rhino JS 引擎，55% API 直接兼容，原 Auto.js 开发者零学习成本迁移，存量脚本可直接复用
+    - generic [ref=e106]:
+      - generic [ref=e107]: 🌐
+      - generic [ref=e108]: 批量云控
+      - generic [ref=e109]: MQTT 批量下发脚本，WebSocket 实时监控执行状态，一键同时操控百台设备完成相同业务流程
+  - separator [ref=e110]
+  - generic [ref=e112]:
+    - generic [ref=e113]:
+      - generic [ref=e114]: // SYSTEM ARCHITECTURE
+      - generic [ref=e115]: 整体架构
+      - paragraph [ref=e116]: 四层系统设计，从脚本引擎到 Vision Agent，覆盖全场景自动化需求
+    - generic [ref=e117]:
+      - generic [ref=e118]:
+        - generic [ref=e119] [cursor=pointer]:
+          - generic [ref=e120]: LAYER 01
+          - generic [ref=e121]: 管理控制台
+          - generic [ref=e122]: shark-vue + NexusFlow 编辑器
+        - generic [ref=e123] [cursor=pointer]:
+          - generic [ref=e124]: LAYER 02
+          - generic [ref=e125]: 云端服务器
+          - generic [ref=e126]: Spring Boot · MQTT · LLM Gateway
+        - generic [ref=e127] [cursor=pointer]:
+          - generic [ref=e128]: LAYER 03
+          - generic [ref=e129]: 设备 Daemon
+          - generic [ref=e130]: SharkPosed 系统进程 · Unix Socket
+        - generic [ref=e131] [cursor=pointer]:
+          - generic [ref=e132]: LAYER 04
+          - generic [ref=e133]: NexusFlow Engine
+          - generic [ref=e134]: Rhino JS · AI Agent · Input Injection
+      - generic [ref=e135]:
+        - text: SYSTEM ARCHITECTURE
+        - img [ref=e136]:
+          - generic [ref=e138]: LAYER 01 · CONSOLE
+          - generic [ref=e139]: shark-vue · NexusFlow 脚本编辑器 · 任务监控面板
+          - generic [ref=e140]: HTTP REST / WebSocket
+          - generic [ref=e142]: LAYER 02 · SERVER
+          - generic [ref=e144]: MQTT Broker
+          - generic [ref=e145]: shark/<imei>
+          - generic [ref=e147]: WebSocket Server
+          - generic [ref=e148]: /video /ctrl
+          - generic [ref=e150]: LLM Gateway
+          - generic [ref=e151]: Claude / GPT-4V
+          - generic [ref=e152]: MQTT + WS
+          - generic [ref=e154]: LAYER 03 · DAEMON
+          - generic [ref=e155]: SharkPosed 系统进程
+          - generic [ref=e156]: Unix Socket · com.shark.daemon.socket
+          - generic [ref=e158]: LAYER 04 · NEXUSFLOW ENGINE
+          - generic [ref=e160]: Rhino JS Runtime
+          - generic [ref=e161]: Auto.js Compatible API
+          - generic [ref=e162]: tap · swipe · screenshot · http · files
+          - generic [ref=e164]: Runtime AI Agent
+          - generic [ref=e165]: ai.fix() · ai.findElement()
+          - generic [ref=e166]: Vision Screen Understanding
+          - generic [ref=e167]: injectInputEvent
+          - generic [ref=e169]: Android Apps
+  - separator [ref=e174]
+  - generic [ref=e176]:
+    - generic [ref=e177]:
+      - generic [ref=e178]: // CORE FEATURES
+      - generic [ref=e179]: 四层能力
+      - paragraph [ref=e180]: 从基础脚本执行到完全视觉驱动的 AI Agent，按需选择复杂度
+    - generic [ref=e181]:
+      - generic [ref=e182]:
+        - generic [ref=e183]: PHASE 1 · FOUNDATION
+        - generic [ref=e184]: 脚本引擎层
+        - generic [ref=e185]: Script Engine · Rhino JS · Auto.js 兼容
+        - generic [ref=e186]:
+          - text: 内嵌 Mozilla Rhino JS 引擎（Auto.js 同款），提供与 Auto.js 55% 以上 API 直接兼容的执行环境。脚本以 JSON 形式通过 MQTT 下发到设备，由运行在 system_process 的 daemon 直接执行——
+          - strong [ref=e187]: 整个过程不需要安装任何额外 App，断网仍可运行主流程
+          - text: 。
+          - text: 每条操作直接调用系统底层：
+          - code [ref=e188]: tap()
+          - text: 对应 InputManager 注入，
+          - code [ref=e189]: captureScreen()
+          - text: 对应系统截图接口，原 Auto.js 开发者迁移成本极低。
+        - generic [ref=e190]:
+          - generic [ref=e191]: Rhino 1.7.x
+          - generic [ref=e192]: MQTT 脚本下发
+          - generic [ref=e193]: tap / swipe / longPress
+          - generic [ref=e194]: captureScreen
+          - generic [ref=e195]: http / files / threads
+          - generic [ref=e196]: Auto.js 兼容
+        - text: "01"
+      - generic [ref=e197]:
+        - generic [ref=e198]: PHASE 2 · AI GENERATION
+        - generic [ref=e199]: AI 魔法生成层
+        - generic [ref=e200]: 自然语言 → 可编辑 JS 脚本 · Claude Vision / GPT-4V
+        - generic [ref=e201]:
+          - text: 运营人员
+          - strong [ref=e202]: 无需编程
+          - text: "，用一句话描述要做的事（例如\"进入抖音发布视频，文案：{{caption}}\"），服务器截取设备屏幕，调用视觉大模型分析 UI 结构，"
+          - strong [ref=e203]: 30 秒内生成完整可执行脚本
+          - text: 。
+          - text: 生成结果在 Monaco 编辑器中展示，用户可直接修改调整后再下发。不确定位置的按钮自动用
+          - code [ref=e204]: ai.findElement()
+          - text: 代替硬编码坐标，脚本天然具备 UI 变化容错能力。支持参数化模板：文案、链接、账号等内容作为变量，批量执行时每台设备传入不同参数。
+        - generic [ref=e205]:
+          - generic [ref=e206]: Claude Vision
+          - generic [ref=e207]: GPT-4V
+          - generic [ref=e208]: Monaco 编辑器
+          - generic [ref=e209]: 参数化模板
+          - generic [ref=e210]: 可二次编辑
+          - generic [ref=e211]: AI 系统提示词
+        - text: "02"
+      - generic [ref=e212]:
+        - generic [ref=e213]: PHASE 3 · RUNTIME AI
+        - generic [ref=e214]: 运行时 AI 兜底层
+        - generic [ref=e215]: 执行中遇到意外 → AI 实时分析修复 → 自动继续
+        - generic [ref=e216]:
+          - text: 脚本按预定流程执行，遇到预期外的弹框、UI 变化、页面跳转时，
+          - strong [ref=e217]: 不报错退出，而是自动触发 AI 介入
+          - text: ：设备截图 + 控件树同步上报服务器，LLM 分析当前状态并返回应对代码，设备执行后回到主流程继续。
+          - text: 后台常驻弹窗守护线程，优先用规则匹配"关闭/取消/我知道了"等常见弹框（毫秒级），规则无法处理时才调用 AI（成本控制）。
+          - strong [ref=e218]: Happy Path 全程零 AI 调用
+          - text: ，只在真正需要时才花费 LLM token。
+        - generic [ref=e219]:
+          - generic [ref=e220]: ai.fix()
+          - generic [ref=e221]: ai.findElement()
+          - generic [ref=e222]: ai.findAndTap()
+          - generic [ref=e223]: 弹窗守护线程
+          - generic [ref=e224]: IAccessibilityManager
+          - generic [ref=e225]: 自动恢复主流程
+        - text: "03"
+      - generic [ref=e226]:
+        - generic [ref=e227]: PHASE 4 · VISION AGENT
+        - generic [ref=e228]: Vision Agent 模式
+        - generic [ref=e229]: 纯自然语言驱动 · 无需预先编写任何脚本
+        - generic [ref=e230]:
+          - text: 终极模式：用户只说目标，AI 自主决策每一步操作。实时截图 → LLM 决策（"当前是什么界面？下一步做什么？"）→ 执行 → 截图，循环直到目标完成。
+          - text: 适用于
+          - strong [ref=e231]: 高度动态 UI、探索性任务、内容审核/智能回复
+          - text: 等无法预先编写脚本的场景。也可作为运行时兜底的最后一道防线：当 Phase 3 的 AI 修复仍无法处理时，切换到 Agent 模式接管整个流程。
+        - generic [ref=e232]:
+          - generic [ref=e233]: 实时截图决策循环
+          - generic [ref=e234]: Computer Use
+          - generic [ref=e235]: 零代码操作
+          - generic [ref=e236]: 智能内容审核
+          - generic [ref=e237]: 自主任务完成
+          - generic [ref=e238]: Future →
+        - text: "04"
+  - separator [ref=e239]
+  - generic [ref=e241]:
+    - generic [ref=e242]:
+      - generic [ref=e243]: // FINAL OUTCOME
+      - generic [ref=e244]: 最终效果长什么样
+      - paragraph [ref=e245]: 从一句话到百台设备同时完成任务，这是 NexusFlow 交付给用户的真实体验
+    - generic [ref=e246]:
+      - generic [ref=e247]:
+        - generic [ref=e248] [cursor=pointer]:
+          - generic [ref=e249]: "1"
+          - generic [ref=e250]: 用户输入
+        - generic [ref=e252] [cursor=pointer]:
+          - generic [ref=e253]: "2"
+          - generic [ref=e254]: AI 生成脚本
+        - generic [ref=e256] [cursor=pointer]:
+          - generic [ref=e257]: "3"
+          - generic [ref=e258]: 下发 100 台设备
+        - generic [ref=e260] [cursor=pointer]:
+          - generic [ref=e261]: "4"
+          - generic [ref=e262]: 设备执行中
+        - generic [ref=e264] [cursor=pointer]:
+          - generic [ref=e265]: "5"
+          - generic [ref=e266]: 任务完成
+      - generic [ref=e267]:
+        - generic [ref=e269]:
+          - generic [ref=e274]: NexusFlow 控制台 · 新建任务
+          - generic [ref=e275]: $ 帮我在抖音发布这条视频，文案：新年特惠，限时8折！，视频：https://cos
+          - generic [ref=e277]:
+            - generic [ref=e278]: 📎 视频已就绪
+            - generic [ref=e279]: 👥 已选择 100 台设备
+            - generic [ref=e280]: ⚙ AI系统提示词：遇到弹框自动关闭
+            - generic [ref=e281]: ▶ 确认执行
+        - generic:
+          - generic:
+            - generic:
+              - generic: 🤖 Vision LLM 处理进度
+              - generic:
+                - generic: ○
+                - text: 截取设备屏幕
+              - generic:
+                - generic: ○
+                - text: 识别抖音界面结构
+              - generic:
+                - generic: ○
+                - text: 分析操作路径
+              - generic:
+                - generic: ○
+                - text: 生成 JS 脚本
+              - generic:
+                - generic: ○
+                - text: 脚本就绪
+        - generic:
+          - generic:
+            - generic:
+              - generic: 正在通过 MQTT 下发脚本到设备...
+              - generic:
+                - generic: "0"
+                - generic: 台已接收 / 100
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic: 等待中...
+              - generic:
+                - text: Device-001
+                - text: 准备中
+        - generic:
+          - generic:
+            - generic: ✓
+            - generic: 任务完成
+            - generic: 全程无人值守 · 100 台设备并发执行
+            - generic:
+              - generic:
+                - generic: "0"
+                - generic: 台设备完成
+              - generic:
+                - generic: 0:00
+                - generic: 总用时
+              - generic:
+                - generic: "0"
+                - generic: 次人工干预
+      - generic [ref=e282]:
+        - button "← 上一步" [ref=e283] [cursor=pointer]
+        - button "▶ 自动播放" [ref=e284] [cursor=pointer]
+        - button "下一步 →" [ref=e285] [cursor=pointer]
+    - generic [ref=e286]:
+      - generic [ref=e287]:
+        - generic [ref=e288]: 场景 · 电商运营
+        - generic [ref=e289]: 淘宝/拼多多批量上架
+        - generic [ref=e290]: 一次配置商品模板，参数化标题/价格/图片，定时任务凌晨自动在所有账号同步上架，早上醒来已全部完成
+      - generic [ref=e291]:
+        - generic [ref=e292]: 场景 · 内容矩阵
+        - generic [ref=e293]: 短视频多平台分发
+        - generic [ref=e294]: 同一条视频，脚本自动在抖音、快手、小红书、视频号逐一发布，文案按平台风格自动调整，全程 AI 处理各平台的弹框差异
+      - generic [ref=e295]:
+        - generic [ref=e296]: 场景 · 设备管理
+        - generic [ref=e297]: App 批量安装/更新
+        - generic [ref=e298]: 新版本 APK 上传服务器后，一条 MQTT 指令触发所有托管设备静默安装更新，无需用户点击确认，完成后上报结果
+  - separator [ref=e299]
+  - generic [ref=e301]:
+    - generic [ref=e302]:
+      - generic [ref=e303]: // API REFERENCE
+      - generic [ref=e304]: 脚本示例
+      - paragraph [ref=e305]: Auto.js 风格的 JS API，开发者可无缝迁移现有脚本
+    - generic [ref=e306]:
+      - generic [ref=e307]:
+        - button "基础操作" [ref=e308] [cursor=pointer]
+        - button "AI 兜底" [ref=e309] [cursor=pointer]
+        - button "抖音发布" [ref=e310] [cursor=pointer]
+      - generic [ref=e311]:
+        - generic [ref=e312]:
+          - generic [ref=e313]:
+            - generic [ref=e314]: touch.js
+            - generic [ref=e315]: JavaScript
+          - generic [ref=e316]: // 基础触控操作 tap(540, 960); longPress(540, 960, 1000); swipe(540, 1200, 540, 400, 500); // 按键 back(); home(); recents(); // 文字输入 input("你好，世界"); clearInput(); // 截图保存 var img = captureScreen(); img.saveTo("/sdcard/shot.png"); // 等待 sleep(1000);
+        - generic [ref=e317]:
+          - generic [ref=e318]:
+            - generic [ref=e319]: app-http.js
+            - generic [ref=e320]: JavaScript
+          - generic [ref=e321]: "// App 控制 launchApp(\"com.zhiliaoapp.musically\"); sleep(2500); // HTTP 请求 var res = http.get(\"https://api.example.com/data\"); var data = JSON.parse(res.body); // 文件操作 files.write(\"/sdcard/result.txt\", data.result); // 设备信息 log(device.imei + \" | \" + device.model); log(\"screen: \" + device.width + \"x\" + device.height); // 上报结果 reportResult({ success: true, data });"
+  - separator [ref=e322]
+  - generic [ref=e324]:
+    - generic [ref=e325]:
+      - generic [ref=e326]: // IMPLEMENTATION PLAN
+      - generic [ref=e327]: 落地计划
+      - paragraph [ref=e328]: 五阶段约 12 周完成核心功能，从引擎到 AI Agent 逐层构建
+    - generic [ref=e332]:
+      - generic [ref=e333]:
+        - generic [ref=e335]: PHASE 01
+        - generic [ref=e336]: 脚本引擎
+        - generic [ref=e337]: Week 1 – 3
+        - list [ref=e338]:
+          - listitem [ref=e339]: ─ Rhino JS 集成 daemon
+          - listitem [ref=e340]: ─ 基础 API 实现
+          - listitem [ref=e341]: ─ MQTT 下发 + 执行
+          - listitem [ref=e342]: ─ tap / swipe / screenshot
+          - listitem [ref=e343]: ─ http / files / log
+          - listitem [ref=e344]: ─ 脚本日志实时上报
+      - generic [ref=e345]:
+        - generic [ref=e347]: PHASE 02
+        - generic [ref=e348]: 图像识别
+        - generic [ref=e349]: Week 4 – 5
+        - list [ref=e350]:
+          - listitem [ref=e351]: ─ Bitmap 颜色操作
+          - listitem [ref=e352]: ─ 模板匹配 OpenCV
+          - listitem [ref=e353]: ─ findImage API
+          - listitem [ref=e354]: ─ Monaco 编辑器
+          - listitem [ref=e355]: ─ 参数化模板 UI
+      - generic [ref=e356]:
+        - generic [ref=e358]: PHASE 03
+        - generic [ref=e359]: AI 生成
+        - generic [ref=e360]: Week 6 – 8
+        - list [ref=e361]:
+          - listitem [ref=e362]: ─ LLM API 接入
+          - listitem [ref=e363]: ─ 脚本生成 Prompt
+          - listitem [ref=e364]: ─ 生成接口 /generate
+          - listitem [ref=e365]: ─ AI 生成按钮 UI
+          - listitem [ref=e366]: ─ 脚本任务管理
+      - generic [ref=e367]:
+        - generic [ref=e369]: PHASE 04
+        - generic [ref=e370]: AI 兜底
+        - generic [ref=e371]: Week 9 – 10
+        - list [ref=e372]:
+          - listitem [ref=e373]: ─ getUITree() 实现
+          - listitem [ref=e374]: ─ ai.fix() / findElement()
+          - listitem [ref=e375]: ─ IAccessibilityManager
+          - listitem [ref=e376]: ─ 弹窗守护线程
+          - listitem [ref=e377]: ─ 实时监控面板
+      - generic [ref=e378]:
+        - generic [ref=e380]: PHASE 05
+        - generic [ref=e381]: 规模化
+        - generic [ref=e382]: Week 11 – 12
+        - list [ref=e383]:
+          - listitem [ref=e384]: ─ Cron 定时任务
+          - listitem [ref=e385]: ─ 批量设备执行
+          - listitem [ref=e386]: ─ 执行历史统计
+          - listitem [ref=e387]: ─ 脚本市场模板
+          - listitem [ref=e388]: ─ 执行报告导出
+    - generic [ref=e389]:
+      - generic [ref=e390]:
+        - generic [ref=e391]: Month 1
+        - generic [ref=e392]: Phase 1 + 2 · 脚本能跑 · 图像识别
+      - generic [ref=e393]:
+        - generic [ref=e394]: Month 2
+        - generic [ref=e395]: Phase 3 + 4 · AI生成 · AI兜底闭环
+      - generic [ref=e396]:
+        - generic [ref=e397]: Month 3
+        - generic [ref=e398]: Phase 5 + 优化 · 生产可用 · 推广
+  - separator [ref=e399]
+  - generic [ref=e401]:
+    - generic [ref=e402]:
+      - generic [ref=e403]: // COMPETITIVE ANALYSIS
+      - generic [ref=e404]: 竞品对比
+      - paragraph [ref=e405]: 系统级注入 + AI 双引擎，构建不可复制的核心壁垒
+    - generic [ref=e406]:
+      - generic [ref=e407]: // 权限层级对比
+      - generic [ref=e408]:
+        - generic [ref=e409]:
+          - generic [ref=e410]: 按键精灵
+          - generic [ref=e412]: Root 级
+        - generic [ref=e413]:
+          - generic [ref=e414]: Auto.js
+          - generic [ref=e416]: AccessibilityService 级
+        - generic [ref=e417]:
+          - generic [ref=e418]: 影刀 RPA
+          - generic [ref=e420]: ADB 级（需 PC 连接）
+        - generic [ref=e421]:
+          - generic [ref=e422]: NexusFlow
+          - generic [ref=e424]: system_process 级 · 最高权限
+    - table [ref=e426]:
+      - rowgroup [ref=e427]:
+        - row "能力维度 NexusFlow 一念流 影刀 RPA Auto.js Appium 按键精灵" [ref=e428]:
+          - columnheader "能力维度" [ref=e429]
+          - columnheader "NexusFlow 一念流" [ref=e430]
+          - columnheader "影刀 RPA" [ref=e431]
+          - columnheader "Auto.js" [ref=e432]
+          - columnheader "Appium" [ref=e433]
+          - columnheader "按键精灵" [ref=e434]
+      - rowgroup [ref=e435]:
+        - row "执行权限深度 ●●●●● system_process ●● ADB ●●● Accessibility ●● ADB ●●●● Root" [ref=e436]:
+          - cell "执行权限深度" [ref=e437]
+          - cell "●●●●● system_process" [ref=e438]
+          - cell "●● ADB" [ref=e439]
+          - cell "●●● Accessibility" [ref=e440]
+          - cell "●● ADB" [ref=e441]
+          - cell "●●●● Root" [ref=e442]
+        - row "批量设备云控 ✓ MQTT 100+ 台 △ 有限 ✗ ✗ ✗" [ref=e443]:
+          - cell "批量设备云控" [ref=e444]
+          - cell "✓ MQTT 100+ 台" [ref=e445]
+          - cell "△ 有限" [ref=e446]
+          - cell "✗" [ref=e447]
+          - cell "✗" [ref=e448]
+          - cell "✗" [ref=e449]
+        - row "Auto.js 脚本兼容 ✓ 55% 直接兼容 ✗ 私有 Python ✓ 完整 ✗ ✗ 私有语言" [ref=e450]:
+          - cell "Auto.js 脚本兼容" [ref=e451]
+          - cell "✓ 55% 直接兼容" [ref=e452]
+          - cell "✗ 私有 Python" [ref=e453]
+          - cell "✓ 完整" [ref=e454]
+          - cell "✗" [ref=e455]
+          - cell "✗ 私有语言" [ref=e456]
+        - row "AI 脚本生成 ✓ LLM + 可编辑 △ 有但不可编辑 ✗ ✗ ✗" [ref=e457]:
+          - cell "AI 脚本生成" [ref=e458]
+          - cell "✓ LLM + 可编辑" [ref=e459]
+          - cell "△ 有但不可编辑" [ref=e460]
+          - cell "✗" [ref=e461]
+          - cell "✗" [ref=e462]
+          - cell "✗" [ref=e463]
+        - row "运行时 AI 兜底 ✓ ai.fix() 原生 ✗ ✗ ✗ ✗" [ref=e464]:
+          - cell "运行时 AI 兜底" [ref=e465]
+          - cell "✓ ai.fix() 原生" [ref=e466]
+          - cell "✗" [ref=e467]
+          - cell "✗" [ref=e468]
+          - cell "✗" [ref=e469]
+          - cell "✗" [ref=e470]
+        - row "UI 控件树获取 ✓ IAccessibilityMgr △ UIAutomator dump △ Accessibility ✓ WebDriver ✗" [ref=e471]:
+          - cell "UI 控件树获取" [ref=e472]
+          - cell "✓ IAccessibilityMgr" [ref=e473]
+          - cell "△ UIAutomator dump" [ref=e474]
+          - cell "△ Accessibility" [ref=e475]
+          - cell "✓ WebDriver" [ref=e476]
+          - cell "✗" [ref=e477]
+        - row "断网可运行 ✓ 主流程可离线 ✗ 依赖 PC 连接 ✓ ✗ ✓" [ref=e478]:
+          - cell "断网可运行" [ref=e479]
+          - cell "✓ 主流程可离线" [ref=e480]
+          - cell "✗ 依赖 PC 连接" [ref=e481]
+          - cell "✓" [ref=e482]
+          - cell "✗" [ref=e483]
+          - cell "✓" [ref=e484]
+        - row "Xposed 模块集成 ✓ LSPosed 原生 ✗ ✗ ✗ ✗" [ref=e485]:
+          - cell "Xposed 模块集成" [ref=e486]
+          - cell "✓ LSPosed 原生" [ref=e487]
+          - cell "✗" [ref=e488]
+          - cell "✗" [ref=e489]
+          - cell "✗" [ref=e490]
+          - cell "✗" [ref=e491]
+        - row "私有部署 ✓ 完全私有 ✗ SaaS ✓ 开源 ✓ 开源 ✗ 商业" [ref=e492]:
+          - cell "私有部署" [ref=e493]
+          - cell "✓ 完全私有" [ref=e494]
+          - cell "✗ SaaS" [ref=e495]
+          - cell "✓ 开源" [ref=e496]
+          - cell "✓ 开源" [ref=e497]
+          - cell "✗ 商业" [ref=e498]
+  - separator [ref=e499]
+  - contentinfo [ref=e500]:
+    - generic [ref=e501]:
+      - generic [ref=e502]: NEXUSFLOW
+      - generic [ref=e503]: 一 念 流
+    - generic [ref=e504]:
+      - generic [ref=e505]: Think Once, Flow Everywhere · 一念触发，流转万机
+      - generic [ref=e506]: Part of NexusControl Platform · v1.0 Planning · 2026

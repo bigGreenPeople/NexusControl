@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusFlow AI Agent · 架构与通信流程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #050c18;
+  --bg2:       #091420;
+  --bg3:       #0d1f35;
+  --cyan:      #00e5ff;
+  --cyan-dim:  rgba(0,229,255,.15);
+  --purple:    #7755ff;
+  --amber:     #ffaa00;
+  --green:     #00ff88;
+  --red:       #ff4d6d;
+  --text:      #b8d0e8;
+  --text-dim:  #4a6580;
+  --text-fade: #2a3a52;
+  --border:    rgba(0,229,255,0.15);
+  --border2:   rgba(0,229,255,0.06);
+  --glass:     rgba(0,229,255,0.04);
+  --mono:      'JetBrains Mono', monospace;
+  --kai:       'ZCOOL XiaoWei', serif;
+  --body:      'Noto Sans SC', sans-serif;
+  --disp:      'Bebas Neue', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--body); min-height: 100vh; overflow-x: hidden; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; color: inherit; }
+
+/* Header */
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2.5rem; border-bottom: 1px solid var(--border2);
+  backdrop-filter: blur(20px); background: rgba(5,12,24,0.85);
+  position: sticky; top: 0; z-index: 100;
+}
+.brand { display: flex; align-items: baseline; gap: .55rem; }
+.brand-en { font-family: var(--disp); font-size: 1.55rem; letter-spacing: .07em; color: var(--cyan); }
+.brand-cn { font-family: var(--kai); font-size: .95rem; color: var(--text-dim); letter-spacing: .2em; }
+.subtitle { font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; color: var(--text-dim); }
+.subtitle strong { color: var(--cyan); }
+
+/* Tabs */
+nav.tabs {
+  display: flex; gap: .8rem;
+  padding: 1rem 2.5rem;
+  border-bottom: 1px solid var(--border2);
+  background: var(--bg2);
+}
+.tab-btn {
+  padding: .6rem 1.4rem;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+  color: var(--text-dim); border: 1px solid transparent;
+  border-radius: 3px; transition: all .2s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--cyan); border-color: var(--border); background: var(--glass); }
+
+section { padding: 2rem 2.5rem; display: none; }
+section.active { display: block; }
+.sec-h { font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: .5rem; }
+.sec-p { font-size: .85rem; color: var(--text-dim); margin-bottom: 1.8rem; line-height: 1.6; }
+.sec-label {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .26em; color: var(--cyan);
+  margin-bottom: .6rem;
+}
+
+/* ════════════════════════════════════════════════════════════════ */
+/* TAB 1: Architecture                                               */
+/* ════════════════════════════════════════════════════════════════ */
+.arch-stack {
+  display: flex; flex-direction: column; gap: .5rem;
+  max-width: 1200px; margin: 0 auto;
+}
+.arch-row {
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 1.4rem 1.8rem;
+  display: flex; align-items: center; gap: 1.4rem;
+  transition: border-color .25s;
+}
+.arch-row:hover { border-color: rgba(0,229,255,.4); }
+.arch-num {
+  font-family: var(--disp); font-size: 2.4rem; line-height: 1; color: var(--cyan-dim); min-width: 70px;
+}
+.arch-info { flex: 1; }
+.arch-name { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+.arch-tech { font-family: var(--mono); font-size: .68rem; color: var(--text-dim); letter-spacing: .08em; }
+.arch-role { font-size: .85rem; color: var(--text); margin-top: .55rem; line-height: 1.6; }
+.arch-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .65rem; }
+.arch-tag {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .08em;
+  padding: .15rem .55rem; border: 1px solid var(--border); color: var(--cyan);
+  background: var(--glass);
+}
+.arch-arrow {
+  text-align: center; color: var(--cyan-dim); font-size: 1.4rem; padding: .15rem 0;
+}
+.arch-arrow span {
+  font-family: var(--mono); font-size: .58rem; color: var(--text-dim);
+  margin-left: .8rem; letter-spacing: .12em;
+}
+.arch-row[data-color="frontend"] { border-left: 3px solid var(--cyan); }
+.arch-row[data-color="java"]     { border-left: 3px solid var(--purple); }
+.arch-row[data-color="agent"]    { border-left: 3px solid var(--green); }
+.arch-row[data-color="llm"]      { border-left: 3px solid var(--amber); }
+.arch-row[data-color="device"]   { border-left: 3px solid var(--red); }
+
+.principle-callout {
+  max-width: 1200px; margin: 2rem auto 0;
+  padding: 1.2rem 1.5rem;
+  background: rgba(0,255,136,0.05);
+  border: 1px solid rgba(0,255,136,0.3);
+  border-left: 3px solid var(--green);
+}
+.principle-callout .label {
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .2em;
+  color: var(--green); margin-bottom: .4rem;
+}
+.principle-callout .text { font-size: .85rem; color: var(--text); line-height: 1.7; }
+.principle-callout strong { color: var(--green); }
+
+/* ════════════════════════════════════════════════════════════════ */
+/* TAB 2: Sequence diagram                                           */
+/* ════════════════════════════════════════════════════════════════ */
+.flow-wrap {
+  display: grid; grid-template-columns: 1fr 380px; gap: 1.5rem;
+  max-width: 1500px; margin: 0 auto;
+}
+@media (max-width: 1100px) { .flow-wrap { grid-template-columns: 1fr; } }
+
+.status-bar {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+.stat-cell { background: var(--bg2); padding: .8rem 1rem; text-align: center; }
+.stat-label {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .15em;
+  color: var(--text-dim); margin-bottom: .25rem;
+}
+.stat-val { font-family: var(--disp); font-size: 1.4rem; color: var(--cyan); line-height: 1; }
+.stat-cell.warn .stat-val { color: var(--amber); }
+.stat-cell.danger .stat-val { color: var(--red); }
+.stat-cell.success .stat-val { color: var(--green); }
+
+/* Sequence diagram stage */
+.seq-stage {
+  position: relative;
+  background: var(--bg2); border: 1px solid var(--border);
+  height: 700px; overflow-y: auto;
+}
+.seq-stage::-webkit-scrollbar { width: 6px; }
+.seq-stage::-webkit-scrollbar-track { background: var(--bg); }
+.seq-stage::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.seq-svg { display: block; width: 100%; min-height: 1400px; }
+
+/* Lane styles */
+.lane-line {
+  stroke: rgba(0,229,255,.18);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+.lane-header-bg {
+  fill: var(--bg3);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+.lane-header-text {
+  font-family: var(--body); font-size: 13px; font-weight: 700;
+  fill: var(--text);
+}
+.lane-header-tech {
+  font-family: var(--mono); font-size: 9px;
+  fill: var(--text-dim); letter-spacing: 1.2px;
+}
+.lane-header-bg.frontend { stroke: var(--cyan); }
+.lane-header-bg.java     { stroke: var(--purple); }
+.lane-header-bg.agent    { stroke: var(--green); }
+.lane-header-bg.llm      { stroke: var(--amber); }
+.lane-header-bg.device   { stroke: var(--red); }
+
+/* Phase divider */
+.phase-divider-line {
+  stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 4;
+}
+.phase-divider-text {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
+  fill: var(--text-dim); text-anchor: start;
+}
+
+/* Message arrow */
+.msg-group { transition: opacity .35s; }
+.msg-group.future { opacity: .12; }
+.msg-group.past   { opacity: .35; }
+.msg-group.current { opacity: 1; }
+
+.msg-arrow {
+  stroke: rgba(0,229,255,.4);
+  stroke-width: 1.4; fill: none;
+}
+.msg-group.current .msg-arrow {
+  stroke: var(--cyan); stroke-width: 2.5;
+  filter: drop-shadow(0 0 6px var(--cyan));
+}
+.msg-arrow.async {
+  stroke-dasharray: 4 3;
+}
+.msg-label {
+  font-family: var(--mono); font-size: 10px;
+  fill: var(--text);
+}
+.msg-group.current .msg-label {
+  fill: var(--cyan); font-weight: 700;
+}
+.msg-arrowhead {
+  fill: rgba(0,229,255,.4);
+}
+.msg-group.current .msg-arrowhead {
+  fill: var(--cyan);
+}
+
+/* Self-loop on lane (component processing internally) */
+.self-loop {
+  fill: none;
+  stroke: rgba(0,229,255,.4);
+  stroke-width: 1.4;
+}
+.msg-group.current .self-loop {
+  stroke: var(--cyan); stroke-width: 2.5;
+  filter: drop-shadow(0 0 6px var(--cyan));
+}
+
+/* Activity box on lane (when component is active) */
+.activity-box {
+  fill: rgba(0,229,255,0.15);
+  stroke: rgba(0,229,255,0.5);
+  stroke-width: 1;
+}
+.msg-group.current .activity-box {
+  fill: rgba(0,229,255,0.4);
+  stroke: var(--cyan);
+}
+
+/* Block emit highlight */
+.msg-group.block-emit .msg-arrow,
+.msg-group.block-emit .self-loop {
+  stroke: var(--green) !important;
+  filter: drop-shadow(0 0 8px var(--green)) !important;
+}
+.msg-group.block-emit .msg-label { fill: var(--green); }
+.msg-group.block-emit .msg-arrowhead { fill: var(--green); }
+
+/* Flow dot on current arrow */
+.flow-dot { fill: var(--cyan); filter: drop-shadow(0 0 4px var(--cyan)); }
+.msg-group.block-emit .flow-dot { fill: var(--green); filter: drop-shadow(0 0 4px var(--green)); }
+
+/* Side detail */
+.step-detail {
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  max-height: 700px; overflow-y: auto;
+  position: sticky; top: 7.5rem;
+}
+.step-detail::-webkit-scrollbar { width: 4px; }
+.step-detail::-webkit-scrollbar-thumb { background: var(--border); }
+
+.step-num-big {
+  font-family: var(--disp); font-size: 3.5rem; line-height: 1; color: var(--cyan); margin-bottom: -.4rem;
+}
+.step-num-big small { font-size: 1.4rem; color: var(--text-dim); }
+.step-phase-tag {
+  display: inline-block;
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .15em;
+  padding: .2rem .6rem;
+  border: 1px solid var(--border); color: var(--cyan);
+  background: var(--glass);
+  margin-bottom: .5rem;
+}
+.step-title { font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.4; }
+.step-desc { font-size: .82rem; color: var(--text-dim); line-height: 1.7; }
+.step-desc code {
+  font-family: var(--mono); font-size: .76rem;
+  background: var(--bg); padding: 1px 6px; color: var(--cyan);
+  border: 1px solid var(--border2);
+}
+.step-data {
+  background: var(--bg); border: 1px solid var(--border2);
+  padding: .8rem .9rem;
+  font-family: var(--mono); font-size: .68rem;
+  color: var(--text); line-height: 1.7;
+  max-height: 300px; overflow-y: auto;
+  white-space: pre-wrap; word-break: break-all;
+}
+.step-data .key  { color: var(--cyan); }
+.step-data .str  { color: var(--green); }
+.step-data .num  { color: var(--amber); }
+.step-data .cm   { color: var(--text-dim); }
+.step-data .ev   { color: var(--purple); font-weight: 700; }
+.step-data .hi   { color: var(--green); font-weight: 700; }
+
+/* Controls */
+.controls {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  margin-top: 1rem;
+}
+.ctrl-btn {
+  padding: .55rem 1.1rem;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+  border: 1px solid var(--border); color: var(--cyan);
+  background: var(--glass); transition: all .2s;
+}
+.ctrl-btn:hover:not(:disabled) { background: var(--cyan); color: var(--bg); }
+.ctrl-btn:disabled { opacity: .35; cursor: not-allowed; }
+.ctrl-btn.primary { background: var(--cyan); color: var(--bg); }
+.ctrl-btn.primary:hover { background: white; }
+
+/* ════════════════════════════════════════════════════════════════ */
+/* TAB 3: Tools                                                      */
+/* ════════════════════════════════════════════════════════════════ */
+.tools-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1rem; max-width: 1300px; margin: 0 auto;
+}
+.tool-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 1.2rem 1.4rem; border-left: 3px solid var(--cyan);
+}
+.tool-card[data-c="purple"] { border-left-color: var(--purple); }
+.tool-card[data-c="amber"]  { border-left-color: var(--amber); }
+.tool-card[data-c="green"]  { border-left-color: var(--green); }
+.tool-card[data-c="red"]    { border-left-color: var(--red); }
+.tool-name {
+  font-family: var(--mono); font-size: 1rem; color: var(--cyan); margin-bottom: .5rem;
+}
+.tool-card[data-c="purple"] .tool-name { color: var(--purple); }
+.tool-card[data-c="amber"]  .tool-name { color: var(--amber); }
+.tool-card[data-c="green"]  .tool-name { color: var(--green); }
+.tool-card[data-c="red"]    .tool-name { color: var(--red); }
+.tool-desc { font-size: .82rem; color: var(--text-dim); line-height: 1.7; margin-bottom: .8rem; }
+.tool-row {
+  font-family: var(--mono); font-size: .7rem; line-height: 1.7;
+  display: flex; gap: .7rem;
+}
+.tool-row b { color: var(--cyan); min-width: 56px; }
+.tool-row span { color: var(--text); }
+
+.loop-section { margin-top: 3rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+.loop-svg { background: var(--bg2); border: 1px solid var(--border); padding: 1.5rem; }
+
+/* ════════════════════════════════════════════════════════════════ */
+/* TAB: System overview (intuitive)                                  */
+/* ════════════════════════════════════════════════════════════════ */
+.ov-wrap {
+  max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-rows: auto auto auto; gap: 1rem;
+}
+.ov-status {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+}
+.ov-status .stat-cell { padding: .7rem 1rem; }
+
+.ov-stage {
+  background: var(--bg2); border: 1px solid var(--border);
+  position: relative;
+}
+.ov-svg { display: block; width: 100%; height: auto; max-height: 700px; }
+
+/* Component box */
+.ov-cmp-bg {
+  fill: var(--bg3);
+  stroke-width: 1.5;
+  transition: filter .35s, stroke .35s;
+}
+.ov-cmp-bg.frontend { stroke: var(--cyan); }
+.ov-cmp-bg.java     { stroke: var(--purple); }
+.ov-cmp-bg.agent    { stroke: var(--green); }
+.ov-cmp-bg.llm      { stroke: var(--amber); }
+.ov-cmp-bg.device   { stroke: var(--red); }
+
+.ov-cmp.active .ov-cmp-bg {
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 12px currentColor);
+}
+.ov-cmp.active.frontend .ov-cmp-bg { color: var(--cyan); }
+.ov-cmp.active.java     .ov-cmp-bg { color: var(--purple); }
+.ov-cmp.active.agent    .ov-cmp-bg { color: var(--green); }
+.ov-cmp.active.llm      .ov-cmp-bg { color: var(--amber); }
+.ov-cmp.active.device   .ov-cmp-bg { color: var(--red); }
+
+.ov-cmp-icon {
+  font-family: var(--disp); font-size: 24px; fill: var(--text-dim);
+  text-anchor: middle;
+}
+.ov-cmp.active .ov-cmp-icon { fill: var(--text); }
+.ov-cmp-name {
+  font-family: var(--body); font-size: 15px; font-weight: 700;
+  fill: var(--text); text-anchor: middle;
+}
+.ov-cmp-tech {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 1.2px;
+  fill: var(--text-dim); text-anchor: middle;
+}
+.ov-cmp-role {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 1px;
+  fill: var(--text-dim); text-anchor: middle;
+}
+
+/* Connection */
+.ov-conn {
+  fill: none;
+  stroke: rgba(0,229,255,.18);
+  stroke-width: 2;
+  transition: stroke .35s, opacity .35s;
+}
+.ov-conn.active {
+  stroke: var(--cyan);
+  filter: drop-shadow(0 0 6px var(--cyan));
+}
+.ov-conn-label {
+  font-family: var(--mono); font-size: 10px;
+  fill: var(--text-dim); letter-spacing: .5px;
+  transition: fill .35s;
+}
+.ov-conn-label.active { fill: var(--cyan); }
+
+/* Particles */
+.ov-particle { filter: drop-shadow(0 0 6px currentColor); }
+.ov-particle.cyan  { fill: var(--cyan);  color: var(--cyan); }
+.ov-particle.amber { fill: var(--amber); color: var(--amber); }
+.ov-particle.green { fill: var(--green); color: var(--green); }
+.ov-particle.purple{ fill: var(--purple);color: var(--purple); }
+
+/* Loop indicator (animated ring around agent) */
+.ov-loop-ring {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  opacity: 0;
+  transform-origin: 500px 370px;
+}
+.ov-loop-ring.spinning {
+  opacity: .8;
+  animation: ov-spin 4s linear infinite;
+}
+@keyframes ov-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Caption */
+.ov-caption {
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 1.2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+.ov-cap-num {
+  font-family: var(--disp); font-size: 3rem; line-height: 1;
+  color: var(--cyan);
+}
+.ov-cap-num small { font-size: 1.1rem; color: var(--text-dim); }
+.ov-cap-body { display: flex; flex-direction: column; gap: .4rem; }
+.ov-cap-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.ov-cap-desc { font-size: .85rem; color: var(--text-dim); line-height: 1.7; }
+.ov-cap-desc strong { color: var(--green); }
+
+/* Scene strip (small dots representing scenes) */
+.ov-scene-strip {
+  display: flex; gap: .35rem; align-items: center;
+}
+.ov-scene-dot {
+  width: 38px; height: 6px;
+  background: var(--bg3); cursor: pointer;
+  transition: background .25s;
+}
+.ov-scene-dot:hover { background: var(--cyan-dim); }
+.ov-scene-dot.done { background: rgba(0,229,255,.3); }
+.ov-scene-dot.current { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="brand-en">NEXUSFLOW</span>
+    <span class="brand-cn">一念流</span>
+  </div>
+  <div class="subtitle"><strong>AI Agent</strong> · 架构与通信流程动态可视化</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="arch">// 架构总览</button>
+  <button class="tab-btn"        data-tab="overview">// 系统全景（直观）</button>
+  <button class="tab-btn"        data-tab="flow">// 通信时序图（精确）</button>
+  <button class="tab-btn"        data-tab="tools">// 工具集与 Agent 循环</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 1                                                             -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<section class="active" id="tab-arch">
+  <div class="sec-label">// SYSTEM ARCHITECTURE</div>
+  <h2 class="sec-h">五层结构</h2>
+  <p class="sec-p">前端 → Java 网关 → Python Agent → Claude，agent 反向调用 Java 内部 API 控制设备。</p>
+
+  <div class="arch-stack">
+    <div class="arch-row" data-color="frontend">
+      <div class="arch-num">01</div>
+      <div class="arch-info">
+        <div class="arch-name">shark-vue · 浏览器前端</div>
+        <div class="arch-tech">Vue 2.6 · Element UI · fetch + ReadableStream</div>
+        <div class="arch-role">三栏 UI：思考流 / 积木流 / 设备投屏。流式渲染 SSE 事件，支持取消、ask_user 回写。</div>
+        <div class="arch-tags">
+          <span class="arch-tag">AiAgentDialog.vue</span>
+          <span class="arch-tag">SSE 客户端</span>
+          <span class="arch-tag">投屏复用</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-arrow">↓ <span>HTTP/SSE · POST /shark/nexusflow/agent-generate</span></div>
+
+    <div class="arch-row" data-color="java">
+      <div class="arch-num">02</div>
+      <div class="arch-info">
+        <div class="arch-name">shark-server · Java 网关</div>
+        <div class="arch-tech">Spring Boot 17 · Sa-Token · WebClient · Redisson</div>
+        <div class="arch-role">用户鉴权 + 日预算检查 + 设备锁；将请求透传给 Agent，回程 SSE 原样转发。同时提供 /internal/agent/* 给 agent 反向调用以操作设备（MQTT 网关）。</div>
+        <div class="arch-tags">
+          <span class="arch-tag">/agent-generate</span>
+          <span class="arch-tag">/agent-reply</span>
+          <span class="arch-tag">/agent-cancel</span>
+          <span class="arch-tag">/internal/agent/* (反向)</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-arrow">↓ <span>HTTP/SSE · Bearer 共享密钥</span></div>
+
+    <div class="arch-row" data-color="agent">
+      <div class="arch-num">03</div>
+      <div class="arch-info">
+        <div class="arch-name">nexusflow-agent · Python 智能体</div>
+        <div class="arch-tech">FastAPI · LangGraph · langchain-anthropic</div>
+        <div class="arch-role">运行 LangGraph StateGraph：LLM 决策 → 工具执行 → 预算检查 → 循环。<br>5 个工具：resolve_package / execute_block / get_layout / ask_user / finish。</div>
+        <div class="arch-tags">
+          <span class="arch-tag">独立服务器</span>
+          <span class="arch-tag">systemd</span>
+          <span class="arch-tag">Caddy HTTPS</span>
+          <span class="arch-tag">隔离 LLM key</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-arrow">↓ <span>HTTPS · stream API · model=claude-sonnet-4-6</span></div>
+
+    <div class="arch-row" data-color="llm">
+      <div class="arch-num">04</div>
+      <div class="arch-info">
+        <div class="arch-name">Anthropic Claude · 大模型</div>
+        <div class="arch-tech">claude-sonnet-4-6 · Tool Use · Streaming</div>
+        <div class="arch-role">每轮基于 system prompt + 历史消息 + 最新 tool_result 决定下一步动作（调哪个工具 / 终止循环）。</div>
+        <div class="arch-tags"><span class="arch-tag">Tool calling</span><span class="arch-tag">流式输出</span></div>
+      </div>
+    </div>
+    <div class="arch-arrow">↓ <span>反向 · agent → /internal/agent/* → MQTT type=5002/5003/5004</span></div>
+
+    <div class="arch-row" data-color="device">
+      <div class="arch-num">05</div>
+      <div class="arch-info">
+        <div class="arch-name">SharkPosed · 真实 Android 设备</div>
+        <div class="arch-tech">Magisk Module · LSPosed · system_process · Rhino JS</div>
+        <div class="arch-role">设备是 agent 的<strong style="color:var(--green)">唯一真实信息源</strong>：包名、控件树、屏幕状态都从这里实时获取，不缓存、不预设。</div>
+        <div class="arch-tags">
+          <span class="arch-tag">PackageManager 实时查询</span>
+          <span class="arch-tag">uiautomator dump</span>
+          <span class="arch-tag">无须连线</span>
+          <span class="arch-tag">系统级注入</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="principle-callout">
+    <div class="label">// CORE PRINCIPLE</div>
+    <div class="text">
+      <strong>所有真实信息从设备来，所有真实操作在设备上做</strong>——agent 不依赖任何缓存的映射表或预设数据。
+      包名要用？让设备 PackageManager 查。控件树要用？让设备 uiautomator dump。这样适配新 App、版本更新、罕见应用都不用改代码。
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB: System overview (intuitive)                                  -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<section id="tab-overview">
+  <div class="sec-label">// SYSTEM OVERVIEW · INTUITIVE VIEW</div>
+  <h2 class="sec-h">系统全景图</h2>
+  <p class="sec-p">
+    一张图理解 AI Agent 的工作方式：用户在<strong style="color:var(--cyan)">左上</strong>发问 →
+    <strong style="color:var(--purple)">shark-server</strong> 是网关 →
+    <strong style="color:var(--green)">Agent</strong> 是大脑（中心）→
+    <strong style="color:var(--amber)">Claude</strong> 出主意（右） →
+    <strong style="color:var(--red)">设备</strong>提供真相和执行（左下）。点 ▶ 看 6 个场景的流动。
+  </p>
+
+  <div class="ov-wrap">
+    <!-- Status bar -->
+    <div class="ov-status">
+      <div class="stat-cell">
+        <div class="stat-label">SCENE</div>
+        <div class="stat-val" id="ov-stat-scene">0/6</div>
+      </div>
+      <div class="stat-cell" id="ov-cost-cell">
+        <div class="stat-label">COST</div>
+        <div class="stat-val" id="ov-stat-cost">¥0.00</div>
+      </div>
+      <div class="stat-cell" id="ov-blocks-cell">
+        <div class="stat-label">BLOCKS</div>
+        <div class="stat-val" id="ov-stat-blocks">0</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">STATE</div>
+        <div class="stat-val" id="ov-stat-state" style="font-size:1rem">IDLE</div>
+      </div>
+    </div>
+
+    <!-- Stage -->
+    <div class="ov-stage">
+      <svg class="ov-svg" id="ov-svg" viewBox="0 0 1000 700">
+        <defs>
+          <!-- Connection paths -->
+          <path id="path-fe-srv"     d="M 220 130 L 420 130" />
+          <path id="path-srv-agent"  d="M 500 190 L 500 320" />
+          <path id="path-agent-llm"  d="M 580 370 L 780 370" />
+          <path id="path-srv-device" d="M 440 190 Q 280 280, 200 440" />
+
+          <!-- Reverse paths (for particles flowing back) -->
+          <path id="path-srv-fe"      d="M 420 138 L 220 138" />
+          <path id="path-agent-srv"   d="M 500 320 L 500 190" />
+          <path id="path-llm-agent"   d="M 780 378 L 580 378" />
+          <path id="path-device-srv"  d="M 200 440 Q 280 280, 440 198" />
+
+          <!-- Arrowhead marker -->
+          <marker id="ov-arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L5,3 L0,6 Z" fill="rgba(0,229,255,.4)"/>
+          </marker>
+        </defs>
+
+        <!-- ── Background grid ── -->
+        <pattern id="ov-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,229,255,0.04)" stroke-width="0.5"/>
+        </pattern>
+        <rect width="1000" height="700" fill="url(#ov-grid)"/>
+
+        <!-- ── Section labels ── -->
+        <text x="20" y="30" class="ov-conn-label" style="font-size:9px;letter-spacing:2px">USER WORLD</text>
+        <text x="980" y="30" text-anchor="end" class="ov-conn-label" style="font-size:9px;letter-spacing:2px">AI WORLD</text>
+        <line x1="700" y1="40" x2="700" y2="660" stroke="rgba(0,229,255,.06)" stroke-width="1" stroke-dasharray="2 6"/>
+
+        <!-- ── Connections (drawn first, under boxes) ── -->
+        <use href="#path-fe-srv"     class="ov-conn" data-conn="fe-srv" />
+        <use href="#path-srv-agent"  class="ov-conn" data-conn="srv-agent" />
+        <use href="#path-agent-llm"  class="ov-conn" data-conn="agent-llm" />
+        <use href="#path-srv-device" class="ov-conn" data-conn="srv-device" />
+
+        <!-- Connection labels -->
+        <text x="320" y="118" class="ov-conn-label" data-conn-label="fe-srv" text-anchor="middle">SSE / fetch</text>
+        <text x="510" y="260" class="ov-conn-label" data-conn-label="srv-agent">SSE forward · /internal/agent/*</text>
+        <text x="680" y="358" class="ov-conn-label" data-conn-label="agent-llm" text-anchor="middle">stream API · tools</text>
+        <text x="240" y="345" class="ov-conn-label" data-conn-label="srv-device">MQTT · type 5002/5003/5004</text>
+
+        <!-- ── Loop ring around agent ── -->
+        <circle id="ov-loop" class="ov-loop-ring" cx="500" cy="370" r="76" />
+
+        <!-- ── Components ── -->
+
+        <!-- 浏览器 -->
+        <g class="ov-cmp frontend" data-cmp="frontend">
+          <rect class="ov-cmp-bg frontend" x="80" y="80" width="160" height="100" rx="4"/>
+          <text class="ov-cmp-icon" x="160" y="115">⌘</text>
+          <text class="ov-cmp-name" x="160" y="148">浏览器</text>
+          <text class="ov-cmp-tech" x="160" y="166">shark-vue · Vue 2.6</text>
+        </g>
+
+        <!-- shark-server -->
+        <g class="ov-cmp java" data-cmp="java">
+          <rect class="ov-cmp-bg java" x="420" y="80" width="160" height="110" rx="4"/>
+          <text class="ov-cmp-icon" x="500" y="115">≡</text>
+          <text class="ov-cmp-name" x="500" y="148">shark-server</text>
+          <text class="ov-cmp-tech" x="500" y="166">Spring Boot · Sa-Token</text>
+          <text class="ov-cmp-role" x="500" y="180">网关 + 鉴权 + MQTT</text>
+        </g>
+
+        <!-- Agent -->
+        <g class="ov-cmp agent" data-cmp="agent">
+          <rect class="ov-cmp-bg agent" x="420" y="320" width="160" height="100" rx="4"/>
+          <text class="ov-cmp-icon" x="500" y="356">◉</text>
+          <text class="ov-cmp-name" x="500" y="388">Agent</text>
+          <text class="ov-cmp-tech" x="500" y="406">FastAPI · LangGraph</text>
+        </g>
+
+        <!-- Claude -->
+        <g class="ov-cmp llm" data-cmp="llm">
+          <rect class="ov-cmp-bg llm" x="780" y="320" width="160" height="100" rx="4"/>
+          <text class="ov-cmp-icon" x="860" y="356">✦</text>
+          <text class="ov-cmp-name" x="860" y="388">Claude LLM</text>
+          <text class="ov-cmp-tech" x="860" y="406">sonnet-4-6 · tools</text>
+        </g>
+
+        <!-- 设备 -->
+        <g class="ov-cmp device" data-cmp="device">
+          <rect class="ov-cmp-bg device" x="80" y="440" width="240" height="120" rx="4"/>
+          <text class="ov-cmp-icon" x="200" y="478">▥</text>
+          <text class="ov-cmp-name" x="200" y="510">Android 设备</text>
+          <text class="ov-cmp-tech" x="200" y="528">SharkPosed · Rhino · system_process</text>
+          <text class="ov-cmp-role" x="200" y="546" style="fill:#00ff88">真相之源 + 执行端</text>
+        </g>
+
+        <!-- ── Particles container ── -->
+        <g id="ov-particles"></g>
+
+        <!-- ── Bottom note ── -->
+        <text x="500" y="680" text-anchor="middle" class="ov-conn-label" style="font-size:10px">
+          所有真实信息从设备来 · 缓存与映射表都不可信 · agent 只信任设备的 PackageManager 和 uiautomator
+        </text>
+      </svg>
+    </div>
+
+    <!-- Caption -->
+    <div class="ov-caption">
+      <div class="ov-cap-num" id="ov-cap-num">0<small>/6</small></div>
+      <div class="ov-cap-body">
+        <div class="ov-cap-title" id="ov-cap-title">点击 ▶ 开始演示</div>
+        <div class="ov-cap-desc" id="ov-cap-desc">看看 Agent 是怎么和 Claude / 设备来回沟通，最终把脚本"长"出来的。</div>
+        <div class="ov-scene-strip" id="ov-scene-strip"></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="ctrl-btn"         id="ov-btn-reset">⏮ 重置</button>
+      <button class="ctrl-btn"         id="ov-btn-prev">⏪ 上一场</button>
+      <button class="ctrl-btn primary" id="ov-btn-play">▶ 自动播放</button>
+      <button class="ctrl-btn"         id="ov-btn-next">下一场 ⏩</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 2: Sequence diagram                                           -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<section id="tab-flow">
+  <div class="sec-label">// END-TO-END SEQUENCE DIAGRAM</div>
+  <h2 class="sec-h">通信时序图</h2>
+  <p class="sec-p">竖向是时间，横向是组件。每条箭头是一次消息。播放时当前消息高亮蓝色（或绿色=落块），过去消息变灰，未来消息隐去。</p>
+
+  <div class="flow-wrap">
+    <div class="status-bar">
+      <div class="stat-cell">
+        <div class="stat-label">STEP</div>
+        <div class="stat-val" id="stat-step">00</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">PHASE</div>
+        <div class="stat-val" id="stat-phase" style="font-size:1rem">—</div>
+      </div>
+      <div class="stat-cell" id="stat-cost-cell">
+        <div class="stat-label">COST</div>
+        <div class="stat-val" id="stat-cost">¥0.00</div>
+      </div>
+      <div class="stat-cell" id="stat-blocks-cell">
+        <div class="stat-label">BLOCKS</div>
+        <div class="stat-val" id="stat-blocks">0</div>
+      </div>
+      <div class="stat-cell" id="stat-status-cell">
+        <div class="stat-label">STATUS</div>
+        <div class="stat-val" id="stat-status" style="font-size:1rem">IDLE</div>
+      </div>
+    </div>
+
+    <div class="seq-stage" id="seq-stage">
+      <svg class="seq-svg" id="seq-svg" viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMin meet">
+        <!-- Drawn by JS -->
+      </svg>
+    </div>
+
+    <div class="step-detail" id="detail">
+      <div>
+        <span class="step-phase-tag" id="detail-phase">— —</span>
+        <div class="step-num-big" id="detail-num">00<small>/00</small></div>
+        <div class="step-title" id="detail-title">点击 ▶ 开始演示</div>
+      </div>
+      <div class="step-desc" id="detail-desc">完整模拟一次"在抖音某好友主页留痕"的生成流程，从用户点 AI 生成按钮到设备真的开始操作的全过程。</div>
+      <div class="step-data" id="detail-data" style="display:none"></div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn"         id="btn-reset" title="重置">⏮ 重置</button>
+      <button class="ctrl-btn"         id="btn-prev"  title="上一步">⏪ 上一步</button>
+      <button class="ctrl-btn primary" id="btn-play"  title="播放">▶ 自动播放</button>
+      <button class="ctrl-btn"         id="btn-next"  title="下一步">下一步 ⏩</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 3                                                             -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<section id="tab-tools">
+  <div class="sec-label">// AGENT TOOLS</div>
+  <h2 class="sec-h">5 个工具 + LangGraph 循环</h2>
+  <p class="sec-p">LLM 不能凭空生成积木——它必须通过这 5 个工具与设备和服务器交互。</p>
+
+  <div class="tools-grid">
+    <div class="tool-card" data-c="cyan">
+      <div class="tool-name">resolve_package(app_name)</div>
+      <div class="tool-desc">**实时查询当前设备**已安装的应用，按 label 模糊匹配返回包名。设备没装的应用绝对不会被错误返回。找不到时返回 NOT_FOUND，LLM 应改用 ask_user。</div>
+      <div class="tool-row"><b>入参</b><span>app_name: "抖音"</span></div>
+      <div class="tool-row"><b>返回</b><span>"com.ss.android.ugc.aweme"</span></div>
+      <div class="tool-row"><b>实现</b><span>MQTT type=5004 → PackageManager.getInstalledPackages()</span></div>
+    </div>
+
+    <div class="tool-card" data-c="amber">
+      <div class="tool-name">execute_block(block)</div>
+      <div class="tool-desc"><strong style="color:var(--text)">落块的唯一入口</strong>——调用即落入用户的最终积木流。先 schema 校验，再 SSE 推到前端，最后真机执行返回结果给 LLM。</div>
+      <div class="tool-row"><b>入参</b><span>block: { type, params }</span></div>
+      <div class="tool-row"><b>返回</b><span>"OK" 或 "ERROR: ..."</span></div>
+      <div class="tool-row"><b>实现</b><span>MQTT type=5002 (Rhino 引擎执行)</span></div>
+    </div>
+
+    <div class="tool-card" data-c="green">
+      <div class="tool-name">get_layout()</div>
+      <div class="tool-desc">抓取当前设备屏幕的 UI 控件树。返回简化版 JSON（去除冗余容器、限 80 节点）控制 token。**不落块**，纯探索性查询。</div>
+      <div class="tool-row"><b>入参</b><span>（无）</span></div>
+      <div class="tool-row"><b>返回</b><span>{ nodes: [...], displaySize }</span></div>
+      <div class="tool-row"><b>实现</b><span>MQTT type=5003 → uiautomator dump</span></div>
+    </div>
+
+    <div class="tool-card" data-c="purple">
+      <div class="tool-name">ask_user(question)</div>
+      <div class="tool-desc">需要用户提供关键信息时调用（昵称、账号、确认）。SSE 推问题到前端，agent 暂停等回复（120 秒超时）。</div>
+      <div class="tool-row"><b>入参</b><span>question: "目标好友昵称？"</span></div>
+      <div class="tool-row"><b>返回</b><span>用户回答 / "USER_TIMEOUT"</span></div>
+      <div class="tool-row"><b>实现</b><span>asyncio.Event 双向通道</span></div>
+    </div>
+
+    <div class="tool-card" data-c="red">
+      <div class="tool-name">finish(summary, success)</div>
+      <div class="tool-desc">完成生成并退出循环。LLM 必须主动调，否则跑到 max_steps 才会被强制终止（浪费 token）。</div>
+      <div class="tool-row"><b>入参</b><span>summary, success</span></div>
+      <div class="tool-row"><b>返回</b><span>FINISHED 字符串</span></div>
+      <div class="tool-row"><b>效果</b><span>graph 跳到 END 节点</span></div>
+    </div>
+  </div>
+
+  <div class="loop-section">
+    <div class="sec-label" style="text-align:center; margin-top: 3rem">// LANGGRAPH STATE MACHINE</div>
+    <h2 class="sec-h" style="text-align:center">Agent 循环</h2>
+    <p class="sec-p" style="text-align:center; max-width:700px; margin: 0 auto 1.5rem">
+      LangGraph 状态机：每轮 LLM 决策一次（调工具或终止），工具执行后回到决策节点，循环直到 finish 或预算耗尽。
+    </p>
+    <svg class="loop-svg" viewBox="0 0 800 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="larr" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#00e5ff"/>
+        </marker>
+        <filter id="loopglo" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <circle cx="80" cy="190" r="28" fill="rgba(0,229,255,.12)" stroke="#00e5ff" stroke-width="1.5"/>
+      <text x="80" y="195" text-anchor="middle" fill="#00e5ff" font-family="JetBrains Mono" font-size="13" font-weight="700">START</text>
+      <rect x="200" y="155" width="160" height="70" rx="3" fill="rgba(165,94,234,.1)" stroke="#7755ff" stroke-width="1.5"/>
+      <text x="280" y="180" text-anchor="middle" fill="#7755ff" font-family="JetBrains Mono" font-size="9" letter-spacing="2">LLM_STEP</text>
+      <text x="280" y="200" text-anchor="middle" fill="#b8d0e8" font-family="Noto Sans SC" font-size="13" font-weight="700">LLM 决策</text>
+      <text x="280" y="215" text-anchor="middle" fill="#4a6580" font-family="JetBrains Mono" font-size="8">ChatAnthropic.bind_tools</text>
+      <rect x="440" y="155" width="160" height="70" rx="3" fill="rgba(255,170,0,.1)" stroke="#ffaa00" stroke-width="1.5"/>
+      <text x="520" y="180" text-anchor="middle" fill="#ffaa00" font-family="JetBrains Mono" font-size="9" letter-spacing="2">TOOL_NODE</text>
+      <text x="520" y="200" text-anchor="middle" fill="#b8d0e8" font-family="Noto Sans SC" font-size="13" font-weight="700">执行工具</text>
+      <text x="520" y="215" text-anchor="middle" fill="#4a6580" font-family="JetBrains Mono" font-size="8">5 个工具任选</text>
+      <polygon points="540,330 600,300 660,330 600,360" fill="rgba(0,255,136,.1)" stroke="#00ff88" stroke-width="1.5"/>
+      <text x="600" y="328" text-anchor="middle" fill="#00ff88" font-family="JetBrains Mono" font-size="9">BUDGET</text>
+      <text x="600" y="340" text-anchor="middle" fill="#b8d0e8" font-family="Noto Sans SC" font-size="11">预算检查</text>
+      <circle cx="720" cy="190" r="28" fill="rgba(255,77,109,.12)" stroke="#ff4d6d" stroke-width="1.5"/>
+      <text x="720" y="195" text-anchor="middle" fill="#ff4d6d" font-family="JetBrains Mono" font-size="13" font-weight="700">END</text>
+      <line x1="108" y1="190" x2="195" y2="190" stroke="#00e5ff" stroke-width="1.5" marker-end="url(#larr)"/>
+      <line x1="365" y1="180" x2="435" y2="180" stroke="#00e5ff" stroke-width="1.5" marker-end="url(#larr)"/>
+      <text x="400" y="172" text-anchor="middle" fill="#4a6580" font-family="JetBrains Mono" font-size="8">tool_calls</text>
+      <path d="M 360 200 Q 540 245 695 195" stroke="#00e5ff" stroke-width="1.5" fill="none" marker-end="url(#larr)" stroke-dasharray="3,3"/>
+      <text x="540" y="235" text-anchor="middle" fill="#4a6580" font-family="JetBrains Mono" font-size="8">no tool_calls</text>
+      <line x1="520" y1="225" x2="600" y2="298" stroke="#00e5ff" stroke-width="1.5" marker-end="url(#larr)"/>
+      <path d="M 540 330 Q 380 330 280 230" stroke="#00e5ff" stroke-width="1.5" fill="none" marker-end="url(#larr)"/>
+      <text x="380" y="320" text-anchor="middle" fill="#4a6580" font-family="JetBrains Mono" font-size="8">under limit</text>
+      <path d="M 660 330 Q 720 290 720 220" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="3,3" fill="none" marker-end="url(#larr)"/>
+      <text x="700" y="290" text-anchor="middle" fill="#4a6580" font-family="JetBrains Mono" font-size="8">exceeded</text>
+      <circle r="4" fill="#00e5ff" filter="url(#loopglo)">
+        <animateMotion dur="6s" repeatCount="indefinite" path="M 108 190 L 195 190 L 365 180 L 435 180 L 520 225 L 600 298 L 540 330 Q 380 330 280 230 L 195 190 Z"/>
+      </circle>
+    </svg>
+  </div>
+</section>
+
+<script>
+/* Tab switching */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ═══════════════ Sequence diagram data ═══════════════ */
+// Lanes layout (in viewBox coordinates 1000-wide)
+const LANES = [
+  { id: 'fe',  name: '浏览器',       tech: 'shark-vue',     x: 110, color: 'frontend' },
+  { id: 'srv', name: 'shark-server', tech: 'Spring Boot',   x: 320, color: 'java'     },
+  { id: 'agt', name: 'agent',        tech: 'FastAPI/LangGraph', x: 540, color: 'agent' },
+  { id: 'llm', name: 'Claude',       tech: 'sonnet-4-6',    x: 740, color: 'llm'      },
+  { id: 'dev', name: 'Android 设备', tech: 'SharkPosed',    x: 920, color: 'device'   },
+];
+
+// Phase markers indicate where to draw a phase divider above a step (1-indexed step number)
+const PHASES = [
+  { atStep: 1, label: 'PHASE A · 启动与鉴权' },
+  { atStep: 6, label: 'PHASE B · Agent 循环 · 第 1 轮：从设备查包名' },
+  { atStep: 13, label: 'PHASE C · Agent 循环 · 第 2 轮：启动 App 落第一块' },
+  { atStep: 20, label: 'PHASE D · 循环若干轮直至完成（折叠）' },
+  { atStep: 22, label: 'PHASE E · 收尾' },
+];
+
+// Steps. Each step is one diagram row.
+//   from / to  : lane id (or 'self' meaning self-processing on `from` lane)
+//   async      : true → dashed arrow (SSE / fire-and-forget); false → solid (sync RPC)
+//   blockEmit  : true → green color (means block was emitted to user)
+//   label      : short text on top of arrow
+//   phase / title / desc / data : detail panel content
+//   blocks     : counter at this step
+//   cost       : cumulative cost (cents)
+//   status     : status bar text
+const STEPS = [
+  // ── Phase A: 启动 ──
+  {
+    from: 'self', on: 'fe',
+    label: '用户输入 + 选设备',
+    phase: 'PHASE A', title: '用户在前端选设备 + 输入需求',
+    desc: '点击"AI 生成"按钮，弹出对话框第一阶段：选择目标设备 + 输入中文需求。',
+    data: `// 用户输入
+{
+  "deviceImei": "353278091234567",
+  "prompt":     "在抖音某好友主页留痕（点赞最近 3 条）",
+  "maxCostCents": 500,
+  "maxSteps":     30
+}`,
+    blocks: 0, cost: 0, status: 'INPUT'
+  },
+  {
+    from: 'fe', to: 'srv', async: false,
+    label: 'POST /agent-generate (SSE)',
+    phase: 'PHASE A', title: '前端发起 SSE 请求',
+    desc: 'fetch + ReadableStream 发起 POST，body 是 JSON，期望响应类型为 text/event-stream。Sa-Token 在 Authorization 头里。',
+    data: `<span class="ev">POST /shark/nexusflow/agent-generate</span>
+<span class="cm">Authorization:</span> Bearer &lt;sa-token&gt;
+<span class="cm">Content-Type:</span> application/json
+<span class="cm">Accept:</span> text/event-stream
+
+{ "deviceImei": "...", "prompt": "...", ... }`,
+    blocks: 0, cost: 0, status: 'REQUESTING'
+  },
+  {
+    from: 'self', on: 'srv',
+    label: '鉴权 + 预算 + 设备锁',
+    phase: 'PHASE A', title: 'shark-server 内部处理',
+    desc: 'Sa-Token 解出 userId → BudgetService 检查日预算 → DeviceLockService 用 Redisson 加分布式锁（TTL 600s）。任意一步失败立即返回 error。',
+    data: `<span class="ev">// 三步检查</span>
+<span class="cm">// 1. 解 token</span>
+userId = StpUtil.getLoginIdAsString()  →  42
+
+<span class="cm">// 2. 检查预算</span>
+checkAndReserve(42, 500)
+  → 今日已用: ¥12.40 / ¥50, 预占 ¥5 ✓
+
+<span class="cm">// 3. 加设备锁</span>
+SET lock:device:agent:35327...4567
+    requestId=abc-123  EX 600 NX  ✓`,
+    blocks: 0, cost: 0, status: 'CHECKING'
+  },
+  {
+    from: 'srv', to: 'agt', async: false,
+    label: 'POST /v1/agent-generate (SSE)',
+    phase: 'PHASE A', title: 'shark-server 转发到 agent',
+    desc: 'WebClient.post 携带 AGENT_SHARED_SECRET 转发请求。后续 agent 推回的 SSE 事件，shark-server 用 Flux<ServerSentEvent> 接收并原样回吐前端。',
+    data: `<span class="ev">POST http://&lt;agent-host&gt;/v1/agent-generate</span>
+<span class="cm">Authorization:</span> Bearer &lt;AGENT_SHARED_SECRET&gt;
+
+{
+  "requestId":  "abc-123",
+  "userId":     "42",
+  "deviceImei": "353278091234567",
+  "prompt":     "在抖音某好友主页留痕..."
+}`,
+    blocks: 0, cost: 0, status: 'FORWARDING'
+  },
+  {
+    from: 'self', on: 'agt',
+    label: '启动 LangGraph',
+    phase: 'PHASE A', title: 'agent 启动状态机',
+    desc: '创建 AgentState + Session（含 sse_queue、cancel_event、user_reply_event），后台 task 跑 graph.astream。SSE 立即吐出 meta 事件。',
+    data: `<span class="ev">build_graph().astream(initial_state)</span>
+
+initial_state = {
+  user_prompt: "在抖音某好友主页留痕...",
+  device_imei: "353278091234567",
+  messages:    [],
+  blocks:      [],
+  step: 0, max_steps: 30,
+  cost_cents: 0, max_cost_cents: 500,
+  status: "running"
+}
+
+<span class="ev">SSE → meta</span>  { requestId, model, costCap }`,
+    blocks: 0, cost: 0, status: 'RUNNING'
+  },
+
+  // ── Phase B: Round 1 - 查包名（信息从设备获取！） ──
+  {
+    from: 'agt', to: 'llm', async: false,
+    label: '第 1 轮决策（system + user）',
+    phase: 'PHASE B', title: 'agent → LLM：第 1 次调用',
+    desc: 'ChatAnthropic.bind_tools(ALL_TOOLS) 把 5 个工具定义一并发给 LLM。这是循环的"第一击"，让 LLM 在收到用户需求后决定第一步该做什么。',
+    data: `<span class="ev">messages.stream(</span>
+  model="claude-sonnet-4-6",
+  system=&lt;agent system prompt&gt;,
+  messages=[
+    HumanMessage("在抖音某好友主页留痕...")
+  ],
+  tools=[resolve_package, execute_block,
+         get_layout, ask_user, finish]
+<span class="ev">)</span>`,
+    blocks: 0, cost: 8, status: 'THINKING'
+  },
+  {
+    from: 'llm', to: 'agt', async: false,
+    label: 'tool_call: resolve_package("抖音")',
+    phase: 'PHASE B', title: 'LLM：先查抖音包名',
+    desc: 'LLM 思考"我需要先知道抖音包名"——它**不会编造**，因为 system prompt 强约束了"信息必须从设备/工具来"。tool_call 里包含工具名和参数。',
+    data: `<span class="cm">// LLM 输出</span>
+{
+  "content":    "我需要先知道抖音的包名...",
+  "tool_calls": [{
+    "name": "resolve_package",
+    "args": { "app_name": "抖音" }
+  }]
+}`,
+    blocks: 0, cost: 12, status: 'TOOL_CALL'
+  },
+  {
+    from: 'agt', to: 'fe', async: true,
+    label: 'SSE → thought + tool_call',
+    phase: 'PHASE B', title: 'agent 推 SSE：思考 + 工具调用',
+    desc: '前端"思考流"栏立即出现两条记录：模型的中文思考、即将调用的工具。SSE 经 shark-server 透传到浏览器。',
+    data: `<span class="ev">SSE → thought</span>
+{ "text": "我需要先知道抖音的包名..." }
+
+<span class="ev">SSE → tool_call</span>
+{ "name": "resolve_package", "args": { "app_name": "抖音" } }`,
+    blocks: 0, cost: 12, status: 'THINKING'
+  },
+  {
+    from: 'agt', to: 'srv', async: false,
+    label: 'GET /internal/agent/resolve-package',
+    phase: 'PHASE B', title: 'agent 反向调 shark-server',
+    desc: 'Python 工具函数 resolve_package 内部用 SharkClient（httpx）调内部 API。鉴权用 X-Internal-Token（与对前端的 Bearer 不同的密钥）。',
+    data: `<span class="ev">GET /internal/agent/resolve-package</span>
+       ?imei=353278091234567&name=抖音
+<span class="cm">X-Internal-Token:</span> &lt;AGENT_INTERNAL_SECRET&gt;`,
+    blocks: 0, cost: 12, status: 'RESOLVING'
+  },
+  {
+    from: 'srv', to: 'dev', async: false,
+    label: 'MQTT type=5004 { query: "抖音" }',
+    phase: 'PHASE B', title: 'shark-server → 设备：实时查包名',
+    desc: '关键步骤：**不查任何缓存表，直接问设备**。MQTT type=5004 触发 daemon 调 PackageManager.getInstalledPackages()，按 label 模糊匹配返回。',
+    data: `<span class="ev">MQTT publish to shark/&lt;imei&gt;</span>
+{
+  "type": 5004,
+  "taskId": "uuid-x",
+  "data": { "query": "抖音" }
+}
+
+<span class="cm">// daemon 端实现</span>
+PackageManager pm = ctx.getPackageManager();
+List&lt;PackageInfo&gt; pkgs = pm.getInstalledPackages(0);
+for (PackageInfo p : pkgs) {
+    String label = p.applicationInfo
+        .loadLabel(pm).toString();
+    if (label.contains("抖音")) {
+        return p.packageName;  // ← 只返回真实安装的
+    }
+}`,
+    blocks: 0, cost: 12, status: 'DEVICE_QUERY'
+  },
+  {
+    from: 'dev', to: 'srv', async: false,
+    label: '{ pkg, label }',
+    phase: 'PHASE B', title: '设备返回真实包名',
+    desc: '设备返回的是**当前真实安装的应用**——版本不同、马甲包不同都能正确处理。如果设备根本没装抖音，会返回 NOT_FOUND，agent 应改用 ask_user。',
+    data: `<span class="ev">MQTT 回写</span>
+{
+  "type":   "pkg_result",
+  "taskId": "uuid-x",
+  "data":   {
+    "pkg":   <span class="hi">"com.ss.android.ugc.aweme"</span>,
+    "label": "抖音"
+  }
+}`,
+    blocks: 0, cost: 12, status: 'DEVICE_QUERY'
+  },
+  {
+    from: 'srv', to: 'agt', async: false,
+    label: '{ pkg }',
+    phase: 'PHASE B', title: 'shark-server 透传结果回 agent',
+    desc: '同时 agent 推 SSE tool_result 给前端，让用户看到这个工具的结果。',
+    data: `<span class="cm">// HTTP 响应</span>
+{ "pkg": "com.ss.android.ugc.aweme", "source": "device" }
+
+<span class="ev">SSE → tool_result</span>
+{
+  "name": "resolve_package",
+  "ok":   true,
+  "result": "com.ss.android.ugc.aweme"
+}`,
+    blocks: 0, cost: 12, status: 'RESOLVED'
+  },
+
+  // ── Phase C: Round 2 - 启动 App ──
+  {
+    from: 'agt', to: 'llm', async: false,
+    label: '第 2 轮决策（含 tool_result）',
+    phase: 'PHASE C', title: 'agent → LLM：第 2 次调用',
+    desc: '本轮 messages 历史里多了上一轮的 tool_call 和 tool_result，LLM 据此决定下一步——既然知道包名了，那就启动它。',
+    data: `messages 历史:
+  [0] system: &lt;agent prompt&gt;
+  [1] user:   "在抖音某好友主页留痕..."
+  [2] ai:     tool_call resolve_package
+  [3] tool:   pkg=com.ss.android.ugc.aweme
+  [4] ?  ← 等 LLM 输出第 5 条
+
+<span class="cm">// 期待的输出</span>
+"现在我知道包名了，启动应用..."
+→ tool_call execute_block(launchApp)`,
+    blocks: 0, cost: 18, status: 'THINKING'
+  },
+  {
+    from: 'llm', to: 'agt', async: false,
+    label: 'tool_call: execute_block(launchApp)',
+    phase: 'PHASE C', title: 'LLM：第一个真正落块的工具调用',
+    desc: '到这里 LLM 决定调 execute_block——这是<strong>落块的唯一入口</strong>。不论后续真机执行成败，块都已落入用户的最终积木流。',
+    data: `<span class="cm">// LLM 输出</span>
+{
+  "tool_calls": [{
+    "name": "execute_block",
+    "args": {
+      "block": {
+        "type": "launchApp",
+        "params": { "pkg": "com.ss.android.ugc.aweme" }
+      }
+    }
+  }]
+}`,
+    blocks: 0, cost: 22, status: 'TOOL_CALL'
+  },
+  {
+    from: 'agt', to: 'fe', async: true, blockEmit: true,
+    label: 'SSE → block ← 落第 1 块!',
+    phase: 'PHASE C', title: '★ agent 推 block：前端立即落块',
+    desc: '本步用绿色高亮——这是 execute_block 工具的副作用：还没真正执行，先把积木推给前端在"积木流"栏立即可见。即使后续设备执行失败，这块也已经在脚本里了（用户回看就知道哪一步炸了）。',
+    data: `<span class="ev">SSE → block</span>
+{
+  "type": "launchApp",
+  "params": { "pkg": "com.ss.android.ugc.aweme" }
+}
+
+<span class="hi">前端积木流：</span>
+  <span class="hi">01  launchApp  com.ss.android.ugc.aweme  ◀── 新增</span>`,
+    blocks: 1, cost: 22, status: 'BLOCK_EMITTED'
+  },
+  {
+    from: 'agt', to: 'srv', async: false,
+    label: 'POST /internal/agent/execute-block',
+    phase: 'PHASE C', title: 'agent → shark-server：真机执行',
+    desc: 'agent 把积木通过 _block_to_js 转成 JS 代码（例如 launchApp(\'com.ss...\')），再通过内部 API 提交给 shark-server。',
+    data: `<span class="ev">POST /internal/agent/execute-block</span>
+{
+  "imei": "...",
+  "code": "launchApp('com.ss.android.ugc.aweme');"
+}`,
+    blocks: 1, cost: 22, status: 'EXECUTING'
+  },
+  {
+    from: 'srv', to: 'dev', async: false,
+    label: 'MQTT type=5002 + Rhino 引擎',
+    phase: 'PHASE C', title: 'shark-server → 设备：MQTT 下发执行',
+    desc: '设备 daemon 收到 type=5002 后用 Rhino JS 引擎执行那段代码（系统进程权限），抖音真的启动了。',
+    data: `<span class="ev">MQTT publish to shark/&lt;imei&gt;</span>
+{
+  "type":   5002,
+  "taskId": "uuid-y",
+  "data":   { "scriptCode": "launchApp('com.ss...')",
+              "timeout": 15 }
+}
+
+<span class="cm">// daemon Rhino 执行</span>
+ScriptExecutor.run(code) → 抖音启动 ✓`,
+    blocks: 1, cost: 22, status: 'EXECUTING'
+  },
+  {
+    from: 'dev', to: 'srv', async: false,
+    label: '{ success: true }',
+    phase: 'PHASE C', title: '设备执行结果回传',
+    desc: 'shark-server → agent → SSE tool_result，让 LLM 知道这一步成功了，可以继续下一步决策。',
+    data: `{ "success": true, "msg": "OK" }
+
+<span class="ev">SSE → tool_result</span>
+{ "name": "execute_block", "ok": true, "result": "OK" }`,
+    blocks: 1, cost: 22, status: 'EXECUTED'
+  },
+
+  // ── Phase D: 循环（折叠） ──
+  {
+    from: 'self', on: 'agt',
+    label: '... 循环若干轮直到 finish ...',
+    phase: 'PHASE D', title: '循环继续：每一轮都是上述模式',
+    desc: '后续每一轮都是同样的"LLM 决策 → 工具执行（可能落块、可能查信息） → 结果回传"。常见调用顺序：sleep → get_layout → clickByText → sleep → get_layout → ... 直到任务达成。',
+    data: `<span class="cm">// 缩略示意</span>
+Round 3: tool_call sleep(3000)            → block 02
+Round 4: tool_call get_layout()           → 查布局
+Round 5: tool_call clickByText("好友")    → block 03
+Round 6: tool_call ask_user("目标昵称?")  ← 暂停等用户
+Round 7: tool_call clickByText("@小明")   → block 04
+Round 8: tool_call get_layout()
+Round 9: tool_call clickByText("点赞")    → block 05
+... (直到 LLM 主动调 finish)
+
+<span class="cm">// 期间持续累计 cost / blocks，前端三栏实时刷新</span>`,
+    blocks: 11, cost: 158, status: 'LOOPING'
+  },
+
+  // ── Phase E: 收尾 ──
+  {
+    from: 'llm', to: 'agt', async: false,
+    label: 'tool_call: finish()',
+    phase: 'PHASE E', title: 'LLM 判断目标达成，主动 finish',
+    desc: 'LLM 看到任务完成（点赞 3 个视频都做了），调 finish 工具退出循环。这是"优雅终止"——避免空跑到 max_steps 浪费 token。',
+    data: `<span class="cm">// LLM 最后一次输出</span>
+{
+  "tool_calls": [{
+    "name": "finish",
+    "args": {
+      "summary": "已点赞好友主页前 3 个视频",
+      "success": true
+    }
+  }]
+}
+
+graph: tools → END`,
+    blocks: 11, cost: 168, status: 'FINISHING'
+  },
+  {
+    from: 'agt', to: 'fe', async: true,
+    label: 'SSE → done',
+    phase: 'PHASE E', title: '收尾：agent 推 done 事件 → 前端展示完成',
+    desc: '前端关闭流式渲染状态，弹出"作为新脚本 / 插入当前脚本"按钮。同时 shark-server 在 doFinally 里 settle 用户预算（实际花费 168 分 vs 预占 500 分，差额退还）+ 释放设备锁。',
+    data: `<span class="ev">SSE → done</span>
+{
+  "summary":        "已点赞好友主页前 3 个视频",
+  "blockCount":     11,
+  "totalCostCents": 168,
+  "totalSeconds":   47,
+  "finalStatus":    "done"
+}
+
+<span class="cm">// shark-server doFinally:</span>
+budgetService.settle(42, 500, 168)   <span class="hi">// 退还 ¥3.32</span>
+deviceLockService.release(imei)       <span class="hi">// 释放设备</span>`,
+    blocks: 11, cost: 168, status: 'DONE'
+  },
+];
+
+const N = STEPS.length;
+
+/* ═══════════════ Render sequence diagram ═══════════════ */
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const HEADER_H = 80;            // 顶部 lane header 高度
+const ROW_H = 60;                // 每条消息行高
+const TOP_PAD = HEADER_H + 30;   // 第一行起始 y
+const PHASE_LABEL_H = 22;        // 阶段分隔行高度
+
+function buildSeq() {
+  const svg = document.getElementById('seq-svg');
+  svg.innerHTML = '';
+
+  // 计算每行 y 位置（考虑 phase divider）
+  const rowYs = [];
+  let curY = TOP_PAD;
+  for (let i = 0; i < N; i++) {
+    if (PHASES.find(p => p.atStep === i + 1)) {
+      curY += PHASE_LABEL_H;
+    }
+    rowYs.push(curY);
+    curY += ROW_H;
+  }
+  const totalHeight = curY + 30;
+  svg.setAttribute('viewBox', `0 0 1000 ${totalHeight}`);
+  svg.style.minHeight = totalHeight + 'px';
+
+  // 1. 画 lane headers（粘性顶部背景）
+  const headerBg = document.createElementNS(SVG_NS, 'rect');
+  headerBg.setAttribute('x', 0); headerBg.setAttribute('y', 0);
+  headerBg.setAttribute('width', 1000); headerBg.setAttribute('height', HEADER_H);
+  headerBg.setAttribute('fill', '#091420');
+  svg.appendChild(headerBg);
+
+  LANES.forEach(lane => {
+    const w = 150;
+    const x = lane.x - w / 2;
+    const r = document.createElementNS(SVG_NS, 'rect');
+    r.setAttribute('x', x); r.setAttribute('y', 18);
+    r.setAttribute('width', w); r.setAttribute('height', 46);
+    r.setAttribute('class', 'lane-header-bg ' + lane.color);
+    svg.appendChild(r);
+
+    const t1 = document.createElementNS(SVG_NS, 'text');
+    t1.setAttribute('x', lane.x); t1.setAttribute('y', 40);
+    t1.setAttribute('text-anchor', 'middle');
+    t1.setAttribute('class', 'lane-header-text');
+    t1.textContent = lane.name;
+    svg.appendChild(t1);
+
+    const t2 = document.createElementNS(SVG_NS, 'text');
+    t2.setAttribute('x', lane.x); t2.setAttribute('y', 56);
+    t2.setAttribute('text-anchor', 'middle');
+    t2.setAttribute('class', 'lane-header-tech');
+    t2.textContent = lane.tech;
+    svg.appendChild(t2);
+
+    // lifeline 虚线
+    const ll = document.createElementNS(SVG_NS, 'line');
+    ll.setAttribute('x1', lane.x); ll.setAttribute('x2', lane.x);
+    ll.setAttribute('y1', HEADER_H); ll.setAttribute('y2', totalHeight - 10);
+    ll.setAttribute('class', 'lane-line');
+    svg.appendChild(ll);
+  });
+
+  // 2. 画 phase 分隔线 + 标签
+  PHASES.forEach(ph => {
+    const idx = ph.atStep - 1;
+    const y = rowYs[idx] - 16;
+    const line = document.createElementNS(SVG_NS, 'line');
+    line.setAttribute('x1', 30); line.setAttribute('x2', 970);
+    line.setAttribute('y1', y); line.setAttribute('y2', y);
+    line.setAttribute('class', 'phase-divider-line');
+    svg.appendChild(line);
+    const t = document.createElementNS(SVG_NS, 'text');
+    t.setAttribute('x', 35); t.setAttribute('y', y - 4);
+    t.setAttribute('class', 'phase-divider-text');
+    t.textContent = ph.label;
+    svg.appendChild(t);
+  });
+
+  // 3. 画每一步的 message
+  STEPS.forEach((step, i) => {
+    const y = rowYs[i];
+    const g = document.createElementNS(SVG_NS, 'g');
+    g.setAttribute('class', 'msg-group future' + (step.blockEmit ? ' block-emit' : ''));
+    g.dataset.step = i;
+    svg.appendChild(g);
+
+    if (step.from === 'self') {
+      // self loop on a lane (lane id stored in step.on)
+      const lane = LANES.find(l => l.id === step.on);
+      if (!lane) return;
+      const cx = lane.x + 12;
+      // small arc loop to right of the lane
+      const path = document.createElementNS(SVG_NS, 'path');
+      path.setAttribute('d', `M ${lane.x} ${y - 8} Q ${cx + 30} ${y - 4}, ${cx + 30} ${y + 4} Q ${cx + 30} ${y + 12}, ${lane.x} ${y + 12}`);
+      path.setAttribute('class', 'self-loop');
+      g.appendChild(path);
+      // arrowhead
+      const head = document.createElementNS(SVG_NS, 'polygon');
+      head.setAttribute('points', `${lane.x - 5},${y + 8} ${lane.x + 5},${y + 8} ${lane.x},${y + 16}`);
+      head.setAttribute('class', 'msg-arrowhead');
+      g.appendChild(head);
+      // label
+      const t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', cx + 36); t.setAttribute('y', y + 4);
+      t.setAttribute('class', 'msg-label');
+      t.textContent = step.label;
+      g.appendChild(t);
+      // step number
+      const n = document.createElementNS(SVG_NS, 'text');
+      n.setAttribute('x', lane.x - 38); n.setAttribute('y', y + 4);
+      n.setAttribute('class', 'msg-label');
+      n.setAttribute('fill', '#4a6580');
+      n.textContent = String(i + 1).padStart(2, '0');
+      g.appendChild(n);
+    } else {
+      const fromLane = LANES.find(l => l.id === step.from);
+      const toLane   = LANES.find(l => l.id === step.to);
+      if (!fromLane || !toLane) return;
+      const x1 = fromLane.x;
+      const x2 = toLane.x;
+      const dir = x2 > x1 ? 1 : -1;
+
+      // arrow line
+      const line = document.createElementNS(SVG_NS, 'line');
+      line.setAttribute('x1', x1 + dir * 6); line.setAttribute('x2', x2 - dir * 8);
+      line.setAttribute('y1', y); line.setAttribute('y2', y);
+      line.setAttribute('class', 'msg-arrow' + (step.async ? ' async' : ''));
+      g.appendChild(line);
+
+      // arrowhead triangle
+      const head = document.createElementNS(SVG_NS, 'polygon');
+      const tipX = x2 - dir * 4;
+      head.setAttribute('points', `${tipX} ${y}, ${tipX - dir * 8} ${y - 4}, ${tipX - dir * 8} ${y + 4}`);
+      head.setAttribute('class', 'msg-arrowhead');
+      g.appendChild(head);
+
+      // label centered above
+      const midX = (x1 + x2) / 2;
+      const t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', midX); t.setAttribute('y', y - 6);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('class', 'msg-label');
+      t.textContent = step.label;
+      g.appendChild(t);
+
+      // step number on the left edge
+      const n = document.createElementNS(SVG_NS, 'text');
+      n.setAttribute('x', 8); n.setAttribute('y', y + 4);
+      n.setAttribute('class', 'msg-label');
+      n.setAttribute('fill', '#4a6580');
+      n.textContent = String(i + 1).padStart(2, '0');
+      g.appendChild(n);
+
+      // flow dot animation (only added/removed when current)
+      const dot = document.createElementNS(SVG_NS, 'circle');
+      dot.setAttribute('r', 4);
+      dot.setAttribute('class', 'flow-dot');
+      dot.style.opacity = '0';
+      const am1 = document.createElementNS(SVG_NS, 'animate');
+      am1.setAttribute('attributeName', 'cx');
+      am1.setAttribute('values', `${x1 + dir * 6};${x2 - dir * 8}`);
+      am1.setAttribute('dur', '1.4s');
+      am1.setAttribute('repeatCount', 'indefinite');
+      const am2 = document.createElementNS(SVG_NS, 'animate');
+      am2.setAttribute('attributeName', 'opacity');
+      am2.setAttribute('values', '0;1;1;0');
+      am2.setAttribute('dur', '1.4s');
+      am2.setAttribute('repeatCount', 'indefinite');
+      dot.appendChild(am1); dot.appendChild(am2);
+      dot.setAttribute('cy', y);
+      dot.setAttribute('cx', x1);
+      dot.dataset.role = 'dot';
+      g.appendChild(dot);
+    }
+  });
+
+  return rowYs;
+}
+
+let ROW_YS = [];
+let cur = 0;
+let playing = false;
+let timer = null;
+
+const $ = id => document.getElementById(id);
+
+function renderStep(i) {
+  cur = Math.max(0, Math.min(N - 1, i));
+  const s = STEPS[cur];
+
+  // status bar
+  $('stat-step').textContent = String(cur + 1).padStart(2, '0');
+  $('stat-phase').textContent = s.phase;
+  $('stat-cost').textContent = '¥' + (s.cost / 100).toFixed(2);
+  $('stat-blocks').textContent = s.blocks;
+  $('stat-status').textContent = s.status;
+  $('stat-cost-cell').classList.remove('warn', 'danger');
+  if (s.cost >= 350) $('stat-cost-cell').classList.add('warn');
+  if (s.cost >= 450) $('stat-cost-cell').classList.add('danger');
+  $('stat-blocks-cell').classList.toggle('success', s.blocks > 0);
+
+  // detail
+  $('detail-num').innerHTML = String(cur + 1).padStart(2, '0') + `<small>/${N}</small>`;
+  $('detail-phase').textContent = s.phase;
+  $('detail-title').textContent = s.title;
+  $('detail-desc').innerHTML = s.desc;
+  if (s.data) {
+    $('detail-data').style.display = '';
+    $('detail-data').innerHTML = s.data;
+  } else {
+    $('detail-data').style.display = 'none';
+  }
+
+  // update msg-group classes
+  document.querySelectorAll('.msg-group').forEach((g, idx) => {
+    g.classList.remove('past', 'current', 'future');
+    if (idx < cur)      g.classList.add('past');
+    else if (idx === cur) g.classList.add('current');
+    else                g.classList.add('future');
+    // 控制流动点透明度
+    const dot = g.querySelector('[data-role="dot"]');
+    if (dot) dot.style.opacity = (idx === cur) ? '' : '0';
+  });
+
+  // scroll to current step
+  const stage = $('seq-stage');
+  if (ROW_YS[cur] != null) {
+    const targetY = ROW_YS[cur] - HEADER_H - 60;
+    stage.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+  }
+}
+
+function play() {
+  if (playing) return;
+  playing = true;
+  $('btn-play').textContent = '⏸ 暂停';
+  const tick = () => {
+    if (cur >= N - 1) { stop(); return; }
+    renderStep(cur + 1);
+    timer = setTimeout(tick, 2400);
+  };
+  timer = setTimeout(tick, 1400);
+}
+function stop() {
+  playing = false;
+  $('btn-play').textContent = '▶ 自动播放';
+  if (timer) { clearTimeout(timer); timer = null; }
+}
+function reset() {
+  stop();
+  renderStep(0);
+}
+
+$('btn-play').addEventListener('click', () => playing ? stop() : play());
+$('btn-prev').addEventListener('click', () => { stop(); renderStep(cur - 1); });
+$('btn-next').addEventListener('click', () => { stop(); renderStep(cur + 1); });
+$('btn-reset').addEventListener('click', reset);
+
+window.addEventListener('keydown', e => {
+  if (document.querySelector('section.active').id !== 'tab-flow') return;
+  if (e.key === ' ')               { e.preventDefault(); playing ? stop() : play(); }
+  else if (e.key === 'ArrowRight') { stop(); renderStep(cur + 1); }
+  else if (e.key === 'ArrowLeft')  { stop(); renderStep(cur - 1); }
+  else if (e.key === 'r' || e.key === 'R') reset();
+});
+
+// init
+ROW_YS = buildSeq();
+renderStep(0);
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* Tab: System overview (intuitive)                                 */
+/* ═══════════════════════════════════════════════════════════════ */
+const SCENES = [
+  {
+    title: '准备：所有组件就绪',
+    desc: '左上是用户的浏览器，右下是 Claude，左下是真实手机。三者都通过中间的 Agent 协调。Agent 由 LangGraph 状态机驱动，处于"待命"状态。',
+    duration: 2500,
+    activeCmps: [],
+    activeConns: [],
+    particles: [],
+    showLoop: false,
+    cost: 0, blocks: 0, state: 'IDLE',
+  },
+  {
+    title: '① 用户发起请求',
+    desc: '浏览器选好设备、写完需求（"在抖音某好友主页留痕"），SSE 连接打到 shark-server。shark-server 鉴权 + 检查日预算 + 加 Redis 设备锁，然后**转发到 Agent**。',
+    duration: 4000,
+    activeCmps: ['frontend', 'java', 'agent'],
+    activeConns: ['fe-srv', 'srv-agent'],
+    particles: [
+      { conn: 'fe-srv', count: 3, delay: 0, color: 'cyan', dir: 'forward' },
+      { conn: 'srv-agent', count: 3, delay: 1200, color: 'cyan', dir: 'forward' },
+    ],
+    showLoop: false,
+    cost: 0, blocks: 0, state: 'STARTING',
+  },
+  {
+    title: '② Agent 与 Claude：第 1 轮决策',
+    desc: 'Agent 启动 LangGraph 循环。第一件事：把 system prompt（含 5 个工具说明） + 用户需求一起发给 Claude，问"该怎么做？"Claude 思考后说：**先得知道抖音的包名**。',
+    duration: 4500,
+    activeCmps: ['agent', 'llm'],
+    activeConns: ['agent-llm'],
+    particles: [
+      { conn: 'agent-llm', count: 3, delay: 0, color: 'amber', dir: 'forward' },
+      { conn: 'agent-llm', count: 3, delay: 2000, color: 'amber', dir: 'reverse' },
+    ],
+    showLoop: true,
+    cost: 12, blocks: 0, state: 'THINKING',
+  },
+  {
+    title: '③ Agent 向设备查真相',
+    desc: 'Agent 调 resolve_package("抖音") 工具——不查任何缓存表。请求经 shark-server 内部 API → MQTT type=5004 → 设备 daemon 调用 <strong>PackageManager.getInstalledPackages()</strong> → 真实安装的应用列表里匹配 label="抖音" → 返回 com.ss.android.ugc.aweme。',
+    duration: 5500,
+    activeCmps: ['agent', 'java', 'device'],
+    activeConns: ['srv-agent', 'srv-device'],
+    particles: [
+      { conn: 'srv-agent', count: 2, delay: 0, color: 'cyan', dir: 'reverse' },
+      { conn: 'srv-device', count: 2, delay: 800, color: 'cyan', dir: 'forward' },
+      { conn: 'srv-device', count: 2, delay: 2800, color: 'green', dir: 'reverse' },
+      { conn: 'srv-agent', count: 2, delay: 3800, color: 'green', dir: 'forward' },
+    ],
+    showLoop: true,
+    cost: 12, blocks: 0, state: 'QUERYING_DEVICE',
+  },
+  {
+    title: '④ 落第 1 块：启动 App',
+    desc: 'Agent 进入第 2 轮决策。Claude 看到包名后说"启动它"，调 execute_block(launchApp) 工具。Agent 立即 SSE 推 block 给前端（**用户在积木流栏看到第 1 块出现**），同时下发设备真的启动应用。',
+    duration: 5500,
+    activeCmps: ['agent', 'llm', 'java', 'frontend', 'device'],
+    activeConns: ['agent-llm', 'srv-agent', 'fe-srv', 'srv-device'],
+    particles: [
+      { conn: 'agent-llm', count: 2, delay: 0, color: 'amber', dir: 'forward' },
+      { conn: 'agent-llm', count: 2, delay: 800, color: 'amber', dir: 'reverse' },
+      { conn: 'srv-agent', count: 2, delay: 1800, color: 'green', dir: 'reverse' },
+      { conn: 'fe-srv', count: 3, delay: 2200, color: 'green', dir: 'reverse' },
+      { conn: 'srv-device', count: 2, delay: 3200, color: 'cyan', dir: 'forward' },
+    ],
+    showLoop: true,
+    cost: 22, blocks: 1, state: 'BLOCK_EMITTED',
+  },
+  {
+    title: '⑤ 循环若干轮直到完成',
+    desc: '后续每一轮都是相同节奏：Claude 决策 → Agent 调工具（查布局 / 落块 / 问用户）→ 结果回到 Claude。用户在前端看到积木一块一块出现，同时投屏画面真实变化。所有 SSE 事件实时推送。',
+    duration: 6500,
+    activeCmps: ['agent', 'llm', 'java', 'frontend', 'device'],
+    activeConns: ['agent-llm', 'srv-agent', 'fe-srv', 'srv-device'],
+    particles: [
+      { conn: 'agent-llm',  count: 5, delay: 0,    color: 'amber', dir: 'both', spacing: 350 },
+      { conn: 'srv-device', count: 5, delay: 600,  color: 'cyan',  dir: 'both', spacing: 400 },
+      { conn: 'fe-srv',     count: 6, delay: 300,  color: 'green', dir: 'reverse', spacing: 350 },
+      { conn: 'srv-agent',  count: 5, delay: 200,  color: 'cyan',  dir: 'both', spacing: 380 },
+    ],
+    showLoop: true,
+    cost: 158, blocks: 9, state: 'LOOPING',
+  },
+  {
+    title: '⑥ 完成',
+    desc: 'Claude 调 finish() 工具，Agent 推 SSE done 给前端。shark-server 在 doFinally 里 settle 用户预算（多退少补）+ 释放设备锁。前端展示"作为新脚本 / 插入当前脚本"按钮。',
+    duration: 4500,
+    activeCmps: ['agent', 'java', 'frontend'],
+    activeConns: ['srv-agent', 'fe-srv'],
+    particles: [
+      { conn: 'srv-agent', count: 3, delay: 0, color: 'green', dir: 'reverse' },
+      { conn: 'fe-srv', count: 3, delay: 1200, color: 'green', dir: 'reverse' },
+    ],
+    showLoop: false,
+    cost: 168, blocks: 11, state: 'DONE',
+  },
+];
+
+const OV_N = SCENES.length;
+let ovCur = 0;
+let ovPlaying = false;
+let ovTimer = null;
+const $$ = id => document.getElementById(id);
+
+function clearParticles() {
+  const container = $$('ov-particles');
+  if (container) container.innerHTML = '';
+}
+
+function spawnParticle(conn, color, dir, delayMs, durationMs = 1400) {
+  const container = $$('ov-particles');
+  if (!container) return;
+  const pathId = (dir === 'reverse')
+    ? { 'fe-srv': 'path-srv-fe', 'srv-agent': 'path-agent-srv',
+        'agent-llm': 'path-llm-agent', 'srv-device': 'path-device-srv' }[conn]
+    : { 'fe-srv': 'path-fe-srv',  'srv-agent': 'path-srv-agent',
+        'agent-llm': 'path-agent-llm', 'srv-device': 'path-srv-device' }[conn];
+  if (!pathId) return;
+
+  const c = document.createElementNS(SVG_NS, 'circle');
+  c.setAttribute('r', 5);
+  c.setAttribute('class', 'ov-particle ' + color);
+  c.setAttribute('opacity', '0');
+  // animateMotion
+  const am = document.createElementNS(SVG_NS, 'animateMotion');
+  am.setAttribute('dur', durationMs + 'ms');
+  am.setAttribute('begin', delayMs + 'ms');
+  am.setAttribute('fill', 'remove');
+  am.setAttribute('repeatCount', '1');
+  const mp = document.createElementNS(SVG_NS, 'mpath');
+  mp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#' + pathId);
+  am.appendChild(mp);
+  // opacity animate
+  const ao = document.createElementNS(SVG_NS, 'animate');
+  ao.setAttribute('attributeName', 'opacity');
+  ao.setAttribute('values', '0;1;1;0');
+  ao.setAttribute('dur', durationMs + 'ms');
+  ao.setAttribute('begin', delayMs + 'ms');
+  ao.setAttribute('fill', 'remove');
+  ao.setAttribute('repeatCount', '1');
+  c.appendChild(am); c.appendChild(ao);
+  container.appendChild(c);
+
+  // Auto-clean after animation done
+  setTimeout(() => {
+    if (c.parentNode) c.parentNode.removeChild(c);
+  }, delayMs + durationMs + 200);
+}
+
+function applyScene(idx) {
+  ovCur = Math.max(0, Math.min(OV_N - 1, idx));
+  const scene = SCENES[ovCur];
+
+  // Status bar
+  $$('ov-stat-scene').textContent = ovCur + '/' + (OV_N - 1);
+  $$('ov-stat-cost').textContent = '¥' + (scene.cost / 100).toFixed(2);
+  $$('ov-stat-blocks').textContent = scene.blocks;
+  $$('ov-stat-state').textContent = scene.state;
+  $$('ov-cost-cell').classList.remove('warn', 'danger');
+  if (scene.cost >= 350) $$('ov-cost-cell').classList.add('warn');
+  if (scene.cost >= 450) $$('ov-cost-cell').classList.add('danger');
+  $$('ov-blocks-cell').classList.toggle('success', scene.blocks > 0);
+
+  // Caption
+  $$('ov-cap-num').innerHTML = ovCur + '<small>/' + (OV_N - 1) + '</small>';
+  $$('ov-cap-title').textContent = scene.title;
+  $$('ov-cap-desc').innerHTML = scene.desc;
+
+  // Component active states
+  document.querySelectorAll('.ov-cmp').forEach(el => {
+    el.classList.toggle('active', scene.activeCmps.includes(el.dataset.cmp));
+  });
+
+  // Connections
+  document.querySelectorAll('.ov-conn').forEach(el => {
+    el.classList.toggle('active', scene.activeConns.includes(el.dataset.conn));
+  });
+  document.querySelectorAll('[data-conn-label]').forEach(el => {
+    el.classList.toggle('active', scene.activeConns.includes(el.dataset.connLabel));
+  });
+
+  // Loop ring
+  const ring = $$('ov-loop');
+  if (ring) ring.classList.toggle('spinning', scene.showLoop);
+
+  // Particles
+  clearParticles();
+  scene.particles.forEach(p => {
+    const dirs = p.dir === 'both' ? ['forward', 'reverse'] : [p.dir];
+    for (let i = 0; i < p.count; i++) {
+      dirs.forEach(d => {
+        spawnParticle(p.conn, p.color, d, p.delay + i * (p.spacing || 380));
+      });
+    }
+  });
+
+  // Scene strip
+  document.querySelectorAll('.ov-scene-dot').forEach((d, i) => {
+    d.classList.remove('done', 'current');
+    if (i < ovCur) d.classList.add('done');
+    if (i === ovCur) d.classList.add('current');
+  });
+}
+
+function ovBuildStrip() {
+  const strip = $$('ov-scene-strip');
+  strip.innerHTML = '';
+  for (let i = 0; i < OV_N; i++) {
+    const d = document.createElement('div');
+    d.className = 'ov-scene-dot';
+    d.title = SCENES[i].title;
+    d.addEventListener('click', () => { ovStop(); applyScene(i); });
+    strip.appendChild(d);
+  }
+}
+
+function ovPlay() {
+  if (ovPlaying) return;
+  ovPlaying = true;
+  $$('ov-btn-play').textContent = '⏸ 暂停';
+  const tick = () => {
+    if (ovCur >= OV_N - 1) { ovStop(); return; }
+    applyScene(ovCur + 1);
+    ovTimer = setTimeout(tick, SCENES[ovCur].duration);
+  };
+  // 立即开始播放下一场（不等当前 scene 时长）
+  if (ovCur === 0) {
+    applyScene(1);
+    ovTimer = setTimeout(tick, SCENES[ovCur].duration);
+  } else {
+    ovTimer = setTimeout(tick, SCENES[ovCur].duration);
+  }
+}
+function ovStop() {
+  ovPlaying = false;
+  $$('ov-btn-play').textContent = '▶ 自动播放';
+  if (ovTimer) { clearTimeout(ovTimer); ovTimer = null; }
+}
+function ovReset() {
+  ovStop();
+  applyScene(0);
+}
+
+$$('ov-btn-play').addEventListener('click', () => ovPlaying ? ovStop() : ovPlay());
+$$('ov-btn-prev').addEventListener('click', () => { ovStop(); applyScene(ovCur - 1); });
+$$('ov-btn-next').addEventListener('click', () => { ovStop(); applyScene(ovCur + 1); });
+$$('ov-btn-reset').addEventListener('click', ovReset);
+
+// Keyboard for overview tab
+window.addEventListener('keydown', e => {
+  if (document.querySelector('section.active').id !== 'tab-overview') return;
+  if (e.key === ' ')               { e.preventDefault(); ovPlaying ? ovStop() : ovPlay(); }
+  else if (e.key === 'ArrowRight') { ovStop(); applyScene(ovCur + 1); }
+  else if (e.key === 'ArrowLeft')  { ovStop(); applyScene(ovCur - 1); }
+});
+
+// init overview
+ovBuildStrip();
+applyScene(0);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,767 @@
+[     273ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[     572ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[     804ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     805ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     805ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     805ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     805ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     805ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     808ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     808ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     808ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[    1262ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/element-ui/lib/element-ui.common.js:9163
+[    1554ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[    1554ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[    1557ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[    1557ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   48979ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[   49074ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[   49267ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49267ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49267ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49267ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49267ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49267ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49268ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49268ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49268ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   49527ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/element-ui/lib/element-ui.common.js:9163
+[   49761ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   49761ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   49762ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   49762ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   50438ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   50438ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   50727ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   50727ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   51039ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   51039ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   51680ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   51680ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   59080ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   59080ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   59083ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[   59084ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  115108ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  115108ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  157570ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  157570ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  158546ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  158546ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  160645ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  160645ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  163567ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  163567ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  169533ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  169533ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  170219ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  170220ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  171081ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  171081ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  176505ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  176506ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  182745ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  182745ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  183605ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  183605ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  183900ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  183900ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  183903ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  183903ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  187273ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  187273ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  188273ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  188273ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  189567ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  189567ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  190245ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  190245ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  194300ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  194300ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  195371ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  195371ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  195721ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[  195721ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1035023ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1035024ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1050312ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1050312ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1050346ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1050346ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1500406ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[ 1500639ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[ 1500866ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500866ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500866ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500866ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500866ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500866ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500867ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500867ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1500867ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1501152ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/element-ui/lib/element-ui.common.js:9163
+[ 1501387ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1501387ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1501389ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1501389ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1516931ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[ 1517076ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[ 1517261ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517262ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517262ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517262ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517262ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517262ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517263ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517263ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517263ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 1517467ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/element-ui/lib/element-ui.common.js:9163
+[ 1517715ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1517715ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1517716ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1517716ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1924584ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1924584ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1924650ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.tencent.mm'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 1924650ms] [ERROR] [Vue warn]: Duplicate keys detected: 'com.hm.wechat'. This may cause an update error.
+
+found in
+
+---> <AppStats> at src/views/shark/app-stats/index.vue
+       <AppMain> at src/layout/components/AppMain.vue
+         <Layout> at src/layout/index.vue
+           <App> at src/App.vue
+             <Root> @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:619
+[ 2241599ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[ 2241814ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[ 2242075ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242075ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242075ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242075ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242075ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242075ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242076ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242076ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242076ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[ 2242143ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/xterm/lib/xterm.js:0

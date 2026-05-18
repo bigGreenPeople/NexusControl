@@ -1,0 +1,137 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "NexusControl" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - heading "NexusControl" [level=1] [ref=e8]
+        - menubar [ref=e12]:
+          - link "首页" [ref=e14] [cursor=pointer]:
+            - /url: /index
+            - menuitem "首页" [ref=e15]:
+              - img [ref=e16]
+              - text: 首页
+          - menuitem "脚本管理 " [ref=e19]:
+            - generic [ref=e20] [cursor=pointer]:
+              - img [ref=e21]
+              - text: 脚本管理
+              - generic [ref=e23]: 
+          - menuitem "应用管理 " [ref=e25]:
+            - generic [ref=e26] [cursor=pointer]:
+              - img [ref=e27]
+              - text: 应用管理
+              - generic [ref=e29]: 
+          - menuitem "设备管理 " [ref=e31]:
+            - generic [ref=e32] [cursor=pointer]:
+              - img [ref=e33]
+              - text: 设备管理
+              - generic [ref=e35]: 
+          - menuitem "系统管理 " [ref=e37]:
+            - generic [ref=e38] [cursor=pointer]:
+              - img [ref=e39]
+              - text: 系统管理
+              - generic [ref=e41]: 
+            - text: 
+          - menuitem "系统监控 " [ref=e43]:
+            - generic [ref=e44] [cursor=pointer]:
+              - img [ref=e45]
+              - text: 系统监控
+              - generic [ref=e47]: 
+          - menuitem "Magisk 管理 " [ref=e49]:
+            - generic [ref=e50] [cursor=pointer]:
+              - img [ref=e51]
+              - text: Magisk 管理
+              - generic [ref=e53]: 
+          - menuitem "系统工具 " [ref=e55]:
+            - generic [ref=e56] [cursor=pointer]:
+              - img [ref=e57]
+              - text: 系统工具
+              - generic [ref=e59]: 
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - img [ref=e65] [cursor=pointer]
+            - navigation "Breadcrumb" [ref=e67]:
+              - generic:
+                - generic [ref=e68]:
+                  - link "首页" [ref=e69]
+                  - text: /
+                - link "远程控制" [ref=e71]
+            - button "" [ref=e74] [cursor=pointer]:
+              - img [ref=e75]
+              - generic [ref=e76]: 
+          - generic [ref=e77]:
+            - generic [ref=e80]:
+              - generic [ref=e81] [cursor=pointer]: 首页
+              - generic [ref=e82] [cursor=pointer]:
+                - text: 远程控制
+                - generic [ref=e83]: 
+            - text:      
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - button " 返回" [ref=e89] [cursor=pointer]:
+              - generic [ref=e90]: 
+              - text: 返回
+            - generic [ref=e91]:
+              - generic [ref=e92]: 
+              - generic [ref=e93]: 远程控制
+              - generic [ref=e94]: "866354068798071"
+            - generic [ref=e95]:
+              - generic [ref=e97]: 已断开
+              - button " 重连" [ref=e98] [cursor=pointer]:
+                - generic [ref=e99]: 
+                - text: 重连
+          - generic [ref=e100]:
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - generic [ref=e104]: 
+                - generic [ref=e105]: 投屏连接中...
+              - generic [ref=e108]:
+                - generic [ref=e109]:
+                  - button "返回" [ref=e110] [cursor=pointer]:
+                    - img [ref=e111]
+                  - button "主页" [ref=e113] [cursor=pointer]:
+                    - img [ref=e114]
+                  - button "最近任务" [ref=e116] [cursor=pointer]:
+                    - img [ref=e117]
+                  - button "音量+" [ref=e119] [cursor=pointer]:
+                    - img [ref=e120]
+                  - button "音量-" [ref=e122] [cursor=pointer]:
+                    - img [ref=e123]
+                  - button "电源" [ref=e125] [cursor=pointer]:
+                    - img [ref=e126]
+                - generic [ref=e128]:
+                  - button "标准" [ref=e129] [cursor=pointer]
+                  - button "高清" [ref=e130] [cursor=pointer]
+                  - button "超清" [ref=e131] [cursor=pointer]
+            - generic [ref=e133]:
+              - tablist [ref=e137]:
+                - tab "终端" [active] [selected] [ref=e139] [cursor=pointer]
+                - tab "设备信息" [ref=e140]
+                - tab "应用列表" [ref=e141]
+                - tab "Magisk模块" [ref=e142]
+                - tab "LSP模块" [ref=e143]
+                - tab "任务" [ref=e144]
+              - tabpanel "终端" [ref=e146]:
+                - generic [ref=e147]:
+                  - textbox "输入命令，回车发送..." [ref=e148]
+                  - button "发送" [ref=e149] [cursor=pointer]
+                - generic [ref=e154]:
+                  - textbox "Terminal input" [ref=e155]
+                  - generic [ref=e156]:
+                    - generic [ref=e157]:
+                      - generic [ref=e248]: "["
+                      - generic [ref=e249]: 已连接到设备
+                      - generic [ref=e250]: 866354068798071]
+                    - generic [ref=e161]:
+                      - generic [ref=e251]: "["
+                      - generic [ref=e252]: 设备不存在或未开启
+                      - generic [ref=e253]: FRP]
+                    - generic [ref=e166]:
+                      - generic [ref=e254]: "["
+                      - generic [ref=e255]: 连接已断开
+                      - generic [ref=e256]: "]"
+          - text:   
+    - text: 
+  - generic [ref=e208]: 断断断断断断断断断断断断断断断断断断断断断断断断断断断断断断断断

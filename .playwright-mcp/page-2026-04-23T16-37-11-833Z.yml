@@ -1,0 +1,128 @@
+- generic [active] [ref=e1]:
+  - img "闲鱼站点Logo" [ref=e3]
+  - generic [ref=e4]:
+    - banner [ref=e6]:
+      - generic [ref=e7] [cursor=pointer]:
+        - img "闲鱼站点Logo" [ref=e9]
+        - link [ref=e10]:
+          - /url: https://www.goofish.com/
+          - img [ref=e11]
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e44]: 综合
+          - generic [ref=e47] [cursor=pointer]: 新降价
+          - generic [ref=e50]: 新发布
+          - generic [ref=e54]: 价格
+          - generic [ref=e56]:
+            - textbox "¥" [ref=e57]
+            - generic [ref=e58]: "-"
+            - textbox "¥" [ref=e59]
+            - button "确定" [disabled]
+        - generic [ref=e60]:
+          - generic [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: 区域
+            - img [ref=e64]
+          - generic [ref=e65]:
+            - button [disabled] [ref=e66]
+            - generic [ref=e68]: 1/1
+            - button [disabled] [ref=e69]
+      - generic [ref=e73]:
+        - generic [ref=e76] [cursor=pointer]: 个人闲置
+        - generic [ref=e79] [cursor=pointer]: 验货宝
+        - generic [ref=e82] [cursor=pointer]: 验号担保
+        - generic [ref=e85] [cursor=pointer]: 包邮
+        - generic [ref=e88] [cursor=pointer]: 超赞鱼小铺
+        - generic [ref=e91] [cursor=pointer]: 全新
+        - generic [ref=e94] [cursor=pointer]: 严选
+        - generic [ref=e97] [cursor=pointer]: 转卖
+      - generic [ref=e98]:
+        - img [ref=e99]
+        - generic [ref=e100]: 加载中...
+    - generic [ref=e128]:
+      - generic [ref=e129]:
+        - link "阿里巴巴集团" [ref=e131] [cursor=pointer]:
+          - /url: https://www.alibabagroup.com/
+        - link "淘宝" [ref=e134] [cursor=pointer]:
+          - /url: https://www.taobao.com/
+        - link "天猫" [ref=e137] [cursor=pointer]:
+          - /url: https://www.tmall.com/
+        - link "1688" [ref=e140] [cursor=pointer]:
+          - /url: https://www.1688.com/
+        - link "一淘" [ref=e143] [cursor=pointer]:
+          - /url: https://www.etao.com/
+        - link "阿里健康" [ref=e146] [cursor=pointer]:
+          - /url: https://www.alihealth.cn/
+        - link "全球速卖通" [ref=e149] [cursor=pointer]:
+          - /url: https://www.aliexpress.com/
+        - link "阿里巴巴国际站" [ref=e152] [cursor=pointer]:
+          - /url: https://www.alibaba.com/
+        - link "高德" [ref=e155] [cursor=pointer]:
+          - /url: https://mobile.amap.com/
+        - link "飞猪" [ref=e158] [cursor=pointer]:
+          - /url: https://www.fliggy.com/
+        - link "优酷" [ref=e161] [cursor=pointer]:
+          - /url: https://www.youku.com/
+        - link "大麦" [ref=e164] [cursor=pointer]:
+          - /url: https://www.damai.cn/
+        - link "阿里影业" [ref=e167] [cursor=pointer]:
+          - /url: https://www.alibabapictures.com/
+        - link "钉钉" [ref=e170] [cursor=pointer]:
+          - /url: https://www.dingtalk.com/
+        - link "支付宝" [ref=e173] [cursor=pointer]:
+          - /url: https://www.alipay.com/
+        - link "阿里妈妈" [ref=e176] [cursor=pointer]:
+          - /url: https://www.alimama.com/
+        - link "阿里云" [ref=e179] [cursor=pointer]:
+          - /url: https://www.aliyun.com/
+      - generic [ref=e180]:
+        - generic [ref=e182]: 统一社会信用代码：91330110MA2H1CFF2D
+        - generic [ref=e185]: 增值电信业务经营许可证：浙B2-20201551
+        - generic [ref=e188]: 增值电信业务经营许可证（跨地区）：B2-20241485
+        - generic [ref=e191]: 网络食品销售第三方平台提供者备案：浙网食A33000101
+      - generic [ref=e192]:
+        - generic [ref=e194]: 广播电视节目制作经营许可证：（浙）字第07629号
+        - generic [ref=e197]: 营业性演出许可证：浙演经33010120064
+        - generic [ref=e200]: 集邮市场开办者备案：杭集邮备006
+        - link "APP备案号：浙ICP备20016791号-2A" [ref=e203] [cursor=pointer]:
+          - /url: https://beian.miit.gov.cn/?spm=a212ne.20922897.9522938140.2#/Integrated/index
+      - generic [ref=e204]:
+        - link "闲鱼社区隐私政策" [ref=e206] [cursor=pointer]:
+          - /url: https://terms.alicdn.com/legal-agreement/terms/suit_bu1_taobao/suit_bu1_taobao202103021554_43790.html
+        - link "软件许可协议" [ref=e209] [cursor=pointer]:
+          - /url: https://terms.alicdn.com/legal-agreement/terms/common_platform_service/20230509172204596/20230509172204596.html
+        - link "闲鱼社区用户服务协议" [ref=e212] [cursor=pointer]:
+          - /url: https://terms.alicdn.com/legal-agreement/terms/suit_bu1_other/suit_bu1_other201708081618_51146.html
+        - link "闲鱼规则" [ref=e215] [cursor=pointer]:
+          - /url: https://h5.m.goofish.com/wow/moyu/moyu-project/doc/pages/v3Lv4OO6VbJS
+        - link "意见征集" [ref=e218] [cursor=pointer]:
+          - /url: https://h5.m.goofish.com/wow/moyu/moyu-project/doc/pages/CQJnCbq230i3
+        - link "算法备案" [ref=e221] [cursor=pointer]:
+          - /url: https://terms.alicdn.com/legal-agreement/terms/privacy_algorithm_theory_state/20221125171956850/20221125171956850.html?spm=a1zaa.8161610.0.0.7db827b7aQ7Ymq
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - img [ref=e224]
+          - link "浙公网安备33011002014818号" [ref=e225] [cursor=pointer]:
+            - /url: https://www.beian.gov.cn/portal/registerSystemInfo?spm=2007.1000261.0.0.660534f17KIS1E&recordcode=33011002014818
+        - generic [ref=e227]:
+          - img [ref=e228]
+          - link "电子营业执照" [ref=e229] [cursor=pointer]:
+            - /url: https://intranetproxy.alipay.com/skylark/lark/0/2023/png/40591/1692327101072-570e6872-655c-4d61-b9b9-a1fbd1ca82fb.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1500%2Climit_0
+        - generic [ref=e232]: © Goofish.com 版权所有
+      - generic [ref=e233]:
+        - link [ref=e234]:
+          - /url: https://www.12377.cn/?spm=a21bo.jianhua/a.1997523009.49.5af92a89T43VX8
+          - img [ref=e235] [cursor=pointer]
+        - link [ref=e236]:
+          - /url: https://www.12377.cn/node_548446.htm?spm=a21bo.jianhua/a.1997523009.50.5af92a89T43VX8
+          - img [ref=e237] [cursor=pointer]
+        - generic [ref=e238]:
+          - paragraph [ref=e239]: 推动绿色发展，促进闲置流通
+          - generic [ref=e240]:
+            - link "《促进绿色消费实施方案》" [ref=e241] [cursor=pointer]:
+              - /url: https://www.gov.cn/zhengce/zhengceku/2022-01/21/content_5669785.htm
+            - link "《关于加快废旧物资循环利用体系建设的指导意见》" [ref=e242] [cursor=pointer]:
+              - /url: https://www.gov.cn/zhengce/zhengceku/2022-01/22/content_5669857.htm
+    - generic [ref=e243] [cursor=pointer]:
+      - img [ref=e244]
+      - img [ref=e245]

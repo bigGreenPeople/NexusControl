@@ -1,0 +1,383 @@
+<h2>文件管理 — 标签页布局方案</h2>
+<p class="subtitle">三种布局方向，在"远程控制"右侧面板内嵌入文件管理器。点击选择你喜欢的方向。</p>
+
+<style>
+  .mock-panel {
+    background: #0c1222;
+    border: 1px solid rgba(74,158,255,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #c0cfdf;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .mock-tabs {
+    display: flex;
+    background: #0c1222;
+    border-bottom: 1px solid rgba(74,158,255,0.10);
+    padding: 0 12px;
+    gap: 2px;
+  }
+  .mock-tab {
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #506580;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .mock-tab.active {
+    color: #4a9eff;
+    border-bottom-color: #4a9eff;
+  }
+  .mock-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(74,158,255,0.08);
+    background: #0c1222;
+  }
+  .mock-btn {
+    padding: 3px 10px;
+    font-size: 11px;
+    border-radius: 4px;
+    border: 1px solid rgba(74,158,255,0.2);
+    background: rgba(74,158,255,0.08);
+    color: #4a9eff;
+    white-space: nowrap;
+  }
+  .mock-btn.green {
+    border-color: rgba(34,214,138,0.25);
+    background: rgba(34,214,138,0.08);
+    color: #22d68a;
+  }
+  .mock-btn.ghost {
+    border-color: rgba(192,207,223,0.1);
+    background: rgba(26,37,64,0.5);
+    color: #8fa4bf;
+  }
+  .mock-path-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #080d18;
+    border-bottom: 1px solid rgba(74,158,255,0.08);
+    font-family: 'Consolas', monospace;
+    font-size: 11px;
+  }
+  .mock-path-text {
+    color: #4a9eff;
+    flex: 1;
+  }
+  .mock-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  .mock-bread-item {
+    color: #4a9eff;
+    font-size: 11px;
+  }
+  .mock-bread-sep {
+    color: #506580;
+  }
+  .mock-bread-active {
+    color: #e0f0ff;
+    font-weight: 600;
+  }
+  .mock-input-path {
+    flex: 1;
+    background: #141c2e;
+    border: 1px solid rgba(74,158,255,0.2);
+    border-radius: 3px;
+    padding: 3px 8px;
+    color: #4a9eff;
+    font-family: 'Consolas', monospace;
+    font-size: 11px;
+  }
+  .mock-file-list {
+    padding: 0;
+  }
+  .mock-file-header {
+    display: grid;
+    padding: 5px 12px;
+    font-size: 10px;
+    color: #506580;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(74,158,255,0.06);
+    background: rgba(20,28,46,0.4);
+  }
+  .mock-file-row {
+    display: grid;
+    padding: 6px 12px;
+    align-items: center;
+    border-bottom: 1px solid rgba(74,158,255,0.05);
+    transition: background 0.1s;
+  }
+  .mock-file-row:hover {
+    background: rgba(74,158,255,0.04);
+  }
+  .mock-file-icon {
+    font-size: 13px;
+    margin-right: 6px;
+  }
+  .mock-file-name {
+    color: #c0cfdf;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+  }
+  .mock-file-name.folder {
+    color: #4a9eff;
+  }
+  .mock-file-meta {
+    color: #506580;
+    font-size: 11px;
+    font-family: 'Consolas', monospace;
+  }
+  .mock-file-actions {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+  }
+  .mock-act {
+    padding: 2px 7px;
+    font-size: 10px;
+    border-radius: 3px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .mock-act.dl {
+    border-color: rgba(34,214,138,0.3);
+    color: #22d68a;
+    background: rgba(34,214,138,0.06);
+  }
+  .mock-act.del {
+    border-color: rgba(245,92,122,0.3);
+    color: #f55c7a;
+    background: rgba(245,92,122,0.06);
+  }
+  .mock-drop-zone {
+    border: 1.5px dashed rgba(74,158,255,0.25);
+    border-radius: 6px;
+    padding: 14px;
+    margin: 10px 12px;
+    text-align: center;
+    color: #506580;
+    font-size: 11px;
+    background: rgba(74,158,255,0.03);
+  }
+  .mock-drop-zone .icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .mock-status-bar {
+    padding: 4px 12px;
+    font-size: 10px;
+    color: #506580;
+    background: #080d18;
+    border-top: 1px solid rgba(74,158,255,0.06);
+    display: flex;
+    justify-content: space-between;
+  }
+  .mock-progress {
+    height: 3px;
+    background: rgba(74,158,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 8px 12px 4px;
+  }
+  .mock-progress-bar {
+    height: 100%;
+    background: #4a9eff;
+    border-radius: 2px;
+    width: 60%;
+  }
+  .tag-new {
+    display: inline-block;
+    font-size: 9px;
+    padding: 1px 5px;
+    background: rgba(34,214,138,0.15);
+    color: #22d68a;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+    border: 1px solid rgba(34,214,138,0.3);
+  }
+</style>
+
+<div class="cards">
+
+  <!-- Option A: 紧凑工具栏 + 表格 -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mock-panel">
+        <div class="mock-tabs">
+          <div class="mock-tab">终端</div>
+          <div class="mock-tab">设备信息</div>
+          <div class="mock-tab">应用列表</div>
+          <div class="mock-tab active">文件管理 <span class="tag-new">NEW</span></div>
+        </div>
+        <!-- 工具栏 -->
+        <div class="mock-toolbar">
+          <div class="mock-btn green">⬆ 上传</div>
+          <div class="mock-btn ghost">↺ 刷新</div>
+          <div class="mock-input-path">/sdcard/Download</div>
+          <div class="mock-btn ghost">→ 跳转</div>
+        </div>
+        <!-- 文件列表 -->
+        <div class="mock-file-list">
+          <div class="mock-file-header" style="grid-template-columns: 1fr 70px 70px 80px;">
+            <span>名称</span><span>大小</span><span>修改时间</span><span style="text-align:right">操作</span>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 70px 70px 80px;">
+            <div class="mock-file-name folder"><span class="mock-file-icon">📁</span>DCIM</div>
+            <div class="mock-file-meta">—</div>
+            <div class="mock-file-meta">05-10</div>
+            <div class="mock-file-actions"><span class="mock-act dl">进入</span></div>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 70px 70px 80px;">
+            <div class="mock-file-name folder"><span class="mock-file-icon">📁</span>WhatsApp</div>
+            <div class="mock-file-meta">—</div>
+            <div class="mock-file-meta">05-09</div>
+            <div class="mock-file-actions"><span class="mock-act dl">进入</span></div>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 70px 70px 80px;">
+            <div class="mock-file-name"><span class="mock-file-icon">📄</span>config.json</div>
+            <div class="mock-file-meta">4.2 KB</div>
+            <div class="mock-file-meta">05-08</div>
+            <div class="mock-file-actions"><span class="mock-act dl">↓</span><span class="mock-act del">✕</span></div>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 70px 70px 80px;">
+            <div class="mock-file-name"><span class="mock-file-icon">📄</span>log.txt</div>
+            <div class="mock-file-meta">128 KB</div>
+            <div class="mock-file-meta">05-07</div>
+            <div class="mock-file-actions"><span class="mock-act dl">↓</span><span class="mock-act del">✕</span></div>
+          </div>
+        </div>
+        <div class="mock-status-bar"><span>4 项 · 2 文件夹 2 文件</span><span>/sdcard/Download</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · 紧凑工具栏</h3>
+      <p>路径输入框内联在工具栏里，节省空间。和现有"应用列表"标签风格一致，上手最快。</p>
+    </div>
+  </div>
+
+  <!-- Option B: 面包屑导航 + 拖拽上传区 -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mock-panel">
+        <div class="mock-tabs">
+          <div class="mock-tab">终端</div>
+          <div class="mock-tab">设备信息</div>
+          <div class="mock-tab">应用列表</div>
+          <div class="mock-tab active">文件管理 <span class="tag-new">NEW</span></div>
+        </div>
+        <!-- 面包屑 -->
+        <div class="mock-path-bar">
+          <span style="color:#506580;font-size:11px;">📍</span>
+          <div class="mock-breadcrumb">
+            <span class="mock-bread-item">/</span>
+            <span class="mock-bread-sep">›</span>
+            <span class="mock-bread-item">sdcard</span>
+            <span class="mock-bread-sep">›</span>
+            <span class="mock-bread-active">Download</span>
+          </div>
+          <div class="mock-btn ghost" style="font-size:10px;">编辑路径</div>
+          <div class="mock-btn ghost" style="font-size:10px;">↺</div>
+        </div>
+        <!-- 拖拽上传区 -->
+        <div class="mock-drop-zone">
+          <span class="icon">⬆</span>
+          拖拽文件到此处上传，或 <span style="color:#4a9eff">点击选择文件</span>
+        </div>
+        <!-- 文件列表（更紧凑） -->
+        <div class="mock-file-list">
+          <div class="mock-file-row" style="grid-template-columns: 1fr 60px 80px;">
+            <div class="mock-file-name folder"><span class="mock-file-icon">📁</span>DCIM</div>
+            <div class="mock-file-meta">—</div>
+            <div class="mock-file-actions"><span class="mock-act dl">进入</span></div>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 60px 80px;">
+            <div class="mock-file-name"><span class="mock-file-icon">📄</span>config.json</div>
+            <div class="mock-file-meta">4.2 KB</div>
+            <div class="mock-file-actions"><span class="mock-act dl">↓</span><span class="mock-act del">✕</span></div>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 60px 80px;">
+            <div class="mock-file-name"><span class="mock-file-icon">📄</span>log.txt</div>
+            <div class="mock-file-meta">128 KB</div>
+            <div class="mock-file-actions"><span class="mock-act dl">↓</span><span class="mock-act del">✕</span></div>
+          </div>
+        </div>
+        <div class="mock-status-bar"><span>3 项</span><span>4.2 KB + 128 KB</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · 面包屑 + 拖拽区</h3>
+      <p>面包屑点击导航更直观；顶部常驻拖拽上传区，拖文件进来即上传，体验更流畅。</p>
+    </div>
+  </div>
+
+  <!-- Option C: 全功能（面包屑 + 工具栏 + 进度条） -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mock-panel">
+        <div class="mock-tabs">
+          <div class="mock-tab">终端</div>
+          <div class="mock-tab">设备信息</div>
+          <div class="mock-tab">应用列表</div>
+          <div class="mock-tab active">文件管理 <span class="tag-new">NEW</span></div>
+        </div>
+        <!-- 面包屑行 -->
+        <div class="mock-path-bar">
+          <span style="color:#506580">◀</span>
+          <div class="mock-breadcrumb">
+            <span class="mock-bread-item">/</span>
+            <span class="mock-bread-sep">›</span>
+            <span class="mock-bread-item">sdcard</span>
+            <span class="mock-bread-sep">›</span>
+            <span class="mock-bread-active">Download</span>
+          </div>
+        </div>
+        <!-- 工具栏单独一行 -->
+        <div class="mock-toolbar" style="padding:6px 12px;">
+          <div class="mock-btn green">⬆ 上传文件</div>
+          <div class="mock-btn ghost">↺ 刷新</div>
+          <span style="flex:1"></span>
+          <span style="font-size:10px;color:#506580">3 项 · 132 KB</span>
+        </div>
+        <!-- 上传进度（上传中时显示） -->
+        <div style="padding:0 0 4px">
+          <div style="display:flex;justify-content:space-between;padding:4px 12px 0;font-size:10px;color:#4a9eff">
+            <span>正在上传 backup.zip …</span><span>60%</span>
+          </div>
+          <div class="mock-progress"><div class="mock-progress-bar"></div></div>
+        </div>
+        <!-- 文件列表 -->
+        <div class="mock-file-list">
+          <div class="mock-file-header" style="grid-template-columns: 1fr 60px 90px;">
+            <span>名称</span><span>大小</span><span style="text-align:right">操作</span>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 60px 90px;">
+            <div class="mock-file-name folder"><span class="mock-file-icon">📁</span>DCIM</div>
+            <div class="mock-file-meta">—</div>
+            <div class="mock-file-actions"><span class="mock-act dl">进入</span></div>
+          </div>
+          <div class="mock-file-row" style="grid-template-columns: 1fr 60px 90px;">
+            <div class="mock-file-name"><span class="mock-file-icon">📄</span>config.json</div>
+            <div class="mock-file-meta">4.2 KB</div>
+            <div class="mock-file-actions"><span class="mock-act dl">↓下载</span><span class="mock-act del">✕</span></div>
+          </div>
+        </div>
+        <div class="mock-status-bar"><span>/sdcard/Download</span><span style="color:#22d68a">● 在线</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · 全功能分层</h3>
+      <p>面包屑 + 独立工具栏 + 内联上传进度条，信息层次最清晰。上传时进度实时可见，最完整。</p>
+    </div>
+  </div>
+
+</div>

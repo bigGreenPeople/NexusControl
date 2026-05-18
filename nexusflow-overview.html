@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusFlow 一念流 — AI 驱动的移动端 RPA 平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Bebas+Neue&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ── Variables ─────────────────────────────────────────────────── */
+:root {
+  --bg:        #050c18;
+  --bg2:       #091420;
+  --bg3:       #0d1f35;
+  --cyan:      #00e5ff;
+  --cyan2:     #0099bb;
+  --purple:    #7755ff;
+  --amber:     #ffaa00;
+  --green:     #00ff88;
+  --text:      #b8d0e8;
+  --text-dim:  #3d5c7a;
+  --border:    rgba(0,229,255,0.15);
+  --border2:   rgba(0,229,255,0.07);
+  --glass:     rgba(0,229,255,0.04);
+  --glow-s:    0 0 12px rgba(0,229,255,0.45);
+  --glow-m:    0 0 30px rgba(0,229,255,0.3);
+  --mono:      'JetBrains Mono', monospace;
+  --kai:       'ZCOOL XiaoWei', serif;
+  --body:      'Noto Sans SC', sans-serif;
+  --disp:      'Bebas Neue', sans-serif;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+ul{list-style:none}
+
+/* Scan-lines */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+  pointer-events:none;z-index:9999
+}
+
+/* ── Nav ───────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 3rem;
+  border-bottom:1px solid var(--border2);
+  backdrop-filter:blur(24px);
+  background:rgba(5,12,24,0.85);
+}
+.nav-brand{display:flex;align-items:baseline;gap:.55rem}
+.nav-en{font-family:var(--disp);font-size:1.55rem;letter-spacing:.07em;color:var(--cyan)}
+.nav-cn{font-family:var(--kai);font-size:1rem;color:var(--text-dim);letter-spacing:.2em}
+.nav-links{display:flex;gap:2.2rem}
+.nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--text-dim);transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
+.nav-pill{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;
+  padding:.3rem .9rem;border:1px solid var(--border);color:var(--cyan)
+}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+#hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;padding:6rem 2rem 3rem;
+}
+#hero-canvas{position:absolute;inset:0;z-index:0}
+
+.hero-kanji{
+  position:absolute;
+  font-family:var(--kai);font-size:clamp(280px,45vw,600px);
+  color:rgba(0,229,255,0.022);line-height:1;
+  top:50%;left:50%;transform:translate(-50%,-54%);
+  pointer-events:none;user-select:none;z-index:1;
+}
+
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.8rem}
+
+.hero-badge{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.32em;
+  color:var(--cyan);opacity:.75;
+  border:1px solid var(--border);padding:.35rem 1.1rem;
+  animation:fadeUp .8s ease both
+}
+.hero-name-en{
+  font-family:var(--disp);font-size:clamp(4.5rem,13vw,11rem);
+  letter-spacing:.04em;color:#fff;line-height:.9;
+  text-shadow:0 0 80px rgba(0,229,255,0.25);
+  animation:fadeUp .8s ease both .15s
+}
+.hero-name-cn{
+  font-family:var(--kai);font-size:clamp(1.6rem,4vw,3.8rem);
+  color:var(--cyan);letter-spacing:.55em;padding-left:.55em;
+  animation:fadeUp .8s ease both .28s
+}
+.hero-tagline{
+  font-family:var(--mono);font-size:clamp(.68rem,1.4vw,.88rem);
+  color:var(--text-dim);letter-spacing:.12em;line-height:2;
+  animation:fadeUp .8s ease both .42s
+}
+.hero-tagline strong{color:var(--text)}
+.hero-tagline em{color:var(--cyan);font-style:normal}
+
+.hero-btns{display:flex;gap:.9rem;margin-top:.4rem;animation:fadeUp .8s ease both .56s}
+.btn-p{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;font-weight:700;
+  padding:.8rem 2.1rem;background:var(--cyan);color:var(--bg);
+  transition:all .2s
+}
+.btn-p:hover{background:#fff;box-shadow:var(--glow-m)}
+.btn-g{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;
+  padding:.8rem 2.1rem;border:1px solid var(--border);color:var(--cyan);
+  transition:all .2s
+}
+.btn-g:hover{background:var(--glass);box-shadow:var(--glow-s)}
+
+.hero-stats{
+  display:flex;gap:3.5rem;margin-top:.8rem;
+  animation:fadeUp .8s ease both .7s
+}
+.stat-n{font-family:var(--disp);font-size:2.8rem;color:var(--cyan);line-height:1}
+.stat-l{font-family:var(--mono);font-size:.58rem;color:var(--text-dim);letter-spacing:.18em;margin-top:.25rem}
+
+.hero-scroll{
+  position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.58rem;color:var(--text-dim);letter-spacing:.25em;
+  animation:bounce 2.5s ease-in-out infinite;z-index:2
+}
+.hero-scroll::after{content:'';width:1px;height:2.8rem;background:linear-gradient(to bottom,var(--cyan),transparent)}
+
+/* ── Section wrapper ───────────────────────────────────────────── */
+.wrap{max-width:1380px;margin:0 auto;padding:6.5rem 5%}
+.wrap-full{padding:6.5rem max(5%,calc(50% - 690px))}
+
+.sec-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.28em;color:var(--cyan);opacity:.7}
+.sec-h{
+  font-family:var(--disp);font-size:clamp(2.2rem,5vw,4.2rem);
+  color:#fff;letter-spacing:.05em;margin-top:.45rem
+}
+.sec-p{font-size:.83rem;color:var(--text-dim);line-height:1.9;margin-top:.7rem;max-width:480px}
+
+/* Divider */
+.div{border:none;border-top:1px solid var(--border2);margin:0}
+
+/* ── Value cards ───────────────────────────────────────────────── */
+.val-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin-top:3.5rem
+}
+@media(max-width:900px){.val-grid{grid-template-columns:repeat(2,1fr)}}
+.val-card{
+  background:var(--bg);padding:2.5rem 2rem;
+  transition:background .3s;position:relative;overflow:hidden
+}
+.val-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,229,255,0.05),transparent);
+  opacity:0;transition:opacity .3s
+}
+.val-card:hover::before{opacity:1}
+.val-icon{font-size:1.8rem;margin-bottom:1.1rem}
+.val-t{font-family:var(--mono);font-size:.82rem;color:var(--cyan);letter-spacing:.07em;margin-bottom:.55rem;font-weight:500}
+.val-d{font-size:.78rem;color:var(--text-dim);line-height:1.9}
+
+/* ── Architecture ──────────────────────────────────────────────── */
+#architecture{background:var(--bg2)}
+.arch-wrap{display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;margin-top:3rem}
+@media(max-width:800px){.arch-wrap{grid-template-columns:1fr}}
+
+.layer-list{display:flex;flex-direction:column;gap:2px}
+.layer-item{
+  border:1px solid var(--border2);padding:1.1rem 1.3rem;
+  cursor:pointer;transition:all .22s;position:relative;overflow:hidden
+}
+.layer-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--cyan);transform:scaleY(0);transition:transform .22s;transform-origin:bottom
+}
+.layer-item:hover,.layer-item.on{border-color:rgba(0,229,255,.3)}
+.layer-item:hover::before,.layer-item.on::before{transform:scaleY(1)}
+.layer-item.on{background:var(--glass)}
+.l-num{font-family:var(--mono);font-size:.52rem;color:var(--text-dim);letter-spacing:.22em;margin-bottom:.25rem}
+.l-name{font-family:var(--mono);font-size:.8rem;color:var(--text);font-weight:500}
+.l-sub{font-size:.68rem;color:var(--text-dim);margin-top:.2rem;line-height:1.5}
+
+.arch-svg-wrap{
+  background:var(--bg);border:1px solid var(--border);padding:2rem;
+  position:relative;overflow:visible
+}
+.arch-svg-wrap::before{
+  content:'SYSTEM ARCHITECTURE';
+  position:absolute;top:.7rem;right:1rem;
+  font-family:var(--mono);font-size:.55rem;color:var(--text-dim);letter-spacing:.2em;opacity:.5
+}
+
+/* ── Features ──────────────────────────────────────────────────── */
+.feat-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin-top:3.5rem
+}
+@media(max-width:700px){.feat-grid{grid-template-columns:1fr}}
+.feat-card{
+  background:var(--bg);padding:3rem 2.5rem;
+  position:relative;overflow:hidden;transition:background .3s
+}
+.feat-card::after{
+  content:attr(data-n);position:absolute;right:-1rem;bottom:-2rem;
+  font-family:var(--disp);font-size:9rem;color:rgba(0,229,255,.035);
+  line-height:1;pointer-events:none;user-select:none
+}
+.feat-card:hover{background:rgba(0,229,255,.025)}
+.feat-ph{font-family:var(--mono);font-size:.58rem;letter-spacing:.28em;color:var(--cyan);opacity:.7;margin-bottom:.9rem}
+.feat-t{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.35rem}
+.feat-sub{font-family:var(--mono);font-size:.68rem;color:var(--cyan2);margin-bottom:1.1rem;letter-spacing:.04em}
+.feat-d{font-size:.8rem;color:var(--text-dim);line-height:2;margin-bottom:1.4rem}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.tag{font-family:var(--mono);font-size:.58rem;padding:.22rem .6rem;border:1px solid var(--border);color:var(--text-dim);letter-spacing:.06em}
+
+/* ── API showcase ──────────────────────────────────────────────── */
+#api-section{background:var(--bg2)}
+.api-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:2rem;gap:0}
+.api-tab{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;
+  padding:.7rem 1.6rem;color:var(--text-dim);
+  border-bottom:2px solid transparent;transition:all .18s
+}
+.api-tab.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+.api-tab:hover{color:var(--text)}
+.api-pane{display:none;grid-template-columns:1fr 1fr;gap:2rem}
+.api-pane.on{display:grid}
+@media(max-width:750px){.api-pane.on{grid-template-columns:1fr}}
+
+.code-box{background:var(--bg);border:1px solid var(--border);overflow:hidden}
+.code-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.55rem 1rem;border-bottom:1px solid var(--border2);
+  background:rgba(0,0,0,.25)
+}
+.code-fn{font-family:var(--mono);font-size:.62rem;color:var(--text-dim);letter-spacing:.07em}
+.code-lg{font-family:var(--mono);font-size:.58rem;color:var(--cyan);opacity:.65}
+pre{
+  padding:1.4rem;overflow-x:auto;font-family:var(--mono);
+  font-size:.72rem;line-height:1.85;color:var(--text)
+}
+.kw{color:var(--purple)} .fn{color:var(--cyan)} .str{color:var(--green)}
+.cm{color:var(--text-dim);font-style:italic} .num{color:var(--amber)}
+
+/* ── Roadmap ───────────────────────────────────────────────────── */
+.roadmap{position:relative;padding-top:3.5rem;margin-top:1.5rem}
+.rm-line{position:absolute;top:4.8rem;left:0;right:0;height:1px;background:var(--border)}
+.rm-prog{
+  position:absolute;top:4.8rem;left:0;width:10%;height:1px;
+  background:linear-gradient(to right,var(--cyan),var(--cyan2));
+  box-shadow:0 0 10px var(--cyan)
+}
+.rm-phases{display:grid;grid-template-columns:repeat(5,1fr);position:relative}
+@media(max-width:700px){.rm-phases{grid-template-columns:1fr;padding-top:0}}
+.phase-col{padding:0 .8rem;text-align:center}
+.p-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--bg3);border:2px solid var(--border);
+  margin:0 auto 1.8rem;position:relative;z-index:1;transition:all .3s
+}
+.phase-col.active .p-dot{
+  background:var(--cyan);border-color:var(--cyan);
+  box-shadow:0 0 0 4px rgba(0,229,255,.15),var(--glow-s);
+  animation:pulse-dot 2.5s ease-in-out infinite
+}
+.phase-col.done .p-dot{
+  background:rgba(0,229,255,.22);border-color:var(--cyan2);
+}
+.phase-col.done .p-name{color:var(--cyan2)}
+.phase-col.done .p-items li{color:rgba(0,229,255,.45)}
+.phase-col.done .p-items li::before{content:'✓';color:var(--cyan2)}
+.p-num{font-family:var(--mono);font-size:.57rem;color:var(--cyan);letter-spacing:.18em;margin-bottom:.4rem}
+.p-name{font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.3rem}
+.p-weeks{font-family:var(--mono);font-size:.58rem;color:var(--text-dim);margin-bottom:.8rem}
+.p-items{text-align:left}
+.p-items li{
+  font-size:.7rem;color:var(--text-dim);padding:.22rem 0 .22rem 1rem;
+  position:relative;line-height:1.5
+}
+.p-items li::before{content:'─';position:absolute;left:0;color:var(--border);font-family:var(--mono)}
+
+/* ── Compare ───────────────────────────────────────────────────── */
+#compare{background:var(--bg2)}
+.tbl-wrap{overflow-x:auto;margin-top:2.5rem}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.72rem}
+th{
+  padding:.95rem 1.4rem;text-align:left;
+  border-bottom:1px solid var(--border);color:var(--text-dim);
+  letter-spacing:.1em;font-weight:400
+}
+th.hi{color:var(--cyan)}
+td{padding:.85rem 1.4rem;border-bottom:1px solid var(--border2);color:var(--text-dim)}
+td.hi{color:var(--text)}
+tr:hover td{background:var(--glass)}
+.yes{color:var(--cyan)} .no{color:var(--text-dim);opacity:.35} .part{color:var(--amber)}
+.best{
+  font-weight:500;
+  background:rgba(0,229,255,.04);
+}
+
+/* ── Footer ────────────────────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--border2);
+  padding:4rem max(5%,calc(50% - 690px));
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:2rem
+}
+.foot-logo-en{font-family:var(--disp);font-size:2.2rem;color:var(--cyan);letter-spacing:.08em}
+.foot-logo-cn{font-family:var(--kai);font-size:1.1rem;color:var(--text-dim);letter-spacing:.38em;margin-top:.2rem}
+.foot-r{text-align:right}
+.foot-sl{font-family:var(--mono);font-size:.68rem;color:var(--text-dim);letter-spacing:.15em;margin-bottom:.5rem}
+.foot-copy{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);opacity:.4}
+
+/* ── Why Not ADB ───────────────────────────────────────────────── */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3rem}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr}}
+.why-bad{background:rgba(255,60,60,.03);padding:2.5rem 2.5rem}
+.why-good{background:rgba(0,229,255,.04);padding:2.5rem 2.5rem}
+.why-head{font-family:var(--mono);font-size:.62rem;letter-spacing:.25em;margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid}
+.why-bad .why-head{color:rgba(255,80,80,.6);border-color:rgba(255,80,80,.15)}
+.why-good .why-head{color:var(--cyan);border-color:var(--border)}
+.why-item{display:flex;gap:1rem;margin-bottom:1.4rem}
+.why-icon{font-size:1.1rem;flex-shrink:0;margin-top:.05rem}
+.why-item-t{font-size:.82rem;color:var(--text);font-weight:600;margin-bottom:.3rem}
+.why-item-d{font-size:.75rem;color:var(--text-dim);line-height:1.8}
+.why-bad .why-item-t{color:rgba(255,120,120,.85)}
+
+/* ── Outcome ───────────────────────────────────────────────────── */
+.outcome-hero{
+  background:var(--bg2);border:1px solid var(--border);
+  padding:3.5rem;margin-top:3rem;position:relative;overflow:hidden
+}
+.outcome-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,var(--cyan),transparent)
+}
+.outcome-input{
+  background:var(--bg);border:1px solid var(--border);padding:1.2rem 1.5rem;
+  font-family:var(--mono);font-size:.82rem;color:var(--text);
+  margin:1.5rem 0;display:flex;align-items:center;gap:.8rem
+}
+.outcome-input::before{content:'>';color:var(--cyan);font-size:1rem}
+.outcome-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);margin-top:2rem}
+@media(max-width:800px){.outcome-flow{grid-template-columns:1fr 1fr}}
+.outcome-step{background:var(--bg);padding:1.8rem 1.5rem;position:relative}
+.outcome-step-n{
+  font-family:var(--disp);font-size:2.5rem;color:rgba(0,229,255,.12);
+  line-height:1;margin-bottom:.6rem
+}
+.outcome-step-t{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.outcome-step-d{font-size:.72rem;color:var(--text-dim);line-height:1.8}
+.outcome-step-tag{
+  display:inline-block;margin-top:.7rem;
+  font-family:var(--mono);font-size:.58rem;padding:.2rem .6rem;
+  border:1px solid;letter-spacing:.07em
+}
+.outcome-step.s1 .outcome-step-tag{border-color:var(--amber);color:var(--amber)}
+.outcome-step.s2 .outcome-step-tag{border-color:var(--purple);color:var(--purple)}
+.outcome-step.s3 .outcome-step-tag{border-color:var(--cyan);color:var(--cyan)}
+.outcome-step.s4 .outcome-step-tag{border-color:var(--cyan);color:var(--cyan)}
+.outcome-step.s5 .outcome-step-tag{border-color:var(--green);color:var(--green)}
+
+.outcome-result{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:2.5rem
+}
+@media(max-width:700px){.outcome-result{grid-template-columns:1fr}}
+.res-card{
+  background:var(--bg);border:1px solid var(--border);padding:1.8rem;
+  text-align:center
+}
+.res-num{font-family:var(--disp);font-size:3rem;color:var(--cyan);line-height:1}
+.res-label{font-family:var(--mono);font-size:.62rem;color:var(--text-dim);letter-spacing:.15em;margin-top:.4rem}
+
+/* ── Interactive Demo ─────────────────────────────────────────── */
+.demo-stage{background:var(--bg);border:1px solid var(--border);padding:2.5rem;margin-top:3rem}
+.demo-progress{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.4rem;margin-bottom:2.2rem}
+.dp-step{display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.dp-dot{
+  width:26px;height:26px;border-radius:50%;
+  border:1.5px solid var(--border);background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.58rem;color:var(--text-dim);
+  transition:all .3s;flex-shrink:0
+}
+.dp-lbl{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);letter-spacing:.05em;transition:color .3s}
+.dp-line{width:2rem;height:1px;background:var(--border);flex-shrink:0}
+.dp-step.active .dp-dot{background:var(--cyan);border-color:var(--cyan);color:var(--bg);font-weight:700}
+.dp-step.active .dp-lbl{color:var(--cyan)}
+.dp-step.done .dp-dot{background:rgba(0,229,255,.18);border-color:var(--cyan);color:var(--cyan)}
+.dp-step.done .dp-lbl{color:var(--cyan2)}
+.demo-panel{position:relative;height:340px;border:1px solid var(--border2);background:var(--bg2);overflow:hidden}
+.demo-step{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
+.demo-step.active{opacity:1;pointer-events:auto}
+.demo-controls{display:flex;align-items:center;justify-content:flex-end;gap:.8rem;margin-top:1.2rem}
+.demo-btn{
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;
+  padding:.55rem 1.4rem;border:1px solid var(--border);color:var(--text-dim);
+  background:var(--bg2);cursor:pointer;transition:all .2s
+}
+.demo-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.demo-btn.hi{border-color:var(--cyan);color:var(--cyan)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.terminal{padding:1.5rem 2rem;height:100%;font-family:var(--mono);font-size:.76rem}
+.t-bar{display:flex;align-items:center;gap:.45rem;padding-bottom:.9rem;border-bottom:1px solid var(--border2);margin-bottom:1rem}
+.t-dot{width:8px;height:8px;border-radius:50%}
+.t-prompt{color:var(--cyan)}
+.t-text{color:var(--text);line-height:1.7}
+.t-cursor{display:inline-block;width:2px;height:.9em;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:middle;margin-left:1px}
+.t-pills{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap;opacity:0;transition:opacity .5s}
+.t-pill{font-size:.65rem;padding:.28rem .75rem;border:1px solid var(--border);color:var(--text-dim)}
+.t-pill.hi{border-color:var(--cyan);color:var(--cyan)}
+.cg-wrap{display:grid;grid-template-columns:190px 1fr;height:100%}
+.cg-left{padding:1.4rem;border-right:1px solid var(--border2)}
+.cg-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--cyan);margin-bottom:1.1rem}
+.cg-item{display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.65rem;font-family:var(--mono);font-size:.65rem;color:var(--text-dim);line-height:1.5}
+.cg-item.ok{color:var(--green)}
+.cg-item.cur{color:var(--text)}
+.cg-ck{flex-shrink:0;width:12px}
+.cg-bar{margin-top:1.2rem;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.cg-bar-fill{height:100%;width:0;background:linear-gradient(to right,var(--cyan),var(--purple));transition:width .4s;border-radius:2px}
+.cg-right{padding:1.2rem 1.5rem;font-family:var(--mono);font-size:.68rem;color:var(--text);line-height:1.85;overflow:hidden}
+.cl{opacity:0;transition:opacity .18s;white-space:pre}
+.cl.show{opacity:1}
+.dsp-wrap{padding:1.6rem 2rem;height:100%;display:flex;flex-direction:column}
+.dsp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.dsp-title{font-family:var(--mono);font-size:.65rem;color:var(--text-dim);letter-spacing:.12em}
+.dsp-cnt{font-family:var(--disp);font-size:1.9rem;color:var(--cyan);line-height:1}
+.dsp-cnt span{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);display:block;margin-top:.1rem}
+.dev-grid{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;flex:1}
+.dn{aspect-ratio:1;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.12);border-radius:1px;transition:all .22s}
+.dn.sent{background:rgba(0,229,255,.28);border-color:var(--cyan);box-shadow:0 0 5px rgba(0,229,255,.4)}
+.dn.done{background:rgba(0,255,136,.2);border-color:var(--green);box-shadow:none}
+.dsp-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:.8rem}
+.dsp-bar-fill{height:100%;width:0;background:linear-gradient(to right,var(--cyan),var(--green));transition:width .15s;border-radius:2px}
+.ripple-wrap{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg2)}
+#ripple-canvas{position:absolute;inset:0;width:100%;height:100%}
+.ripple-center{position:relative;z-index:2;text-align:center;pointer-events:none;padding:.6rem 1.2rem}
+.ripple-num{font-family:var(--disp);font-size:3.2rem;color:var(--cyan);line-height:1;transition:color .6s}
+.ripple-lbl{font-family:var(--mono);font-size:.55rem;color:var(--text-dim);letter-spacing:.2em;margin-top:.25rem}
+.ripple-sub{font-family:var(--mono);font-size:.52rem;color:var(--cyan);margin-top:.4rem;opacity:.8}
+.exec-wrap{display:grid;grid-template-columns:200px 1fr;height:100%}
+.exec-left{padding:.9rem .8rem;border-right:1px solid var(--border2);display:flex;flex-direction:column;align-items:center;gap:.5rem;overflow:hidden}
+.phone{width:124px;height:218px;border:2px solid rgba(0,229,255,.55);border-radius:16px;background:#000;overflow:hidden;flex-shrink:0;box-shadow:0 0 22px rgba(0,229,255,.18);position:relative}
+.ph-notch{width:38px;height:5px;background:rgba(0,229,255,.22);border-radius:0 0 4px 4px;margin:0 auto;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:3}
+.ph-screen{height:100%;overflow:hidden;position:relative;transition:opacity .25s}
+@keyframes ld-pulse{0%,80%,100%{opacity:.15}40%{opacity:1}}
+.ld{width:5px;height:5px;border-radius:50%;background:#aaa;display:inline-block;animation:ld-pulse 1.2s ease-in-out infinite}
+.exec-status{font-family:var(--mono);font-size:.58rem;color:var(--text-dim);text-align:center;line-height:1.7}
+.exec-pbar{width:100%;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.exec-pbar-fill{height:100%;width:0;background:var(--cyan);transition:width .8s;border-radius:2px}
+.log-stream{padding:1rem 1.2rem;overflow-y:auto;height:100%;display:flex;flex-direction:column;gap:.28rem}
+.log-stream::-webkit-scrollbar{width:3px}
+.log-stream::-webkit-scrollbar-thumb{background:var(--border)}
+.le{display:flex;gap:.7rem;align-items:baseline;font-family:var(--mono);font-size:.63rem;opacity:0;transition:opacity .25s}
+.le.show{opacity:1}
+.le-t{color:var(--text-dim);flex-shrink:0}
+.le-d{color:var(--cyan2);flex-shrink:0;min-width:75px}
+.le-ok{color:var(--green)}
+.le-warn{color:var(--amber)}
+.le-ai{color:var(--purple)}
+.done-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem;gap:1rem}
+.done-mark{font-size:2.2rem}
+.done-title{font-family:var(--disp);font-size:2.5rem;color:var(--cyan);letter-spacing:.1em}
+.done-sub{font-family:var(--mono);font-size:.62rem;color:var(--text-dim);letter-spacing:.15em}
+.done-stats{display:flex;gap:4rem;margin-top:.5rem}
+.ds-n{font-family:var(--disp);font-size:3rem;color:var(--cyan);line-height:1}
+.ds-l{font-family:var(--mono);font-size:.58rem;color:var(--text-dim);letter-spacing:.14em;margin-top:.3rem}
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ── Keyframes ─────────────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-9px)}}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 4px rgba(0,229,255,.15),0 0 12px rgba(0,229,255,.45)}50%{box-shadow:0 0 0 8px rgba(0,229,255,.08),0 0 28px rgba(0,229,255,.6)}}
+@keyframes dash{to{stroke-dashoffset:-60}}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-en">NEXUSFLOW</span>
+    <span class="nav-cn">一念流</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#why-sec">核心差异</a></li>
+    <li><a href="#arch-sec">架构</a></li>
+    <li><a href="#feat-sec">功能</a></li>
+    <li><a href="#outcome-sec">效果</a></li>
+    <li><a href="#road-sec">计划</a></li>
+    <li><a href="#cmp-sec">对比</a></li>
+  </ul>
+  <div class="nav-pill">V0.2 · PHASE 2 ✓</div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-kanji">流</div>
+  <div class="hero-inner">
+    <div class="hero-badge">NEXUSCONTROL AI MODULE &nbsp;·&nbsp; 2026</div>
+    <div class="hero-name-en">NEXUSFLOW</div>
+    <div class="hero-name-cn">一　念　流</div>
+    <div class="hero-tagline">
+      <strong>Think Once, Flow Everywhere</strong><br>
+      <em>一念触发，流转万机</em>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="document.getElementById('feat-sec').scrollIntoView({behavior:'smooth'})">查看功能</button>
+      <button class="btn-g" onclick="document.getElementById('road-sec').scrollIntoView({behavior:'smooth'})">落地计划</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">100+</div><div class="stat-l">设备并发</div></div>
+      <div><div class="stat-n">55%</div><div class="stat-l">Auto.js 兼容</div></div>
+      <div><div class="stat-n">4</div><div class="stat-l">AI 能力层</div></div>
+      <div><div class="stat-n">5</div><div class="stat-l">落地阶段</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- ── OUTCOME ───────────────────────────────────────────────────── -->
+<hr class="div">
+<div id="outcome-sec" class="wrap-full" style="background:var(--bg2)">
+  <div class="wrap" style="padding-left:0;padding-right:0;max-width:none">
+    <div class="reveal">
+      <div class="sec-label">// FINAL OUTCOME</div>
+      <div class="sec-h">一念触发，看看会发生什么</div>
+      <p class="sec-p">从一句话到百台设备同时完成任务，这是 NexusFlow 交付给用户的真实体验</p>
+    </div>
+
+    <!-- Interactive demo -->
+    <div class="demo-stage reveal" id="demo-stage">
+      <!-- Step progress -->
+      <div class="demo-progress">
+        <div class="dp-step active" onclick="DEMO.goTo(0)"><div class="dp-dot">1</div><div class="dp-lbl">用户输入</div></div>
+        <div class="dp-line"></div>
+        <div class="dp-step" onclick="DEMO.goTo(1)"><div class="dp-dot">2</div><div class="dp-lbl">AI 生成脚本</div></div>
+        <div class="dp-line"></div>
+        <div class="dp-step" onclick="DEMO.goTo(2)"><div class="dp-dot">3</div><div class="dp-lbl">下发 100 台设备</div></div>
+        <div class="dp-line"></div>
+        <div class="dp-step" onclick="DEMO.goTo(3)"><div class="dp-dot">4</div><div class="dp-lbl">设备执行中</div></div>
+        <div class="dp-line"></div>
+        <div class="dp-step" onclick="DEMO.goTo(4)"><div class="dp-dot">5</div><div class="dp-lbl">任务完成</div></div>
+      </div>
+
+      <!-- Demo panel -->
+      <div class="demo-panel">
+
+        <!-- Step 0: User input terminal -->
+        <div class="demo-step active" id="ds-0">
+          <div class="terminal">
+            <div class="t-bar">
+              <div class="t-dot" style="background:#ff5f57"></div>
+              <div class="t-dot" style="background:#febc2e"></div>
+              <div class="t-dot" style="background:#28c840"></div>
+              <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-dim);letter-spacing:.15em;margin-left:.6rem">NexusFlow 控制台 · 新建任务</span>
+            </div>
+            <div style="margin-top:.8rem">
+              <span class="t-prompt">$&nbsp;</span><span class="t-text" id="tw-text"></span><span class="t-cursor" id="tw-cur"></span>
+            </div>
+            <div class="t-pills" id="tw-pills">
+              <div class="t-pill">📎 视频已就绪</div>
+              <div class="t-pill hi">👥 已选择 100 台设备</div>
+              <div class="t-pill" style="color:var(--text-dim)">⚙ AI系统提示词：遇到弹框自动关闭</div>
+              <div class="t-pill hi" style="background:rgba(0,229,255,.1)">▶ 确认执行</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1: AI generating code -->
+        <div class="demo-step" id="ds-1">
+          <div class="cg-wrap">
+            <div class="cg-left">
+              <div class="cg-title">🤖 Vision LLM 处理进度</div>
+              <div class="cg-item" id="cg1"><span class="cg-ck">○</span>截取设备屏幕</div>
+              <div class="cg-item" id="cg2"><span class="cg-ck">○</span>识别抖音界面结构</div>
+              <div class="cg-item" id="cg3"><span class="cg-ck">○</span>分析操作路径</div>
+              <div class="cg-item" id="cg4"><span class="cg-ck">○</span>生成 JS 脚本</div>
+              <div class="cg-item" id="cg5"><span class="cg-ck">○</span>脚本就绪</div>
+              <div class="cg-bar"><div class="cg-bar-fill" id="cg-bar"></div></div>
+            </div>
+            <div class="cg-right" id="cg-code"></div>
+          </div>
+        </div>
+
+        <!-- Step 2: Ripple dispatch -->
+        <div class="demo-step" id="ds-2">
+          <div class="ripple-wrap">
+            <canvas id="ripple-canvas"></canvas>
+            <div class="ripple-center">
+              <div class="ripple-num" id="ripple-num">0</div>
+              <div class="ripple-lbl">台已接收</div>
+              <div class="ripple-sub" id="ripple-sub">MQTT 广播中...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Execution in progress -->
+        <div class="demo-step" id="ds-3">
+          <div class="exec-wrap">
+            <div class="exec-left">
+              <div class="phone">
+                <div class="ph-notch"></div>
+                <div class="ph-screen" id="ph-screen">等待中...</div>
+              </div>
+              <div class="exec-status" id="exec-st">Device-001<br>准备中</div>
+              <div class="exec-pbar"><div class="exec-pbar-fill" id="exec-pbar"></div></div>
+            </div>
+            <div class="log-stream" id="log-stream"></div>
+          </div>
+        </div>
+
+        <!-- Step 4: Complete -->
+        <div class="demo-step" id="ds-4">
+          <div class="done-wrap">
+            <div class="done-mark">✓</div>
+            <div class="done-title">任务完成</div>
+            <div class="done-sub">全程无人值守 · 100 台设备并发执行</div>
+            <div class="done-stats">
+              <div><div class="ds-n" id="stat1">—</div><div class="ds-l">台设备完成</div></div>
+              <div><div class="ds-n" id="stat2">—:——</div><div class="ds-l">总用时</div></div>
+              <div><div class="ds-n" id="stat3">—</div><div class="ds-l">次 AI 干预</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls: next button on right -->
+      <div class="demo-controls">
+        <button class="demo-btn" onclick="DEMO.prev()">← 上一步</button>
+        <button class="demo-btn" onclick="DEMO.next()">下一步 →</button>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)" class="reveal">
+      <div style="background:var(--bg);padding:2rem 2.5rem;border:none">
+        <div style="font-family:var(--mono);font-size:.62rem;color:var(--cyan);letter-spacing:.18em;margin-bottom:.8rem">场景 · 电商运营</div>
+        <div style="font-size:.82rem;color:var(--text);font-weight:600;margin-bottom:.5rem">淘宝/拼多多批量上架</div>
+        <div style="font-size:.75rem;color:var(--text-dim);line-height:1.8">一次配置商品模板，参数化标题/价格/图片，定时任务凌晨自动在所有账号同步上架，早上醒来已全部完成</div>
+      </div>
+      <div style="background:var(--bg);padding:2rem 2.5rem">
+        <div style="font-family:var(--mono);font-size:.62rem;color:var(--cyan);letter-spacing:.18em;margin-bottom:.8rem">场景 · 内容矩阵</div>
+        <div style="font-size:.82rem;color:var(--text);font-weight:600;margin-bottom:.5rem">短视频多平台分发</div>
+        <div style="font-size:.75rem;color:var(--text-dim);line-height:1.8">同一条视频，脚本自动在抖音、快手、小红书、视频号逐一发布，文案按平台风格自动调整，全程 AI 处理各平台的弹框差异</div>
+      </div>
+      <div style="background:var(--bg);padding:2rem 2.5rem">
+        <div style="font-family:var(--mono);font-size:.62rem;color:var(--cyan);letter-spacing:.18em;margin-bottom:.8rem">场景 · 设备管理</div>
+        <div style="font-size:.82rem;color:var(--text);font-weight:600;margin-bottom:.5rem">App 批量安装/更新</div>
+        <div style="font-size:.75rem;color:var(--text-dim);line-height:1.8">新版本 APK 上传服务器后，一条 MQTT 指令触发所有托管设备静默安装更新，无需用户点击确认，完成后上报结果</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY NOT ADB ──────────────────────────────────────────────── -->
+<hr class="div">
+<div id="why-sec" class="wrap-full" style="background:var(--bg)">
+  <div class="wrap" style="padding-left:0;padding-right:0;max-width:none">
+    <div class="reveal">
+      <div class="sec-label">// CORE DIFFERENTIATION</div>
+      <div class="sec-h">为什么不用 ADB 和无障碍</div>
+      <p class="sec-p">市场上几乎所有同类产品都依赖 ADB 或无障碍服务——这是我们认为<strong style="color:var(--text)">根本错误的方向</strong>。</p>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-bad">
+        <div class="why-head">✗ &nbsp;传统方案的困境</div>
+        <div class="why-item">
+          <div class="why-icon">🔌</div>
+          <div>
+            <div class="why-item-t">ADB 依赖 · 必须连线</div>
+            <div class="why-item-d">每台手机需开启开发者模式、配对 USB 或同局域网。手机离线或重启后连接即断，无法真正做到远程无人值守。服务器与设备必须保持持续网络通道，部署成本极高。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🚫</div>
+          <div>
+            <div class="why-item-t">无障碍服务 · 脆弱且可被检测</div>
+            <div class="why-item-d">用户必须手动进入系统设置逐一授权。系统低内存、省电模式会强制杀掉无障碍服务。更致命的是，微信、支付宝、抖音等主流 App <strong style="color:rgba(255,120,120,.85)">主动检测无障碍并拒绝运行或弹出警告</strong>，导致脚本在最需要的场景下完全失效。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🐢</div>
+          <div>
+            <div class="why-item-t">性能差 · 延迟高</div>
+            <div class="why-item-d">ADB 命令通过 shell 解析再下发，无障碍事件经过多层转发，两种方式的操作延迟均在 100–500ms 级别，批量并发时问题更严重。</div>
+          </div>
+        </div>
+      </div>
+      <div class="why-good">
+        <div class="why-head">✓ &nbsp;NexusFlow 的方式 · 系统级注入</div>
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <div>
+            <div class="why-item-t">运行在 system_process · 无需任何授权</div>
+            <div class="why-item-d">基于 LSPosed / Riru 将代码注入 Android 系统进程本身。一次刷入 Magisk 模块，永久生效，重启后自动恢复，无需用户做任何操作。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">📡</div>
+          <div>
+            <div class="why-item-t">无需连线 · 只需联网</div>
+            <div class="why-item-d">手机只需接入任意网络（4G / Wi-Fi），通过 MQTT 接收服务器指令，与服务器距离、是否在同一局域网完全无关。支持 FRPC 内网穿透，任何网络环境均可工作。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🥷</div>
+          <div>
+            <div class="why-item-t">App 无法感知 · 操作来自系统层</div>
+            <div class="why-item-d">直接调用 <code style="color:var(--cyan);font-family:var(--mono);font-size:.75rem">InputManager.injectInputEvent()</code>，操作事件的来源与系统触屏完全一致，任何应用层的检测手段均无法区分真实触摸与 NexusFlow 注入的事件。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VALUE ───────────────────────────────────────────────────── -->
+<hr class="div">
+<div class="wrap-full">
+  <div class="val-grid reveal">
+    <div class="val-card">
+      <div class="val-icon">⚡</div>
+      <div class="val-t">系统级权限</div>
+      <div class="val-d">基于 LSPosed 注入 system_process，直接调用 InputManager.injectInputEvent()，无需无障碍授权，无需用户确认</div>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">🧠</div>
+      <div class="val-t">AI 魔法生成</div>
+      <div class="val-d">自然语言一句话生成可编辑 JS 脚本，Claude / GPT-4V 视觉理解屏幕，运行时 AI 自动处理异常弹框</div>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">📜</div>
+      <div class="val-t">Auto.js 兼容</div>
+      <div class="val-d">内置 Rhino JS 引擎，55% API 直接兼容，原 Auto.js 开发者零学习成本迁移，存量脚本可直接复用</div>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">🌐</div>
+      <div class="val-t">批量云控</div>
+      <div class="val-d">MQTT 批量下发脚本，WebSocket 实时监控执行状态，一键同时操控百台设备完成相同业务流程</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ARCHITECTURE ─────────────────────────────────────────────── -->
+<hr class="div">
+<div id="arch-sec" class="wrap-full" style="background:var(--bg2)">
+  <div class="wrap" style="padding-top:6.5rem;padding-bottom:6.5rem;padding-left:0;padding-right:0;max-width:none">
+    <div class="reveal">
+      <div class="sec-label">// SYSTEM ARCHITECTURE</div>
+      <div class="sec-h">整体架构</div>
+      <p class="sec-p">四层系统设计，从脚本引擎到 Vision Agent，覆盖全场景自动化需求</p>
+    </div>
+    <div class="arch-wrap reveal">
+      <div class="layer-list">
+        <div class="layer-item on" onclick="activateLayer(this,0)">
+          <div class="l-num">LAYER 01</div>
+          <div class="l-name">管理控制台</div>
+          <div class="l-sub">shark-vue + NexusFlow 编辑器</div>
+        </div>
+        <div class="layer-item" onclick="activateLayer(this,1)">
+          <div class="l-num">LAYER 02</div>
+          <div class="l-name">云端服务器</div>
+          <div class="l-sub">Spring Boot · MQTT · LLM Gateway</div>
+        </div>
+        <div class="layer-item" onclick="activateLayer(this,2)">
+          <div class="l-num">LAYER 03</div>
+          <div class="l-name">设备 Daemon</div>
+          <div class="l-sub">SharkPosed 系统进程 · Unix Socket</div>
+        </div>
+        <div class="layer-item" onclick="activateLayer(this,3)">
+          <div class="l-num">LAYER 04</div>
+          <div class="l-name">NexusFlow Engine</div>
+          <div class="l-sub">Rhino JS · AI Agent · Input Injection</div>
+        </div>
+      </div>
+
+      <div class="arch-svg-wrap">
+        <svg viewBox="0 0 560 510" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block">
+          <defs>
+            <marker id="arr" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto">
+              <path d="M0,0 L5,2.5 L0,5 Z" fill="rgba(0,229,255,0.55)"/>
+            </marker>
+            <filter id="glo" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <linearGradient id="vg" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:.9"/>
+              <stop offset="100%" style="stop-color:#7755ff;stop-opacity:.5"/>
+            </linearGradient>
+            <!-- dot paths -->
+            <path id="dp1" d="M280 65 L280 100" fill="none"/>
+            <path id="dp2" d="M280 185 L280 220" fill="none"/>
+            <path id="dp3" d="M280 295 L280 330" fill="none"/>
+          </defs>
+
+          <!-- L1: Console -->
+          <rect x="40" y="12" width="480" height="53" rx="2" fill="rgba(0,229,255,.05)" stroke="rgba(0,229,255,.28)" stroke-width="1"/>
+          <text x="280" y="29" text-anchor="middle" fill="rgba(0,229,255,.45)" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="3">LAYER 01 · CONSOLE</text>
+          <text x="280" y="50" text-anchor="middle" fill="#c0d8f0" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700">shark-vue  ·  NexusFlow 脚本编辑器  ·  任务监控面板</text>
+
+          <!-- Connector 1 -->
+          <line x1="280" y1="65" x2="280" y2="100" stroke="url(#vg)" stroke-width="1.2" marker-end="url(#arr)"/>
+          <text x="290" y="86" fill="rgba(0,229,255,.4)" font-family="JetBrains Mono,monospace" font-size="7">HTTP REST / WebSocket</text>
+
+          <!-- L2: Server -->
+          <rect x="40" y="100" width="480" height="85" rx="2" fill="rgba(119,85,255,.05)" stroke="rgba(119,85,255,.38)" stroke-width="1"/>
+          <text x="280" y="117" text-anchor="middle" fill="rgba(119,85,255,.55)" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="3">LAYER 02 · SERVER</text>
+          <!-- sub boxes -->
+          <rect x="55" y="122" width="120" height="48" rx="1" fill="rgba(119,85,255,.1)" stroke="rgba(119,85,255,.28)" stroke-width="1"/>
+          <text x="115" y="141" text-anchor="middle" fill="#b8d0e8" font-family="JetBrains Mono,monospace" font-size="8">MQTT Broker</text>
+          <text x="115" y="157" text-anchor="middle" fill="rgba(119,85,255,.55)" font-family="JetBrains Mono,monospace" font-size="7">shark/&lt;imei&gt;</text>
+
+          <rect x="200" y="122" width="160" height="48" rx="1" fill="rgba(119,85,255,.1)" stroke="rgba(119,85,255,.28)" stroke-width="1"/>
+          <text x="280" y="141" text-anchor="middle" fill="#b8d0e8" font-family="JetBrains Mono,monospace" font-size="8">WebSocket Server</text>
+          <text x="280" y="157" text-anchor="middle" fill="rgba(119,85,255,.55)" font-family="JetBrains Mono,monospace" font-size="7">/video  /ctrl</text>
+
+          <rect x="385" y="122" width="120" height="48" rx="1" fill="rgba(255,170,0,.08)" stroke="rgba(255,170,0,.3)" stroke-width="1"/>
+          <text x="445" y="141" text-anchor="middle" fill="#b8d0e8" font-family="JetBrains Mono,monospace" font-size="8">LLM Gateway</text>
+          <text x="445" y="157" text-anchor="middle" fill="rgba(255,170,0,.55)" font-family="JetBrains Mono,monospace" font-size="7">Claude / GPT-4V</text>
+
+          <!-- Connector 2 -->
+          <line x1="280" y1="185" x2="280" y2="220" stroke="url(#vg)" stroke-width="1.2" marker-end="url(#arr)"/>
+          <text x="290" y="206" fill="rgba(0,229,255,.4)" font-family="JetBrains Mono,monospace" font-size="7">MQTT  +  WS</text>
+
+          <!-- L3: Daemon -->
+          <rect x="40" y="220" width="480" height="75" rx="2" fill="rgba(0,229,255,.04)" stroke="rgba(0,229,255,.22)" stroke-width="1"/>
+          <text x="280" y="237" text-anchor="middle" fill="rgba(0,229,255,.4)" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="3">LAYER 03 · DAEMON</text>
+          <text x="280" y="261" text-anchor="middle" fill="#c0d8f0" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700">SharkPosed 系统进程</text>
+          <text x="280" y="280" text-anchor="middle" fill="rgba(0,229,255,.38)" font-family="JetBrains Mono,monospace" font-size="7">Unix Socket  ·  com.shark.daemon.socket</text>
+
+          <!-- Connector 3 -->
+          <line x1="280" y1="295" x2="280" y2="330" stroke="url(#vg)" stroke-width="1.2" marker-end="url(#arr)"/>
+
+          <!-- L4: NexusFlow Engine -->
+          <rect x="40" y="330" width="480" height="110" rx="2" fill="rgba(0,229,255,.07)" stroke="rgba(0,229,255,.4)" stroke-width="1.5"/>
+          <text x="280" y="347" text-anchor="middle" fill="rgba(0,229,255,.7)" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="2.5">LAYER 04 · NEXUSFLOW ENGINE</text>
+
+          <rect x="55" y="354" width="205" height="70" rx="1" fill="rgba(0,229,255,.08)" stroke="rgba(0,229,255,.22)" stroke-width="1"/>
+          <text x="157" y="372" text-anchor="middle" fill="#b8d0e8" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="500">Rhino JS Runtime</text>
+          <text x="157" y="388" text-anchor="middle" fill="rgba(0,229,255,.5)" font-family="JetBrains Mono,monospace" font-size="7">Auto.js Compatible API</text>
+          <text x="157" y="403" text-anchor="middle" fill="rgba(0,229,255,.35)" font-family="JetBrains Mono,monospace" font-size="6.5">tap · swipe · screenshot · http · files</text>
+
+          <rect x="280" y="354" width="225" height="70" rx="1" fill="rgba(255,170,0,.06)" stroke="rgba(255,170,0,.22)" stroke-width="1"/>
+          <text x="392" y="372" text-anchor="middle" fill="#b8d0e8" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="500">Runtime AI Agent</text>
+          <text x="392" y="388" text-anchor="middle" fill="rgba(255,170,0,.6)" font-family="JetBrains Mono,monospace" font-size="7">ai.fix()  ·  ai.findElement()</text>
+          <text x="392" y="403" text-anchor="middle" fill="rgba(255,170,0,.38)" font-family="JetBrains Mono,monospace" font-size="6.5">Vision Screen Understanding</text>
+
+          <!-- Connector 4 -->
+          <line x1="280" y1="440" x2="280" y2="460" stroke="url(#vg)" stroke-width="1.2" marker-end="url(#arr)"/>
+          <text x="290" y="454" fill="rgba(0,229,255,.38)" font-family="JetBrains Mono,monospace" font-size="7">injectInputEvent</text>
+
+          <!-- Android box -->
+          <rect x="170" y="460" width="220" height="26" rx="2" fill="rgba(0,229,255,.03)" stroke="rgba(0,229,255,.14)" stroke-width="1"/>
+          <text x="280" y="477" text-anchor="middle" fill="rgba(0,229,255,.45)" font-family="JetBrains Mono,monospace" font-size="9">Android Apps</text>
+
+          <!-- Animated dots -->
+          <circle r="3.5" fill="#00e5ff" filter="url(#glo)">
+            <animateMotion dur="2.8s" repeatCount="indefinite" begin="0s">
+              <mpath href="#dp1"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" dur="2.8s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+          <circle r="3" fill="#7755ff" filter="url(#glo)">
+            <animateMotion dur="2.8s" repeatCount="indefinite" begin="0.9s">
+              <mpath href="#dp1"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;0.8;0.8;0" dur="2.8s" repeatCount="indefinite" begin="0.9s"/>
+          </circle>
+          <circle r="3.5" fill="#00e5ff" filter="url(#glo)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.3s">
+              <mpath href="#dp2"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" dur="2.5s" repeatCount="indefinite" begin="0.3s"/>
+          </circle>
+          <circle r="3.5" fill="#ffaa00" filter="url(#glo)">
+            <animateMotion dur="2.3s" repeatCount="indefinite" begin="0.6s">
+              <mpath href="#dp3"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2.3s" repeatCount="indefinite" begin="0.6s"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURES ─────────────────────────────────────────────────── -->
+<hr class="div">
+<div id="feat-sec" class="wrap-full">
+  <div class="wrap" style="padding-top:6.5rem;padding-bottom:6.5rem;padding-left:0;padding-right:0;max-width:none">
+    <div class="reveal">
+      <div class="sec-label">// CORE FEATURES</div>
+      <div class="sec-h">四层能力</div>
+      <p class="sec-p">从基础脚本执行到完全视觉驱动的 AI Agent，按需选择复杂度</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card" data-n="01">
+        <div class="feat-ph">PHASE 1 · FOUNDATION</div>
+        <div class="feat-t">脚本引擎层</div>
+        <div class="feat-sub">Script Engine · Rhino JS · Auto.js 兼容</div>
+        <div class="feat-d">
+          内嵌 Mozilla Rhino JS 引擎（Auto.js 同款），提供与 Auto.js 55% 以上 API 直接兼容的执行环境。脚本以 JSON 形式通过 MQTT 下发到设备，由运行在 system_process 的 daemon 直接执行——<strong style="color:var(--text)">整个过程不需要安装任何额外 App，断网仍可运行主流程</strong>。<br><br>
+          每条操作直接调用系统底层：<code style="font-family:var(--mono);font-size:.72rem;color:var(--cyan)">tap()</code> 对应 InputManager 注入，<code style="font-family:var(--mono);font-size:.72rem;color:var(--cyan)">captureScreen()</code> 对应系统截图接口，原 Auto.js 开发者迁移成本极低。
+        </div>
+        <div class="tags">
+          <span class="tag">Rhino 1.7.x</span><span class="tag">MQTT 脚本下发</span>
+          <span class="tag">tap / swipe / longPress</span><span class="tag">captureScreen</span>
+          <span class="tag">http / files / threads</span><span class="tag">Auto.js 兼容</span>
+        </div>
+      </div>
+      <div class="feat-card" data-n="02">
+        <div class="feat-ph">PHASE 2 · AI GENERATION</div>
+        <div class="feat-t">AI 魔法生成层</div>
+        <div class="feat-sub">自然语言 → 可编辑 JS 脚本 · Claude Vision / GPT-4V</div>
+        <div class="feat-d">
+          运营人员<strong style="color:var(--text)">无需编程</strong>，用一句话描述要做的事（例如"进入抖音发布视频，文案：{{caption}}"），服务器截取设备屏幕，调用视觉大模型分析 UI 结构，<strong style="color:var(--text)">30 秒内生成完整可执行脚本</strong>。<br><br>
+          生成结果在 Monaco 编辑器中展示，用户可直接修改调整后再下发。不确定位置的按钮自动用 <code style="font-family:var(--mono);font-size:.72rem;color:var(--cyan)">ai.findElement()</code> 代替硬编码坐标，脚本天然具备 UI 变化容错能力。支持参数化模板：文案、链接、账号等内容作为变量，批量执行时每台设备传入不同参数。
+        </div>
+        <div class="tags">
+          <span class="tag">Claude Vision</span><span class="tag">GPT-4V</span>
+          <span class="tag">Monaco 编辑器</span><span class="tag">参数化模板</span>
+          <span class="tag">可二次编辑</span><span class="tag">AI 系统提示词</span>
+        </div>
+      </div>
+      <div class="feat-card" data-n="03">
+        <div class="feat-ph">PHASE 3 · RUNTIME AI</div>
+        <div class="feat-t">运行时 AI 兜底层</div>
+        <div class="feat-sub">执行中遇到意外 → AI 实时分析修复 → 自动继续</div>
+        <div class="feat-d">
+          脚本按预定流程执行，遇到预期外的弹框、UI 变化、页面跳转时，<strong style="color:var(--text)">不报错退出，而是自动触发 AI 介入</strong>：设备截图 + 控件树同步上报服务器，LLM 分析当前状态并返回应对代码，设备执行后回到主流程继续。<br><br>
+          后台常驻弹窗守护线程，优先用规则匹配"关闭/取消/我知道了"等常见弹框（毫秒级），规则无法处理时才调用 AI（成本控制）。<strong style="color:var(--text)">Happy Path 全程零 AI 调用</strong>，只在真正需要时才花费 LLM token。
+        </div>
+        <div class="tags">
+          <span class="tag">ai.fix()</span><span class="tag">ai.findElement()</span>
+          <span class="tag">ai.findAndTap()</span><span class="tag">弹窗守护线程</span>
+          <span class="tag">IAccessibilityManager</span><span class="tag">自动恢复主流程</span>
+        </div>
+      </div>
+      <div class="feat-card" data-n="04">
+        <div class="feat-ph">PHASE 4 · VISION AGENT</div>
+        <div class="feat-t">Vision Agent 模式</div>
+        <div class="feat-sub">纯自然语言驱动 · 无需预先编写任何脚本</div>
+        <div class="feat-d">
+          终极模式：用户只说目标，AI 自主决策每一步操作。实时截图 → LLM 决策（"当前是什么界面？下一步做什么？"）→ 执行 → 截图，循环直到目标完成。<br><br>
+          适用于<strong style="color:var(--text)">高度动态 UI、探索性任务、内容审核/智能回复</strong>等无法预先编写脚本的场景。也可作为运行时兜底的最后一道防线：当 Phase 3 的 AI 修复仍无法处理时，切换到 Agent 模式接管整个流程。
+        </div>
+        <div class="tags">
+          <span class="tag">实时截图决策循环</span><span class="tag">Computer Use</span>
+          <span class="tag">零代码操作</span><span class="tag">智能内容审核</span>
+          <span class="tag">自主任务完成</span><span class="tag">Future →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── API SHOWCASE ──────────────────────────────────────────────── -->
+<hr class="div">
+<div id="api-section" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-label">// API REFERENCE</div>
+      <div class="sec-h">脚本示例</div>
+      <p class="sec-p">Auto.js 风格的 JS API，开发者可无缝迁移现有脚本</p>
+    </div>
+    <div class="reveal" style="margin-top:2.5rem">
+      <div class="api-tabs">
+        <button class="api-tab on" onclick="switchTab(this,'t-basic')">基础操作</button>
+        <button class="api-tab" onclick="switchTab(this,'t-ai')">AI 兜底</button>
+        <button class="api-tab" onclick="switchTab(this,'t-dy')">抖音发布</button>
+      </div>
+      <div id="t-basic" class="api-pane on">
+        <div class="code-box">
+          <div class="code-head"><span class="code-fn">touch.js</span><span class="code-lg">JavaScript</span></div>
+          <pre><span class="cm">// 基础触控操作</span>
+<span class="fn">tap</span>(<span class="num">540</span>, <span class="num">960</span>);
+<span class="fn">longPress</span>(<span class="num">540</span>, <span class="num">960</span>, <span class="num">1000</span>);
+<span class="fn">swipe</span>(<span class="num">540</span>, <span class="num">1200</span>, <span class="num">540</span>, <span class="num">400</span>, <span class="num">500</span>);
+
+<span class="cm">// 按键</span>
+<span class="fn">back</span>(); <span class="fn">home</span>(); <span class="fn">recents</span>();
+
+<span class="cm">// 文字输入</span>
+<span class="fn">input</span>(<span class="str">"你好，世界"</span>);
+<span class="fn">clearInput</span>();
+
+<span class="cm">// 截图保存</span>
+<span class="kw">var</span> img = <span class="fn">captureScreen</span>();
+img.<span class="fn">saveTo</span>(<span class="str">"/sdcard/shot.png"</span>);
+
+<span class="cm">// 等待</span>
+<span class="fn">sleep</span>(<span class="num">1000</span>);</pre>
+        </div>
+        <div class="code-box">
+          <div class="code-head"><span class="code-fn">app-http.js</span><span class="code-lg">JavaScript</span></div>
+          <pre><span class="cm">// App 控制</span>
+<span class="fn">launchApp</span>(<span class="str">"com.zhiliaoapp.musically"</span>);
+<span class="fn">sleep</span>(<span class="num">2500</span>);
+
+<span class="cm">// HTTP 请求</span>
+<span class="kw">var</span> res = http.<span class="fn">get</span>(<span class="str">"https://api.example.com/data"</span>);
+<span class="kw">var</span> data = JSON.<span class="fn">parse</span>(res.body);
+
+<span class="cm">// 文件操作</span>
+files.<span class="fn">write</span>(<span class="str">"/sdcard/result.txt"</span>, data.result);
+
+<span class="cm">// 设备信息</span>
+<span class="fn">log</span>(device.imei + <span class="str">" | "</span> + device.model);
+<span class="fn">log</span>(<span class="str">"screen: "</span> + device.width + <span class="str">"x"</span> + device.height);
+
+<span class="cm">// 上报结果</span>
+<span class="fn">reportResult</span>({ success: <span class="kw">true</span>, data });</pre>
+        </div>
+      </div>
+      <div id="t-ai" class="api-pane">
+        <div class="code-box">
+          <div class="code-head"><span class="code-fn">ai-fallback.js</span><span class="code-lg">JavaScript</span></div>
+          <pre><span class="cm">// AI 智能查找并点击</span>
+ai.<span class="fn">findAndTap</span>(<span class="str">"发布按钮"</span>);
+ai.<span class="fn">findAndTap</span>(<span class="str">"关闭弹窗"</span>, { timeout: <span class="num">2000</span>, required: <span class="kw">false</span> });
+
+<span class="cm">// 获取元素坐标</span>
+<span class="kw">var</span> pt = ai.<span class="fn">findElement</span>(<span class="str">"底部加号图标"</span>);
+<span class="kw">if</span> (pt) <span class="fn">tap</span>(pt.x, pt.y);
+
+<span class="cm">// 运行时修复</span>
+<span class="kw">try</span> {
+  <span class="fn">tapText</span>(<span class="str">"发布"</span>);
+} <span class="kw">catch</span>(e) {
+  ai.<span class="fn">fix</span>({ task: <span class="str">"点击发布按钮"</span> });
+}
+
+<span class="cm">// 向 LLM 提问</span>
+<span class="kw">var</span> ans = ai.<span class="fn">ask</span>(<span class="str">"当前界面是否已登录？返回true/false"</span>);
+<span class="kw">if</span> (ans === <span class="str">"false"</span>) doLogin();</pre>
+        </div>
+        <div class="code-box">
+          <div class="code-head"><span class="code-fn">popup-guard.js</span><span class="code-lg">JavaScript</span></div>
+          <pre><span class="cm">// 后台弹窗守护线程（自动开启）</span>
+threads.<span class="fn">start</span>(<span class="kw">function</span>() {
+  <span class="kw">while</span> (SCRIPT_RUNNING) {
+    <span class="kw">var</span> ui = <span class="fn">getUITree</span>();
+
+    <span class="cm">// 规则优先（快）</span>
+    <span class="kw">var</span> btn = ui.<span class="fn">findByText</span>([
+      <span class="str">"关闭"</span>, <span class="str">"×"</span>, <span class="str">"取消"</span>, <span class="str">"我知道了"</span>, <span class="str">"拒绝"</span>
+    ]);
+    <span class="kw">if</span> (btn && <span class="fn">isPopup</span>(btn)) {
+      <span class="fn">tap</span>(btn.x, btn.y);
+      <span class="fn">sleep</span>(<span class="num">500</span>);
+      <span class="kw">continue</span>;
+    }
+    <span class="cm">// 无规则命中时 AI 接管</span>
+    <span class="fn">sleep</span>(<span class="num">1500</span>);
+  }
+});</pre>
+        </div>
+      </div>
+      <div id="t-dy" class="api-pane">
+        <div class="code-box">
+          <div class="code-head"><span class="code-fn">douyin-publish.js</span><span class="code-lg">JavaScript</span></div>
+          <pre><span class="cm">/**
+ * 抖音批量发布脚本
+ * 参数由服务器下发时注入
+ */</span>
+<span class="kw">function</span> <span class="fn">main</span>({ caption, video_url }) {
+  <span class="cm">// 下载视频到本地</span>
+  <span class="kw">var</span> path = <span class="str">"/sdcard/nexusflow/tmp.mp4"</span>
+  http.<span class="fn">download</span>(video_url, path)
+
+  <span class="cm">// 启动抖音</span>
+  app.<span class="fn">launch</span>(<span class="str">"com.ss.android.ugc.aweme"</span>)
+  <span class="fn">sleep</span>(<span class="num">3000</span>)
+
+  <span class="cm">// AI 兜底：关闭可能出现的启动弹框</span>
+  ai.<span class="fn">findAndTap</span>(<span class="str">"关闭"</span>, { required: <span class="kw">false</span>, timeout: <span class="num">1500</span> })
+
+  <span class="cm">// 点击发布入口</span>
+  ai.<span class="fn">findAndTap</span>(<span class="str">"底部加号发布按钮"</span>)
+  <span class="fn">sleep</span>(<span class="num">1500</span>)</pre>
+        </div>
+        <div class="code-box">
+          <div class="code-head"><span class="code-fn">douyin-publish.js (续)</span><span class="code-lg">JavaScript</span></div>
+          <pre>  <span class="cm">// 选择本地视频</span>
+  ai.<span class="fn">findAndTap</span>(<span class="str">"上传/选择视频"</span>)
+  media.<span class="fn">selectFromGallery</span>(path)
+  <span class="fn">sleep</span>(<span class="num">4000</span>)
+
+  <span class="cm">// 填写文案</span>
+  ai.<span class="fn">findAndTap</span>(<span class="str">"添加作品描述输入框"</span>)
+  <span class="fn">input</span>(caption)
+
+  <span class="cm">// 点击发布</span>
+  <span class="kw">try</span> {
+    <span class="fn">tapText</span>(<span class="str">"发布"</span>);
+  } <span class="kw">catch</span>(e) {
+    ai.<span class="fn">findAndTap</span>(<span class="str">"发布按钮"</span>);
+  }
+  <span class="fn">sleep</span>(<span class="num">2500</span>)
+
+  <span class="fn">reportResult</span>({ success: <span class="kw">true</span> })
+}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ROADMAP ───────────────────────────────────────────────────── -->
+<hr class="div">
+<div id="road-sec" class="wrap-full">
+  <div class="wrap" style="padding-top:6.5rem;padding-bottom:6.5rem;padding-left:0;padding-right:0;max-width:none">
+    <div class="reveal">
+      <div class="sec-label">// IMPLEMENTATION PLAN</div>
+      <div class="sec-h">落地计划</div>
+      <p class="sec-p">五阶段约 12 周完成核心功能，从引擎到 AI Agent 逐层构建</p>
+    </div>
+    <div class="roadmap reveal">
+      <div class="rm-line"></div>
+      <div class="rm-prog" style="width:42%"></div>
+      <div class="rm-phases">
+        <div class="phase-col done">
+          <div class="p-dot"></div>
+          <div class="p-num">PHASE 01</div>
+          <div class="p-name">脚本引擎 + 编辑器</div>
+          <div class="p-weeks">已完成 · 2026-05</div>
+          <ul class="p-items">
+            <li>Rhino JS + MQTT 下发执行</li>
+            <li>tap / swipe / input / log / sleep</li>
+            <li>clickByText / clickById / inputById</li>
+            <li>积木式流程编辑器</li>
+            <li>投屏 + 布局检查器</li>
+            <li>uiautomator getLayout API</li>
+            <li>Agent 无鉴权接口</li>
+          </ul>
+        </div>
+        <div class="phase-col done">
+          <div class="p-dot"></div>
+          <div class="p-num">PHASE 02</div>
+          <div class="p-name">图像识别 + 资源管理</div>
+          <div class="p-weeks">已完成 · 2026-05</div>
+          <ul class="p-items">
+            <li>findImage / tapOnImage 模板匹配</li>
+            <li>findColor 颜色识别</li>
+            <li>ScreenPanel 截图上传到模板库</li>
+            <li>脚本资源树（OSS + 文件夹）</li>
+            <li>loadResource 设备按需下载</li>
+            <li>积木「找图点击」/「加载资源」</li>
+          </ul>
+        </div>
+        <div class="phase-col active">
+          <div class="p-dot"></div>
+          <div class="p-num">PHASE 03</div>
+          <div class="p-name">AI 生成</div>
+          <div class="p-weeks">下一阶段</div>
+          <ul class="p-items">
+            <li>LLM API 接入</li>
+            <li>脚本生成 Prompt</li>
+            <li>生成接口 /generate</li>
+            <li>AI 生成按钮 UI</li>
+            <li>脚本任务管理</li>
+          </ul>
+        </div>
+        <div class="phase-col">
+          <div class="p-dot"></div>
+          <div class="p-num">PHASE 04</div>
+          <div class="p-name">AI 兜底</div>
+          <div class="p-weeks">Week 9 – 10</div>
+          <ul class="p-items">
+            <li>ai.fix() 异常自愈</li>
+            <li>Vision LLM 接入</li>
+            <li>弹窗守护线程</li>
+            <li>AI 生成积木块</li>
+            <li>实时监控面板</li>
+          </ul>
+        </div>
+        <div class="phase-col">
+          <div class="p-dot"></div>
+          <div class="p-num">PHASE 05</div>
+          <div class="p-name">规模化</div>
+          <div class="p-weeks">Week 11 – 12</div>
+          <ul class="p-items">
+            <li>Cron 定时任务</li>
+            <li>批量设备执行</li>
+            <li>执行历史统计</li>
+            <li>脚本市场模板</li>
+            <li>执行报告导出</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline bar -->
+    <div style="margin-top:4rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border)" class="reveal">
+      <div style="background:var(--bg);padding:1.5rem 2rem;text-align:center">
+        <div style="font-family:var(--disp);font-size:2rem;color:var(--cyan)">Month 1</div>
+        <div style="font-family:var(--mono);font-size:.68rem;color:var(--text-dim);margin-top:.4rem;letter-spacing:.1em">Phase 1 + 2 ✓ 引擎 · 编辑器 · 图像识别 · 资源管理</div>
+      </div>
+      <div style="background:var(--bg);padding:1.5rem 2rem;text-align:center">
+        <div style="font-family:var(--disp);font-size:2rem;color:var(--cyan)">Month 2</div>
+        <div style="font-family:var(--mono);font-size:.68rem;color:var(--text-dim);margin-top:.4rem;letter-spacing:.1em">Phase 3 + 4 · AI 生成 · AI 兜底闭环</div>
+      </div>
+      <div style="background:var(--bg);padding:1.5rem 2rem;text-align:center">
+        <div style="font-family:var(--disp);font-size:2rem;color:var(--cyan)">Month 3</div>
+        <div style="font-family:var(--mono);font-size:.68rem;color:var(--text-dim);margin-top:.4rem;letter-spacing:.1em">Phase 5 + 优化 · 生产可用 · 推广</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMPARE ───────────────────────────────────────────────────── -->
+<hr class="div">
+<div id="cmp-sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-label">// COMPETITIVE ANALYSIS</div>
+      <div class="sec-h">竞品对比</div>
+      <p class="sec-p">系统级注入 + AI 双引擎，构建不可复制的核心壁垒</p>
+    </div>
+
+    <!-- Permission ladder -->
+    <div class="reveal" style="margin-top:2.5rem;background:var(--bg);border:1px solid var(--border);padding:2rem">
+      <div style="font-family:var(--mono);font-size:.62rem;color:var(--text-dim);letter-spacing:.2em;margin-bottom:1.2rem">// 权限层级对比</div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div style="display:flex;align-items:center;gap:1rem">
+          <div style="font-family:var(--mono);font-size:.7rem;color:var(--text-dim);width:90px">按键精灵</div>
+          <div style="height:6px;width:30%;background:rgba(0,229,255,.2);border-radius:1px;position:relative">
+            <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.6rem;color:var(--text-dim);white-space:nowrap;padding-left:calc(30% + 8px)">Root 级</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <div style="font-family:var(--mono);font-size:.7rem;color:var(--text-dim);width:90px">Auto.js</div>
+          <div style="height:6px;width:42%;background:rgba(0,229,255,.2);border-radius:1px;position:relative">
+            <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.6rem;color:var(--text-dim);white-space:nowrap;padding-left:calc(42% + 8px)">AccessibilityService 级</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <div style="font-family:var(--mono);font-size:.7rem;color:var(--text-dim);width:90px">影刀 RPA</div>
+          <div style="height:6px;width:25%;background:rgba(0,229,255,.2);border-radius:1px;position:relative">
+            <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.6rem;color:var(--text-dim);white-space:nowrap;padding-left:calc(25% + 8px)">ADB 级（需 PC 连接）</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <div style="font-family:var(--mono);font-size:.72rem;color:var(--cyan);width:90px;font-weight:700">NexusFlow</div>
+          <div style="height:8px;width:100%;background:linear-gradient(to right,var(--cyan),rgba(0,229,255,.4));border-radius:1px;box-shadow:0 0 12px rgba(0,229,255,.4);position:relative">
+            <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.65rem;color:var(--bg);font-weight:700">system_process 级 · 最高权限</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap reveal" style="margin-top:2rem">
+      <table>
+        <thead>
+          <tr>
+            <th>能力维度</th>
+            <th class="hi">NexusFlow 一念流</th>
+            <th>影刀 RPA</th>
+            <th>Auto.js</th>
+            <th>Appium</th>
+            <th>按键精灵</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>执行权限深度</td>
+            <td class="hi best"><span class="yes">●●●●●</span> system_process</td>
+            <td><span class="part">●●</span> ADB</td>
+            <td><span class="part">●●●</span> Accessibility</td>
+            <td><span class="part">●●</span> ADB</td>
+            <td><span class="part">●●●●</span> Root</td>
+          </tr>
+          <tr>
+            <td>批量设备云控</td>
+            <td class="hi best"><span class="yes">✓</span> MQTT 100+ 台</td>
+            <td><span class="part">△</span> 有限</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Auto.js 脚本兼容</td>
+            <td class="hi best"><span class="yes">✓</span> 55% 直接兼容</td>
+            <td><span class="no">✗</span> 私有 Python</td>
+            <td><span class="yes">✓</span> 完整</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span> 私有语言</td>
+          </tr>
+          <tr>
+            <td>AI 脚本生成</td>
+            <td class="hi best"><span class="yes">✓</span> LLM + 可编辑</td>
+            <td><span class="part">△</span> 有但不可编辑</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>运行时 AI 兜底</td>
+            <td class="hi best"><span class="yes">✓</span> ai.fix() 原生</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>UI 控件树获取</td>
+            <td class="hi best"><span class="yes">✓</span> IAccessibilityMgr</td>
+            <td><span class="part">△</span> UIAutomator dump</td>
+            <td><span class="part">△</span> Accessibility</td>
+            <td><span class="yes">✓</span> WebDriver</td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>断网可运行</td>
+            <td class="hi best"><span class="yes">✓</span> 主流程可离线</td>
+            <td><span class="no">✗</span> 依赖 PC 连接</td>
+            <td><span class="yes">✓</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Xposed 模块集成</td>
+            <td class="hi best"><span class="yes">✓</span> LSPosed 原生</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>私有部署</td>
+            <td class="hi best"><span class="yes">✓</span> 完全私有</td>
+            <td><span class="no">✗</span> SaaS</td>
+            <td><span class="yes">✓</span> 开源</td>
+            <td><span class="yes">✓</span> 开源</td>
+            <td><span class="no">✗</span> 商业</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ────────────────────────────────────────────────────── -->
+<hr class="div">
+<footer>
+  <div>
+    <div class="foot-logo-en">NEXUSFLOW</div>
+    <div class="foot-logo-cn">一 念 流</div>
+  </div>
+  <div class="foot-r">
+    <div class="foot-sl">Think Once, Flow Everywhere · 一念触发，流转万机</div>
+    <div class="foot-copy">Part of NexusControl Platform · v1.0 Planning · 2026</div>
+  </div>
+</footer>
+
+<script>
+/* ── Canvas Hero — Floating Thoughts ──────────────────────────── */
+(function(){
+  const c = document.getElementById('hero-canvas');
+  const ctx = c.getContext('2d');
+  let W, H, active = [];
+
+  const THOUGHTS = [
+    '今天的抖音视频，让所有设备一起发',
+    '演唱会开票那一刻，100 台同时抢',
+    '凌晨两点的挂机任务，不用守着',
+    '闲鱼这个链接，看到就下单',
+    '50 台设备的账号数据，一次全拿回来',
+    '这条视频，快手小红书视频号同步发出去',
+    '所有账号的简介，今晚统一改掉',
+    '每天早上八点，自动签到打卡',
+    '这款商品降到 299 就立刻买',
+    '直播间的数据，每小时采集一次给我',
+    '开抢前三秒，所有设备全部就位',
+    '今天的养号计划，按时间表跑完',
+    '竞品的价格和评论，每天给我汇总一份',
+    '新品上线，私信所有老客户',
+    '粉丝满一万，自动发优惠券',
+    '福袋开始的瞬间，设备自动参与',
+    '截图汇总一下，发我看看效果',
+    '这件商品，在所有平台同步上架',
+    '空闲的设备先跑这批任务',
+    '评论区的关键词，实时监控回复',
+    '每周一自动更新所有账号的头像',
+    '这个脚本，分发给今天在线的设备',
+    '刷完视频停留够三秒才算有效',
+    '账号异常的设备，先暂停任务',
+    '新增的 20 台设备，加入今天的计划',
+    '任务跑完把结果截图发给我就行',
+    '遇到验证码，自动识别通过',
+    '弹框出来的时候，别让它卡住',
+    '不想一台一台手动操作了',
+    '说一声，剩下的事交给它',
+  ];
+
+  const ROWS = 12;
+  let rowBusy = new Array(ROWS).fill(false);
+
+  function freeRow() {
+    const free = [];
+    rowBusy.forEach((b, i) => { if (!b) free.push(i); });
+    if (!free.length) return -1;
+    return free[Math.floor(Math.random() * free.length)];
+  }
+
+  function spawnOne() {
+    const row = freeRow();
+    if (row === -1) return;
+    rowBusy[row] = true;
+    const y = (row + 0.5) / ROWS * H + (Math.random() - 0.5) * 22;
+    const size = Math.random() * 3 + 12;
+    const speed = Math.random() * 0.3 + 0.22;
+    const maxA = Math.random() * 0.25 + 0.28;
+    const text = THOUGHTS[Math.floor(Math.random() * THOUGHTS.length)];
+    const fadeW = 200;
+    active.push({ text, x: -20, y, speed, maxA, size, fadeW, alpha: 0, row });
+  }
+
+  function spawnLoop() {
+    spawnOne();
+    setTimeout(spawnLoop, 1400 + Math.random() * 800);
+  }
+
+  function init() {
+    W = c.width  = window.innerWidth;
+    H = c.height = window.innerHeight;
+    active = [];
+    rowBusy = new Array(ROWS).fill(false);
+    for (let i = 0; i < 7; i++) {
+      const row = i * Math.floor(ROWS / 7);
+      if (row < ROWS && !rowBusy[row]) {
+        rowBusy[row] = true;
+        const y = (row + 0.5) / ROWS * H + (Math.random() - 0.5) * 22;
+        const size = Math.random() * 3 + 12;
+        const speed = Math.random() * 0.3 + 0.22;
+        const maxA = Math.random() * 0.25 + 0.28;
+        const text = THOUGHTS[Math.floor(Math.random() * THOUGHTS.length)];
+        active.push({ text, x: Math.random() * W * 0.6, y, speed, maxA, size, fadeW: 200, alpha: 0, row });
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = active.length - 1; i >= 0; i--) {
+      const s = active[i];
+      s.x += s.speed;
+      const fadeW = s.fadeW;
+      if      (s.x < fadeW)     s.alpha = Math.max(0, s.x / fadeW) * s.maxA;
+      else if (s.x > W - fadeW) s.alpha = Math.max(0, (W - s.x) / fadeW) * s.maxA;
+      else                       s.alpha = s.maxA;
+      if (s.x > W + 300) {
+        rowBusy[s.row] = false;
+        active.splice(i, 1);
+        continue;
+      }
+      ctx.save();
+      ctx.globalAlpha = s.alpha;
+      ctx.fillStyle   = '#b8d8f0';
+      ctx.font        = `300 ${s.size}px 'Noto Sans SC', sans-serif`;
+      ctx.fillText(s.text, s.x, s.y);
+      ctx.restore();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { init(); });
+  requestAnimationFrame(() => { init(); draw(); setTimeout(spawnLoop, 600); });
+})();
+
+/* ── API Tabs ──────────────────────────────────────────────────── */
+function switchTab(btn, id){
+  document.querySelectorAll('.api-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.api-pane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+
+/* ── Layer highlight ───────────────────────────────────────────── */
+function activateLayer(el){
+  document.querySelectorAll('.layer-item').forEach(l=>l.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ── Scroll Reveal ─────────────────────────────────────────────── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── Nav shrink ────────────────────────────────────────────────── */
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.padding =
+    window.scrollY > 80 ? '.75rem 3rem' : '1.1rem 3rem';
+});
+
+/* ── Interactive Demo ──────────────────────────────────────────── */
+const KW='color:#7755ff', FN='color:#00e5ff', STR='color:#00ff88',
+      CM='color:#3d5c7a;font-style:italic', NUM='color:#ffaa00';
+
+const CODE_LINES = [
+  `<span style="${KW}">function</span> <span style="${FN}">main</span>({ caption, video_url }) {`,
+  `  <span style="${CM}">// 下载视频到设备本地</span>`,
+  `  <span style="${KW}">var</span> path = <span style="${STR}">"/sdcard/nexusflow/video.mp4"</span>`,
+  `  http.<span style="${FN}">download</span>(video_url, path)`,
+  ``,
+  `  <span style="${CM}">// 启动抖音</span>`,
+  `  app.<span style="${FN}">launch</span>(<span style="${STR}">"com.ss.android.ugc.aweme"</span>)`,
+  `  <span style="${FN}">sleep</span>(<span style="${NUM}">3000</span>)`,
+  ``,
+  `  <span style="${CM}">// AI 守护线程处理弹框</span>`,
+  `  ai.<span style="${FN}">findAndTap</span>(<span style="${STR}">"关闭"</span>, { required: <span style="${KW}">false</span> })`,
+  ``,
+  `  <span style="${CM}">// 点击发布 & 选视频</span>`,
+  `  ai.<span style="${FN}">findAndTap</span>(<span style="${STR}">"底部加号发布按钮"</span>)`,
+  `  media.<span style="${FN}">selectFromGallery</span>(path)`,
+  `  <span style="${FN}">sleep</span>(<span style="${NUM}">4000</span>)`,
+  ``,
+  `  <span style="${CM}">// 填写文案 & 发布</span>`,
+  `  ai.<span style="${FN}">findAndTap</span>(<span style="${STR}">"描述输入框"</span>)`,
+  `  <span style="${FN}">input</span>(caption)`,
+  `  ai.<span style="${FN}">findAndTap</span>(<span style="${STR}">"发布按钮"</span>)`,
+  `  <span style="${KW}">return</span> { success: <span style="${KW}">true</span> }`,
+  `}`,
+];
+
+const LOG_ENTRIES = [
+  { t:300,   m:'抖音正在启动...', c:'ok' },
+  { t:1800,  m:'应用启动完成', c:'ok' },
+  { t:2300,  m:'点击 + 发布按钮', c:'ok' },
+  { t:3600,  m:'进入发布界面', c:'ok' },
+  { t:4700,  m:'开始填写视频文案', c:'ok' },
+  { t:6600,  m:'点击"发布"按钮', c:'ok' },
+  { t:7300,  m:'检测到权限弹框', c:'warn' },
+  { t:9200,  m:'AI 介入，正在处理弹框', c:'ai' },
+  { t:10200, m:'弹框已关闭，继续执行', c:'ok' },
+  { t:11400, m:'视频发布成功 ✓', c:'ok' },
+];
+
+const PHONE_SCREENS = [
+  // 0: 启动抖音
+  { ms:2000, html:`<div style="background:#000;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-family:sans-serif">
+    <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#25f4ee,#fe2c55);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 14px rgba(254,44,85,.5)">♪</div>
+    <div style="color:#fff;font-size:10px;letter-spacing:3px;font-weight:600">抖音</div>
+    <div style="display:flex;gap:5px;margin-top:4px">
+      <div class="ld"></div><div class="ld" style="animation-delay:.2s"></div><div class="ld" style="animation-delay:.4s"></div>
+    </div>
+  </div>` },
+
+  // 1: 主界面 点击+号
+  { ms:2400, html:`<div style="background:#000;height:100%;position:relative;font-family:sans-serif">
+    <div style="height:calc(100% - 40px);background:#0a0a0a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+      <div style="width:56px;height:90px;background:#1c1c1c;border-radius:4px;border:1px solid #2a2a2a"></div>
+      <div style="position:absolute;right:8px;top:50%;transform:translateY(-60%);display:flex;flex-direction:column;gap:6px;align-items:center">
+        <div style="font-size:16px">❤️</div><div style="color:#fff;font-size:7px">3.2w</div>
+        <div style="font-size:14px">💬</div><div style="color:#fff;font-size:7px">892</div>
+        <div style="font-size:14px">↗️</div>
+      </div>
+      <div style="position:absolute;bottom:6px;left:8px;color:#fff;font-size:7px;opacity:.7">@抖音用户 · 新年特惠来了！</div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:#111;border-top:1px solid #222;display:flex;align-items:center;justify-content:space-around;padding:0 6px">
+      <div style="text-align:center"><div style="font-size:14px">🏠</div><div style="color:#fff;font-size:6px">首页</div></div>
+      <div style="width:32px;height:22px;background:linear-gradient(90deg,#25f4ee 0%,#fe2c55 100%);border-radius:6px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px rgba(254,44,85,.7)">
+        <span style="color:#fff;font-size:16px;font-weight:900;line-height:1">+</span>
+      </div>
+      <div style="text-align:center"><div style="font-size:14px">👤</div><div style="color:#888;font-size:6px">我</div></div>
+    </div>
+  </div>` },
+
+  // 2: 发布界面 + 填写文案
+  { ms:2600, html:`<div style="background:#111;height:100%;font-family:sans-serif;display:flex;flex-direction:column">
+    <div style="background:#000;color:#fff;font-size:8px;padding:5px 10px;display:flex;align-items:center">
+      <span style="color:#888">✕</span>
+      <span style="flex:1;text-align:center;font-weight:600">发布作品</span>
+    </div>
+    <div style="display:flex;gap:6px;padding:8px;background:#0a0a0a">
+      <div style="width:52px;height:70px;background:#1e1e1e;border-radius:5px;flex-shrink:0;border:1px solid #2a2a2a;display:flex;align-items:flex-end;justify-content:flex-end;padding:2px">
+        <div style="background:#25f4ee;border-radius:2px;padding:1px 3px;font-size:5px;color:#000;font-weight:bold">00:15</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+        <div style="background:#1e1e1e;border-radius:5px;padding:5px 7px;font-size:7px;color:#ddd;border:1px solid #333;line-height:1.5">新年特惠，限时8折！<br>快来抢购<span style="color:#fe2c55;animation:blink 1s infinite">|</span></div>
+        <div style="display:flex;gap:3px;flex-wrap:wrap">
+          <div style="background:#1a1a2a;border-radius:10px;padding:2px 6px;font-size:6px;color:#25f4ee;border:1px solid #25f4ee33">#好物推荐</div>
+          <div style="background:#1a1a2a;border-radius:10px;padding:2px 6px;font-size:6px;color:#25f4ee;border:1px solid #25f4ee33">#限时</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:0 8px;margin-top:auto;padding-bottom:8px">
+      <div style="background:linear-gradient(90deg,#fe2c55,#ff6b35);border-radius:6px;padding:7px;text-align:center;font-size:9px;color:#fff;font-weight:700;letter-spacing:1px;box-shadow:0 3px 12px rgba(254,44,85,.4)">发 布</div>
+    </div>
+  </div>` },
+
+  // 3: 弹框出现
+  { ms:2000, html:`<div style="background:#111;height:100%;font-family:sans-serif;position:relative">
+    <div style="background:#000;color:#fff;font-size:8px;padding:5px 10px;text-align:center;font-weight:600">发布作品</div>
+    <div style="padding:8px;background:#0a0a0a;display:flex;gap:6px">
+      <div style="width:52px;height:70px;background:#1e1e1e;border-radius:5px;flex-shrink:0"></div>
+      <div style="flex:1;background:#1e1e1e;border-radius:5px;padding:5px;font-size:6px;color:#888">新年特惠，限时8折！...</div>
+    </div>
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center">
+      <div style="background:#2c2c2c;border-radius:10px;width:84%;padding:12px 10px;text-align:center;border:1px solid #3a3a3a;box-shadow:0 8px 24px rgba(0,0,0,.6)">
+        <div style="font-size:9px;color:#fff;font-weight:700;margin-bottom:4px">允许访问相册</div>
+        <div style="font-size:7px;color:#999;margin-bottom:10px;line-height:1.5">抖音需要访问您的相册以选择视频</div>
+        <div style="display:flex;gap:5px">
+          <div style="flex:1;background:#3a3a3a;border-radius:5px;padding:5px;font-size:7px;color:#aaa">不允许</div>
+          <div style="flex:1;background:#fe2c55;border-radius:5px;padding:5px;font-size:7px;color:#fff;font-weight:600">允许</div>
+        </div>
+      </div>
+    </div>
+  </div>` },
+
+  // 4: AI介入 关闭弹框
+  { ms:2200, html:`<div style="background:#111;height:100%;font-family:sans-serif;position:relative">
+    <div style="background:#000;color:#fff;font-size:8px;padding:5px 10px;text-align:center;font-weight:600">发布作品</div>
+    <div style="padding:8px;background:#0a0a0a;display:flex;gap:6px">
+      <div style="width:52px;height:70px;background:#1e1e1e;border-radius:5px;flex-shrink:0"></div>
+      <div style="flex:1;background:#1e1e1e;border-radius:5px;padding:5px;font-size:6px;color:#888">新年特惠，限时8折！...</div>
+    </div>
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center">
+      <div style="background:#2c2c2c;border-radius:10px;width:84%;padding:12px 10px;text-align:center;border:2px solid #7755ff;box-shadow:0 0 20px rgba(119,85,255,.4);opacity:.6">
+        <div style="font-size:9px;color:#fff;font-weight:700;margin-bottom:4px">允许访问相册</div>
+        <div style="display:flex;gap:5px;margin-top:8px">
+          <div style="flex:1;background:#3a3a3a;border-radius:5px;padding:5px;font-size:7px;color:#aaa">不允许</div>
+          <div style="flex:1;background:#fe2c55;border-radius:5px;padding:5px;font-size:7px;color:#fff">允许</div>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center">
+      <div style="background:rgba(119,85,255,.95);border-radius:20px;padding:4px 10px;font-size:7px;color:#fff;display:flex;align-items:center;gap:4px;box-shadow:0 0 12px rgba(119,85,255,.6)">🤖 AI 正在自动处理弹框...</div>
+    </div>
+  </div>` },
+
+  // 5: 发布成功
+  { ms:0, html:`<div style="background:#000;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:sans-serif">
+    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#25f4ee,#00c853);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 20px rgba(37,244,238,.5)">✓</div>
+    <div style="color:#fff;font-size:10px;font-weight:700">发布成功</div>
+    <div style="color:#666;font-size:7px">视频正在审核中...</div>
+    <div style="margin-top:4px;background:#1a1a1a;border-radius:10px;padding:3px 10px;font-size:7px;color:#25f4ee">查看作品</div>
+  </div>` },
+];
+
+const DEMO = {
+  step: 0, total: 5,
+  autoTimer: null, stepTimer: null,
+  delays: [3800, 5200, 3800, 12000, 4000],
+
+  init() {
+    const g = document.getElementById('dev-grid');
+    if (g) { g.innerHTML=''; for(let i=0;i<100;i++){const d=document.createElement('div');d.className='dn';d.id='dng'+i;g.appendChild(d);} }
+  },
+
+  goTo(s) {
+    if (s < 0 || s >= this.total) return;
+    if (this.stepTimer) clearTimeout(this.stepTimer);
+    if (this._step2Stop) { this._step2Stop(); this._step2Stop = null; }
+    document.querySelectorAll('.demo-step').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.dp-step').forEach((el,i) => {
+      el.classList.toggle('active', i===s);
+      el.classList.toggle('done', i<s);
+    });
+    const el = document.getElementById('ds-'+s);
+    if (el) el.classList.add('active');
+    this.step = s;
+    setTimeout(() => this.animate(s), 120);
+    if (this.autoTimer && s < this.total-1)
+      this.stepTimer = setTimeout(() => this.next(), this.delays[s]);
+  },
+
+  next() { if(this.step<this.total-1) this.goTo(this.step+1); else { this.stopAuto(); setTimeout(()=>this.restart(),5000); } },
+  prev() { this.stopAuto(); if(this.step>0) this.goTo(this.step-1); },
+
+  startAuto() {
+    if (this.autoTimer) return;
+    this.autoTimer = true;
+    this.goTo(0);
+  },
+
+  stopAuto() {
+    this.autoTimer = null;
+    if (this.stepTimer) clearTimeout(this.stepTimer);
+  },
+
+  restart() {
+    this.step = -1;
+    this.autoTimer = true;
+    this.next();
+  },
+
+  animate(s) {
+    [this.aStep0,this.aStep1,this.aStep2,this.aStep3,this.aStep4][s].call(this);
+  },
+
+  aStep0() {
+    const msg = '今天的视频发到抖音，100 台设备一起发';
+    const el = document.getElementById('tw-text');
+    const pills = document.getElementById('tw-pills');
+    el.textContent=''; pills.style.opacity='0';
+    let i=0;
+    const t=setInterval(()=>{ if(i<msg.length){el.textContent+=msg[i++];}
+      else{clearInterval(t);setTimeout(()=>{pills.style.opacity='1';},400);} },38);
+  },
+
+  aStep1() {
+    const items=[{id:'cg1',p:18},{id:'cg2',p:36},{id:'cg3',p:55},{id:'cg4',p:78},{id:'cg5',p:100}];
+    const delays=[400,900,1500,2300,4100];
+    items.forEach(x=>{ const e=document.getElementById(x.id); if(e){e.className='cg-item';e.querySelector('.cg-ck').textContent='○';} });
+    const bar=document.getElementById('cg-bar'); if(bar) bar.style.width='0%';
+    const area=document.getElementById('cg-code'); if(area) area.innerHTML='';
+    items.forEach((x,i)=>{
+      setTimeout(()=>{
+        if(i>0){const p=document.getElementById(items[i-1].id);if(p){p.className='cg-item ok';p.querySelector('.cg-ck').textContent='✓';}}
+        const e=document.getElementById(x.id); if(!e) return;
+        e.className='cg-item cur';
+        if(bar) bar.style.width=x.p+'%';
+        if(i===4){e.className='cg-item ok';e.querySelector('.cg-ck').textContent='✓';}
+      },delays[i]);
+    });
+    if(area) CODE_LINES.forEach((line,i)=>{
+      const d=document.createElement('div');d.className='cl';
+      d.innerHTML=line||'&nbsp;';area.appendChild(d);
+      setTimeout(()=>d.classList.add('show'),2300+i*95);
+    });
+  },
+
+  aStep2() {
+    const canvas = document.getElementById('ripple-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const wrap = canvas.parentElement;
+    canvas.width = wrap.offsetWidth;
+    canvas.height = wrap.offsetHeight;
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+
+    // Phone icon: w×h rounded rect with speaker notch
+    function drawPhone(x, y, state, pulseVal) {
+      const pw = 9, ph = 15, pr = 2;
+      const lx = x - pw/2, ty = y - ph/2;
+      let fill, stroke, glow, blur;
+      if (state === 'done') {
+        fill = 'rgba(0,255,136,0.22)'; stroke = 'rgba(0,255,136,0.95)';
+        glow = 'rgba(0,255,136,0.7)'; blur = 7;
+      } else if (state === 'active') {
+        const a = 0.55 + pulseVal * 0.45;
+        fill = `rgba(0,229,255,${a * 0.35})`; stroke = `rgba(0,229,255,${a})`;
+        glow = 'rgba(0,229,255,0.9)'; blur = 8 + pulseVal * 8;
+      } else {
+        fill = 'rgba(0,229,255,0.04)'; stroke = 'rgba(0,229,255,0.18)';
+        glow = null; blur = 0;
+      }
+      ctx.shadowColor = glow || 'transparent';
+      ctx.shadowBlur = blur;
+      // Body
+      ctx.beginPath();
+      ctx.roundRect(lx, ty, pw, ph, pr);
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // Speaker
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.roundRect(lx + pw*0.25, ty + 2, pw*0.5, 1.5, 1);
+      ctx.fillStyle = stroke;
+      ctx.fill();
+    }
+
+    // 4 rings, total 100 phones, innermost ring starts at r=90 to clear center text
+    const rings = [
+      { r: 90,  n: 16 },
+      { r: 122, n: 24 },
+      { r: 152, n: 32 },
+      { r: 180, n: 28 },
+    ];
+    const devices = [];
+    rings.forEach(ring => {
+      for (let i = 0; i < ring.n; i++) {
+        const angle = (i / ring.n) * Math.PI * 2 - Math.PI / 2;
+        devices.push({
+          x: cx + Math.cos(angle) * ring.r,
+          y: cy + Math.sin(angle) * ring.r,
+          dist: ring.r,
+          state: 'idle',
+          pulse: 0,
+        });
+      }
+    });
+
+    const numEl = document.getElementById('ripple-num');
+    const subEl = document.getElementById('ripple-sub');
+    let received = 0, waves = [], running2 = true;
+    const waveSpeed = 1.8;
+
+    function spawnWave() { waves.push({ r: 0, alpha: 0.85 }); }
+    const waveIv = setInterval(spawnWave, 750);
+    spawnWave();
+
+    function draw() {
+      if (!running2) return;
+      ctx.clearRect(0, 0, W, H);
+
+      // Ripple waves (drawn first, behind phones)
+      waves = waves.filter(w => w.r < 210);
+      waves.forEach(w => {
+        w.r += waveSpeed;
+        w.alpha = Math.max(0, 0.85 - w.r / 195);
+        devices.forEach(dev => {
+          if (dev.state === 'idle' && Math.abs(w.r - dev.dist) < waveSpeed + 1) {
+            dev.state = 'active'; dev.pulse = 1;
+            received++;
+            if (numEl) numEl.textContent = received;
+            setTimeout(() => { dev.state = 'done'; }, 500);
+          }
+        });
+        ctx.beginPath();
+        ctx.arc(cx, cy, w.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0,229,255,${w.alpha})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+
+      // Phones
+      devices.forEach(dev => {
+        if (dev.state === 'active') dev.pulse = Math.max(0, dev.pulse - 0.035);
+        drawPhone(dev.x, dev.y, dev.state, dev.pulse);
+      });
+
+      // Center: dark radial mask so text stays readable (drawn on canvas behind HTML overlay)
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 78);
+      grad.addColorStop(0,   'rgba(9,20,32,0.92)');
+      grad.addColorStop(0.7, 'rgba(9,20,32,0.6)');
+      grad.addColorStop(1,   'rgba(9,20,32,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(cx, cy, 78, 0, Math.PI*2); ctx.fill();
+
+      // Center server icon
+      ctx.shadowColor = 'rgba(0,229,255,0.6)'; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,229,255,0.9)'; ctx.fill();
+      ctx.shadowBlur = 0;
+
+      if (received >= 100) {
+        clearInterval(waveIv);
+        if (subEl) subEl.textContent = '全部设备已接收 ✓';
+        if (numEl) numEl.style.color = 'var(--green)';
+      }
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+    this._step2Stop = () => { running2 = false; clearInterval(waveIv); };
+  },
+
+  aStep3() {
+    const ls  = document.getElementById('log-stream');
+    const ps  = document.getElementById('ph-screen');
+    const ep  = document.getElementById('exec-pbar');
+    const est = document.getElementById('exec-st');
+    if (ls) ls.innerHTML = '';
+    if (ep) ep.style.width = '0%';
+
+    // Screen sequence driven by each screen's ms delay
+    let elapsed = 0;
+    PHONE_SCREENS.forEach((scr, i) => {
+      setTimeout(() => {
+        if (!ps) return;
+        ps.style.opacity = '0';
+        setTimeout(() => {
+          ps.innerHTML = scr.html;
+          ps.style.opacity = '1';
+          if (ep) ep.style.width = ((i + 1) / PHONE_SCREENS.length * 100) + '%';
+          const labels = ['启动抖音', '打开发布', '填写文案', '弹框出现', 'AI 介入', '发布成功'];
+          if (est) est.innerHTML = `Device-001<br><span style="color:var(--cyan)">${labels[i] || ''}</span>`;
+        }, 220);
+      }, elapsed);
+      elapsed += scr.ms;
+    });
+
+    // Log stream
+    const now = new Date();
+    LOG_ENTRIES.forEach(log => {
+      setTimeout(() => {
+        if (!ls) return;
+        const e = document.createElement('div'); e.className = 'le';
+        const sec = (now.getSeconds() + Math.floor(log.t / 1000)) % 60;
+        const ts = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ':' + sec.toString().padStart(2,'0');
+        const cls = log.c === 'ok' ? 'le-ok' : log.c === 'warn' ? 'le-warn' : 'le-ai';
+        const pfx = log.c === 'ok' ? '✓' : log.c === 'warn' ? '⚠' : '🤖';
+        e.innerHTML = `<span class="le-t">[${ts}]</span><span class="${cls}">${pfx} ${log.m}</span>`;
+        ls.appendChild(e); ls.scrollTop = ls.scrollHeight;
+        setTimeout(() => e.classList.add('show'), 40);
+      }, log.t);
+    });
+  },
+
+  aStep4() {
+    function cu(id,target,dur){
+      let v=0;const step=target/(dur/40);
+      const t=setInterval(()=>{
+        v=Math.min(v+step,target);
+        const el=document.getElementById(id);if(el)el.textContent=Math.floor(v)+'';
+        if(v>=target)clearInterval(t);
+      },40);
+    }
+    setTimeout(()=>cu('stat1',100,1400),200);
+    setTimeout(()=>{
+      let s=0;const t=setInterval(()=>{
+        s++;const m=Math.floor(s/60),sc=s%60;
+        const el=document.getElementById('stat2');if(el)el.textContent=m+':'+sc.toString().padStart(2,'0');
+        if(s>=158)clearInterval(t);
+      },18);
+    },200);
+    setTimeout(()=>cu('stat3',17,1400),400);
+  }
+};
+
+document.addEventListener('DOMContentLoaded',()=>{
+  DEMO.init();
+  // 滚动进入视图时自动开始播放
+  const stage = document.getElementById('demo-stage');
+  if (stage) {
+    const obsDemo = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ DEMO.startAuto(); obsDemo.disconnect(); } });
+    },{threshold:0.3});
+    obsDemo.observe(stage);
+  }
+});
+</script>
+</body>
+</html>

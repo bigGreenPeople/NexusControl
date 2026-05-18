@@ -1,0 +1,26 @@
+[     224ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[     427ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[     651ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     651ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     652ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     652ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     652ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     652ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     653ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     653ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     654ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[     726ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/xterm/lib/xterm.js:0
+[   71682ms] [LOG] [HMR] Waiting for update signal from WDS... @ webpack-internal:///./node_modules/webpack/hot/log.js:23
+[   71885ms] [INFO] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools @ webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:8417
+[   72110ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/localDevices/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72110ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/infoList" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72111ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScript" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72111ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-list/pythonScriptModify" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72111ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "DetailInfo", path: "/shark/devices-detail/info/:imei(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72111ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "hideApp", path: "/shark/noInstallApp/index/:id(\d+)" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72115ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Script", path: "/script" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72115ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "App", path: "/app" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72116ms] [WARNING] [vue-router] Duplicate named routes definition: { name: "Demo", path: "/demo" } @ webpack-internal:///./node_modules/vue-router/dist/vue-router.esm.js:16
+[   72190ms] [INFO] Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: http://localhost/static/fonts/element-icons.535877f5.woff @ webpack-internal:///./node_modules/xterm/lib/xterm.js:0

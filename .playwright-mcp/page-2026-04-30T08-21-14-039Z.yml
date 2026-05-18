@@ -1,0 +1,685 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "NexusControl" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img [ref=e7]
+        - heading "NexusControl" [level=1] [ref=e8]
+      - menubar [ref=e12]:
+        - link "首页" [ref=e14] [cursor=pointer]:
+          - /url: /index
+          - menuitem "首页" [ref=e15]:
+            - img [ref=e16]
+            - text: 首页
+        - menuitem "脚本管理 " [ref=e19]:
+          - generic [ref=e20] [cursor=pointer]:
+            - img [ref=e21]
+            - text: 脚本管理
+            - generic [ref=e23]: 
+        - menuitem "应用管理 " [ref=e25]:
+          - generic [ref=e26] [cursor=pointer]:
+            - img [ref=e27]
+            - text: 应用管理
+            - generic [ref=e29]: 
+        - menuitem "设备管理 " [ref=e31]:
+          - generic [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+            - text: 设备管理
+            - generic [ref=e35]: 
+        - menuitem "系统管理 " [ref=e37]:
+          - generic [ref=e38] [cursor=pointer]:
+            - img [ref=e39]
+            - text: 系统管理
+            - generic [ref=e41]: 
+          - text: 
+        - menuitem "系统监控 " [ref=e43]:
+          - generic [ref=e44] [cursor=pointer]:
+            - img [ref=e45]
+            - text: 系统监控
+            - generic [ref=e47]: 
+        - menuitem "Magisk 管理 " [expanded] [ref=e49]:
+          - generic [ref=e50] [cursor=pointer]:
+            - img [ref=e51]
+            - text: Magisk 管理
+            - generic [ref=e53]: 
+          - menu [ref=e54]:
+            - link "核心管理" [ref=e56] [cursor=pointer]:
+              - /url: /magisk/posed
+              - menuitem "核心管理" [ref=e57]:
+                - img [ref=e58]
+                - text: 核心管理
+            - link "模块统计" [ref=e60] [cursor=pointer]:
+              - /url: /magisk/magisk-stats
+              - menuitem "模块统计" [ref=e61]:
+                - img [ref=e62]
+                - text: 模块统计
+        - menuitem "系统工具 " [ref=e64]:
+          - generic [ref=e65] [cursor=pointer]:
+            - img [ref=e66]
+            - text: 系统工具
+            - generic [ref=e68]: 
+    - generic [ref=e70]:
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - img [ref=e74] [cursor=pointer]
+          - navigation "Breadcrumb" [ref=e76]:
+            - generic:
+              - generic [ref=e77]:
+                - link "首页" [ref=e78]
+                - text: /
+              - generic [ref=e79]:
+                - link "Magisk 管理" [ref=e80]
+                - text: /
+              - link "模块统计" [ref=e82]
+          - button "" [ref=e85] [cursor=pointer]:
+            - img [ref=e86]
+            - generic [ref=e87]: 
+        - generic [ref=e88]:
+          - generic [ref=e91]:
+            - generic [ref=e92] [cursor=pointer]: 首页
+            - generic [ref=e93] [cursor=pointer]:
+              - text: 模块统计
+              - generic [ref=e94]: 
+          - text:      
+      - generic [ref=e98]:
+        - generic [ref=e100]: MODULE STATS共 68 台设备
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]: 模块名
+            - generic [ref=e105]:
+              - textbox "选择模块" [ref=e106] [cursor=pointer]: SharkController
+              - generic [ref=e108] [cursor=pointer]: 
+          - generic [ref=e109]:
+            - generic [ref=e110]: 版本
+            - generic [ref=e112]:
+              - textbox "全部版本" [ref=e113] [cursor=pointer]
+              - generic [ref=e115] [cursor=pointer]: 
+          - generic [ref=e116]:
+            - generic [ref=e117]: 分组
+            - generic [ref=e119]:
+              - textbox "全部分组" [ref=e120] [cursor=pointer]
+              - generic [ref=e122] [cursor=pointer]: 
+          - generic [ref=e123]:
+            - generic [ref=e124]: 在线
+            - generic [ref=e126]:
+              - textbox "全部" [ref=e127] [cursor=pointer]
+              - generic [ref=e129] [cursor=pointer]: 
+          - generic [ref=e130]:
+            - generic [ref=e131]: Android版本
+            - generic [ref=e133]:
+              - textbox "全部" [ref=e134] [cursor=pointer]
+              - generic [ref=e136] [cursor=pointer]: 
+          - generic [ref=e137]:
+            - button " 查询" [active] [ref=e138] [cursor=pointer]:
+              - generic [ref=e139]: 
+              - text: 查询
+            - button " 重置" [ref=e140] [cursor=pointer]:
+              - generic [ref=e141]: 
+              - text: 重置
+        - generic [ref=e198]:
+          - generic [ref=e199]:
+            - generic [ref=e200]: "68"
+            - generic [ref=e201]: 总设备数
+          - generic [ref=e202]:
+            - generic [ref=e203]: "42"
+            - generic [ref=e204]: 已安装
+          - generic [ref=e205]:
+            - generic [ref=e206]: "26"
+            - generic [ref=e207]: 未安装
+          - generic [ref=e208]:
+            - generic [ref=e209]: 61.8%
+            - generic [ref=e210]: 安装率
+        - generic [ref=e212]:
+          - generic [ref=e213]: 版本分布
+          - radiogroup [ref=e214]:
+            - radio "柱状图" [checked] [ref=e215]:
+              - radio "柱状图" [checked] [ref=e216]
+              - generic [ref=e217] [cursor=pointer]: 柱状图
+            - radio "饼状图" [ref=e218]:
+              - radio "饼状图" [ref=e219]
+              - generic [ref=e220] [cursor=pointer]: 饼状图
+        - generic [ref=e142]:
+          - generic [ref=e225]:
+            - generic [ref=e226]:
+              - generic [ref=e227]: 安装状态
+              - generic [ref=e229]:
+                - textbox "请选择" [ref=e230] [cursor=pointer]: 全部
+                - generic [ref=e232] [cursor=pointer]: 
+            - generic [ref=e233]:
+              - generic [ref=e234]: 已装版本
+              - generic [ref=e236]:
+                - textbox "全部" [ref=e237] [cursor=pointer]
+                - generic [ref=e239] [cursor=pointer]: 
+            - generic [ref=e240]:
+              - generic [ref=e241]: 在线状态
+              - generic [ref=e243]:
+                - textbox "全部" [ref=e244] [cursor=pointer]
+                - generic [ref=e246] [cursor=pointer]: 
+            - generic [ref=e247]:
+              - generic [ref=e248]: 排除版本
+              - generic [ref=e250]:
+                - textbox "不排除" [ref=e251] [cursor=pointer]
+                - generic [ref=e253] [cursor=pointer]: 
+          - generic [ref=e143]:
+            - table [ref=e145]:
+              - rowgroup [ref=e155]:
+                - row "IMEI 型号 Android版本 分组 已装版本 在线 操作" [ref=e156]:
+                  - columnheader [ref=e157]:
+                    - generic [ref=e160] [cursor=pointer]:
+                      - checkbox
+                  - columnheader "IMEI" [ref=e162]:
+                    - generic [ref=e163]: IMEI
+                  - columnheader "型号" [ref=e164]:
+                    - generic [ref=e165]: 型号
+                  - columnheader "Android版本" [ref=e166]:
+                    - generic [ref=e167]: Android版本
+                  - columnheader "分组" [ref=e168]:
+                    - generic [ref=e169]: 分组
+                  - columnheader "已装版本" [ref=e170]:
+                    - generic [ref=e171]: 已装版本
+                  - columnheader "在线" [ref=e172]:
+                    - generic [ref=e173]: 在线
+                  - columnheader "操作" [ref=e174]:
+                    - generic [ref=e175]: 操作
+            - table [ref=e254]:
+              - rowgroup [ref=e264]:
+                - row "868141075045172 ZTE 7553N 13 真美香佛具 v1.1.1 (1074) 在线  管理  远控" [ref=e265]:
+                  - cell [ref=e266]:
+                    - generic [ref=e269] [cursor=pointer]:
+                      - checkbox
+                  - cell "868141075045172" [ref=e271]:
+                    - generic [ref=e272]: "868141075045172"
+                  - cell "ZTE 7553N" [ref=e273]:
+                    - generic [ref=e274]: ZTE 7553N
+                  - cell "13" [ref=e275]:
+                    - generic [ref=e276]: "13"
+                  - cell "真美香佛具" [ref=e277]:
+                    - generic [ref=e278]: 真美香佛具
+                  - cell "v1.1.1 (1074)" [ref=e279]:
+                    - generic [ref=e280]: v1.1.1 (1074)
+                  - cell "在线" [ref=e281]:
+                    - generic [ref=e282]: 在线
+                  - cell " 管理  远控" [ref=e283]:
+                    - generic [ref=e285]:
+                      - button " 管理" [ref=e286] [cursor=pointer]:
+                        - generic [ref=e287]: 
+                        - text: 管理
+                      - button " 远控" [ref=e288] [cursor=pointer]:
+                        - generic [ref=e289]: 
+                        - text: 远控
+                - row "862349078158340 2312DRAABC 14 自己的设备 v1.0.9 (1072) 离线  管理  远控" [ref=e290]:
+                  - cell [ref=e291]:
+                    - generic [ref=e294] [cursor=pointer]:
+                      - checkbox
+                  - cell "862349078158340" [ref=e296]:
+                    - generic [ref=e297]: "862349078158340"
+                  - cell "2312DRAABC" [ref=e298]:
+                    - generic [ref=e299]: 2312DRAABC
+                  - cell "14" [ref=e300]:
+                    - generic [ref=e301]: "14"
+                  - cell "自己的设备" [ref=e302]:
+                    - generic [ref=e303]: 自己的设备
+                  - cell "v1.0.9 (1072)" [ref=e304]:
+                    - generic [ref=e305]: v1.0.9 (1072)
+                  - cell "离线" [ref=e306]:
+                    - generic [ref=e307]: 离线
+                  - cell " 管理  远控" [ref=e308]:
+                    - generic [ref=e310]:
+                      - button " 管理" [ref=e311] [cursor=pointer]:
+                        - generic [ref=e312]: 
+                        - text: 管理
+                      - button " 远控" [ref=e313] [cursor=pointer]:
+                        - generic [ref=e314]: 
+                        - text: 远控
+                - row "862526073534001 2312DRAABC 13 环目运营销售 v1.1.1 (1074) 在线  管理  远控" [ref=e315]:
+                  - cell [ref=e316]:
+                    - generic [ref=e319] [cursor=pointer]:
+                      - checkbox
+                  - cell "862526073534001" [ref=e321]:
+                    - generic [ref=e322]: "862526073534001"
+                  - cell "2312DRAABC" [ref=e323]:
+                    - generic [ref=e324]: 2312DRAABC
+                  - cell "13" [ref=e325]:
+                    - generic [ref=e326]: "13"
+                  - cell "环目运营销售" [ref=e327]:
+                    - generic [ref=e328]: 环目运营销售
+                  - cell "v1.1.1 (1074)" [ref=e329]:
+                    - generic [ref=e330]: v1.1.1 (1074)
+                  - cell "在线" [ref=e331]:
+                    - generic [ref=e332]: 在线
+                  - cell " 管理  远控" [ref=e333]:
+                    - generic [ref=e335]:
+                      - button " 管理" [ref=e336] [cursor=pointer]:
+                        - generic [ref=e337]: 
+                        - text: 管理
+                      - button " 远控" [ref=e338] [cursor=pointer]:
+                        - generic [ref=e339]: 
+                        - text: 远控
+                - row "862526077619386 2312DRAABC 13 今致 v1.0.9 (1072) 在线  管理  远控" [ref=e340]:
+                  - cell [ref=e341]:
+                    - generic [ref=e344] [cursor=pointer]:
+                      - checkbox
+                  - cell "862526077619386" [ref=e346]:
+                    - generic [ref=e347]: "862526077619386"
+                  - cell "2312DRAABC" [ref=e348]:
+                    - generic [ref=e349]: 2312DRAABC
+                  - cell "13" [ref=e350]:
+                    - generic [ref=e351]: "13"
+                  - cell "今致" [ref=e352]:
+                    - generic [ref=e353]: 今致
+                  - cell "v1.0.9 (1072)" [ref=e354]:
+                    - generic [ref=e355]: v1.0.9 (1072)
+                  - cell "在线" [ref=e356]:
+                    - generic [ref=e357]: 在线
+                  - cell " 管理  远控" [ref=e358]:
+                    - generic [ref=e360]:
+                      - button " 管理" [ref=e361] [cursor=pointer]:
+                        - generic [ref=e362]: 
+                        - text: 管理
+                      - button " 远控" [ref=e363] [cursor=pointer]:
+                        - generic [ref=e364]: 
+                        - text: 远控
+                - row "867319064560762 2312DRAABC 13 今致 v1.0.9 (1072) 在线  管理  远控" [ref=e365]:
+                  - cell [ref=e366]:
+                    - generic [ref=e369] [cursor=pointer]:
+                      - checkbox
+                  - cell "867319064560762" [ref=e371]:
+                    - generic [ref=e372]: "867319064560762"
+                  - cell "2312DRAABC" [ref=e373]:
+                    - generic [ref=e374]: 2312DRAABC
+                  - cell "13" [ref=e375]:
+                    - generic [ref=e376]: "13"
+                  - cell "今致" [ref=e377]:
+                    - generic [ref=e378]: 今致
+                  - cell "v1.0.9 (1072)" [ref=e379]:
+                    - generic [ref=e380]: v1.0.9 (1072)
+                  - cell "在线" [ref=e381]:
+                    - generic [ref=e382]: 在线
+                  - cell " 管理  远控" [ref=e383]:
+                    - generic [ref=e385]:
+                      - button " 管理" [ref=e386] [cursor=pointer]:
+                        - generic [ref=e387]: 
+                        - text: 管理
+                      - button " 远控" [ref=e388] [cursor=pointer]:
+                        - generic [ref=e389]: 
+                        - text: 远控
+                - row "866515054148424 21091116AC 11 墨夕颜 v1.0.9 (1072) 离线  管理  远控" [ref=e390]:
+                  - cell [ref=e391]:
+                    - generic [ref=e394] [cursor=pointer]:
+                      - checkbox
+                  - cell "866515054148424" [ref=e396]:
+                    - generic [ref=e397]: "866515054148424"
+                  - cell "21091116AC" [ref=e398]:
+                    - generic [ref=e399]: 21091116AC
+                  - cell "11" [ref=e400]:
+                    - generic [ref=e401]: "11"
+                  - cell "墨夕颜" [ref=e402]:
+                    - generic [ref=e403]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e404]:
+                    - generic [ref=e405]: v1.0.9 (1072)
+                  - cell "离线" [ref=e406]:
+                    - generic [ref=e407]: 离线
+                  - cell " 管理  远控" [ref=e408]:
+                    - generic [ref=e410]:
+                      - button " 管理" [ref=e411] [cursor=pointer]:
+                        - generic [ref=e412]: 
+                        - text: 管理
+                      - button " 远控" [ref=e413] [cursor=pointer]:
+                        - generic [ref=e414]: 
+                        - text: 远控
+                - row "866659060814106 21091116AC 11 墨夕颜 v1.0.6 (1005) 在线  管理  远控" [ref=e415]:
+                  - cell [ref=e416]:
+                    - generic [ref=e419] [cursor=pointer]:
+                      - checkbox
+                  - cell "866659060814106" [ref=e421]:
+                    - generic [ref=e422]: "866659060814106"
+                  - cell "21091116AC" [ref=e423]:
+                    - generic [ref=e424]: 21091116AC
+                  - cell "11" [ref=e425]:
+                    - generic [ref=e426]: "11"
+                  - cell "墨夕颜" [ref=e427]:
+                    - generic [ref=e428]: 墨夕颜
+                  - cell "v1.0.6 (1005)" [ref=e429]:
+                    - generic [ref=e430]: v1.0.6 (1005)
+                  - cell "在线" [ref=e431]:
+                    - generic [ref=e432]: 在线
+                  - cell " 管理  远控" [ref=e433]:
+                    - generic [ref=e435]:
+                      - button " 管理" [ref=e436] [cursor=pointer]:
+                        - generic [ref=e437]: 
+                        - text: 管理
+                      - button " 远控" [ref=e438] [cursor=pointer]:
+                        - generic [ref=e439]: 
+                        - text: 远控
+                - row "867294069321306 21091116AC 11 墨夕颜 v1.0.6 (1005) 在线  管理  远控" [ref=e440]:
+                  - cell [ref=e441]:
+                    - generic [ref=e444] [cursor=pointer]:
+                      - checkbox
+                  - cell "867294069321306" [ref=e446]:
+                    - generic [ref=e447]: "867294069321306"
+                  - cell "21091116AC" [ref=e448]:
+                    - generic [ref=e449]: 21091116AC
+                  - cell "11" [ref=e450]:
+                    - generic [ref=e451]: "11"
+                  - cell "墨夕颜" [ref=e452]:
+                    - generic [ref=e453]: 墨夕颜
+                  - cell "v1.0.6 (1005)" [ref=e454]:
+                    - generic [ref=e455]: v1.0.6 (1005)
+                  - cell "在线" [ref=e456]:
+                    - generic [ref=e457]: 在线
+                  - cell " 管理  远控" [ref=e458]:
+                    - generic [ref=e460]:
+                      - button " 管理" [ref=e461] [cursor=pointer]:
+                        - generic [ref=e462]: 
+                        - text: 管理
+                      - button " 远控" [ref=e463] [cursor=pointer]:
+                        - generic [ref=e464]: 
+                        - text: 远控
+                - row "866659064859784 21091116AC 11 墨夕颜 v1.0.9 (1072) 在线  管理  远控" [ref=e465]:
+                  - cell [ref=e466]:
+                    - generic [ref=e469] [cursor=pointer]:
+                      - checkbox
+                  - cell "866659064859784" [ref=e471]:
+                    - generic [ref=e472]: "866659064859784"
+                  - cell "21091116AC" [ref=e473]:
+                    - generic [ref=e474]: 21091116AC
+                  - cell "11" [ref=e475]:
+                    - generic [ref=e476]: "11"
+                  - cell "墨夕颜" [ref=e477]:
+                    - generic [ref=e478]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e479]:
+                    - generic [ref=e480]: v1.0.9 (1072)
+                  - cell "在线" [ref=e481]:
+                    - generic [ref=e482]: 在线
+                  - cell " 管理  远控" [ref=e483]:
+                    - generic [ref=e485]:
+                      - button " 管理" [ref=e486] [cursor=pointer]:
+                        - generic [ref=e487]: 
+                        - text: 管理
+                      - button " 远控" [ref=e488] [cursor=pointer]:
+                        - generic [ref=e489]: 
+                        - text: 远控
+                - row "866066052775347 21091116AC 11 墨夕颜 v1.0.9 (1072) 在线  管理  远控" [ref=e490]:
+                  - cell [ref=e491]:
+                    - generic [ref=e494] [cursor=pointer]:
+                      - checkbox
+                  - cell "866066052775347" [ref=e496]:
+                    - generic [ref=e497]: "866066052775347"
+                  - cell "21091116AC" [ref=e498]:
+                    - generic [ref=e499]: 21091116AC
+                  - cell "11" [ref=e500]:
+                    - generic [ref=e501]: "11"
+                  - cell "墨夕颜" [ref=e502]:
+                    - generic [ref=e503]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e504]:
+                    - generic [ref=e505]: v1.0.9 (1072)
+                  - cell "在线" [ref=e506]:
+                    - generic [ref=e507]: 在线
+                  - cell " 管理  远控" [ref=e508]:
+                    - generic [ref=e510]:
+                      - button " 管理" [ref=e511] [cursor=pointer]:
+                        - generic [ref=e512]: 
+                        - text: 管理
+                      - button " 远控" [ref=e513] [cursor=pointer]:
+                        - generic [ref=e514]: 
+                        - text: 远控
+                - row "869895060998385 21091116AG 11 墨夕颜 v1.0.6 (1005) 在线  管理  远控" [ref=e515]:
+                  - cell [ref=e516]:
+                    - generic [ref=e519] [cursor=pointer]:
+                      - checkbox
+                  - cell "869895060998385" [ref=e521]:
+                    - generic [ref=e522]: "869895060998385"
+                  - cell "21091116AG" [ref=e523]:
+                    - generic [ref=e524]: 21091116AG
+                  - cell "11" [ref=e525]:
+                    - generic [ref=e526]: "11"
+                  - cell "墨夕颜" [ref=e527]:
+                    - generic [ref=e528]: 墨夕颜
+                  - cell "v1.0.6 (1005)" [ref=e529]:
+                    - generic [ref=e530]: v1.0.6 (1005)
+                  - cell "在线" [ref=e531]:
+                    - generic [ref=e532]: 在线
+                  - cell " 管理  远控" [ref=e533]:
+                    - generic [ref=e535]:
+                      - button " 管理" [ref=e536] [cursor=pointer]:
+                        - generic [ref=e537]: 
+                        - text: 管理
+                      - button " 远控" [ref=e538] [cursor=pointer]:
+                        - generic [ref=e539]: 
+                        - text: 远控
+                - row "866659062683327 21091116AC 11 墨夕颜 v1.0.9 (1072) 离线  管理  远控" [ref=e540]:
+                  - cell [ref=e541]:
+                    - generic [ref=e544] [cursor=pointer]:
+                      - checkbox
+                  - cell "866659062683327" [ref=e546]:
+                    - generic [ref=e547]: "866659062683327"
+                  - cell "21091116AC" [ref=e548]:
+                    - generic [ref=e549]: 21091116AC
+                  - cell "11" [ref=e550]:
+                    - generic [ref=e551]: "11"
+                  - cell "墨夕颜" [ref=e552]:
+                    - generic [ref=e553]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e554]:
+                    - generic [ref=e555]: v1.0.9 (1072)
+                  - cell "离线" [ref=e556]:
+                    - generic [ref=e557]: 离线
+                  - cell " 管理  远控" [ref=e558]:
+                    - generic [ref=e560]:
+                      - button " 管理" [ref=e561] [cursor=pointer]:
+                        - generic [ref=e562]: 
+                        - text: 管理
+                      - button " 远控" [ref=e563] [cursor=pointer]:
+                        - generic [ref=e564]: 
+                        - text: 远控
+                - row "869048065569468 21091116AC 11 墨夕颜 v1.0.6 (1005) 在线  管理  远控" [ref=e565]:
+                  - cell [ref=e566]:
+                    - generic [ref=e569] [cursor=pointer]:
+                      - checkbox
+                  - cell "869048065569468" [ref=e571]:
+                    - generic [ref=e572]: "869048065569468"
+                  - cell "21091116AC" [ref=e573]:
+                    - generic [ref=e574]: 21091116AC
+                  - cell "11" [ref=e575]:
+                    - generic [ref=e576]: "11"
+                  - cell "墨夕颜" [ref=e577]:
+                    - generic [ref=e578]: 墨夕颜
+                  - cell "v1.0.6 (1005)" [ref=e579]:
+                    - generic [ref=e580]: v1.0.6 (1005)
+                  - cell "在线" [ref=e581]:
+                    - generic [ref=e582]: 在线
+                  - cell " 管理  远控" [ref=e583]:
+                    - generic [ref=e585]:
+                      - button " 管理" [ref=e586] [cursor=pointer]:
+                        - generic [ref=e587]: 
+                        - text: 管理
+                      - button " 远控" [ref=e588] [cursor=pointer]:
+                        - generic [ref=e589]: 
+                        - text: 远控
+                - row "866515054399548 21091116AC 11 墨夕颜 v1.0.9 (1072) 离线  管理  远控" [ref=e590]:
+                  - cell [ref=e591]:
+                    - generic [ref=e594] [cursor=pointer]:
+                      - checkbox
+                  - cell "866515054399548" [ref=e596]:
+                    - generic [ref=e597]: "866515054399548"
+                  - cell "21091116AC" [ref=e598]:
+                    - generic [ref=e599]: 21091116AC
+                  - cell "11" [ref=e600]:
+                    - generic [ref=e601]: "11"
+                  - cell "墨夕颜" [ref=e602]:
+                    - generic [ref=e603]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e604]:
+                    - generic [ref=e605]: v1.0.9 (1072)
+                  - cell "离线" [ref=e606]:
+                    - generic [ref=e607]: 离线
+                  - cell " 管理  远控" [ref=e608]:
+                    - generic [ref=e610]:
+                      - button " 管理" [ref=e611] [cursor=pointer]:
+                        - generic [ref=e612]: 
+                        - text: 管理
+                      - button " 远控" [ref=e613] [cursor=pointer]:
+                        - generic [ref=e614]: 
+                        - text: 远控
+                - row "866066054062207 21091116AC 11 墨夕颜 v1.0.6 (1005) 在线  管理  远控" [ref=e615]:
+                  - cell [ref=e616]:
+                    - generic [ref=e619] [cursor=pointer]:
+                      - checkbox
+                  - cell "866066054062207" [ref=e621]:
+                    - generic [ref=e622]: "866066054062207"
+                  - cell "21091116AC" [ref=e623]:
+                    - generic [ref=e624]: 21091116AC
+                  - cell "11" [ref=e625]:
+                    - generic [ref=e626]: "11"
+                  - cell "墨夕颜" [ref=e627]:
+                    - generic [ref=e628]: 墨夕颜
+                  - cell "v1.0.6 (1005)" [ref=e629]:
+                    - generic [ref=e630]: v1.0.6 (1005)
+                  - cell "在线" [ref=e631]:
+                    - generic [ref=e632]: 在线
+                  - cell " 管理  远控" [ref=e633]:
+                    - generic [ref=e635]:
+                      - button " 管理" [ref=e636] [cursor=pointer]:
+                        - generic [ref=e637]: 
+                        - text: 管理
+                      - button " 远控" [ref=e638] [cursor=pointer]:
+                        - generic [ref=e639]: 
+                        - text: 远控
+                - row "866066051543142 21091116AC 11 墨夕颜 v1.0.9 (1072) 在线  管理  远控" [ref=e640]:
+                  - cell [ref=e641]:
+                    - generic [ref=e644] [cursor=pointer]:
+                      - checkbox
+                  - cell "866066051543142" [ref=e646]:
+                    - generic [ref=e647]: "866066051543142"
+                  - cell "21091116AC" [ref=e648]:
+                    - generic [ref=e649]: 21091116AC
+                  - cell "11" [ref=e650]:
+                    - generic [ref=e651]: "11"
+                  - cell "墨夕颜" [ref=e652]:
+                    - generic [ref=e653]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e654]:
+                    - generic [ref=e655]: v1.0.9 (1072)
+                  - cell "在线" [ref=e656]:
+                    - generic [ref=e657]: 在线
+                  - cell " 管理  远控" [ref=e658]:
+                    - generic [ref=e660]:
+                      - button " 管理" [ref=e661] [cursor=pointer]:
+                        - generic [ref=e662]: 
+                        - text: 管理
+                      - button " 远控" [ref=e663] [cursor=pointer]:
+                        - generic [ref=e664]: 
+                        - text: 远控
+                - row "869048060658282 21091116AC 11 墨夕颜 v1.0.6 (1005) 在线  管理  远控" [ref=e665]:
+                  - cell [ref=e666]:
+                    - generic [ref=e669] [cursor=pointer]:
+                      - checkbox
+                  - cell "869048060658282" [ref=e671]:
+                    - generic [ref=e672]: "869048060658282"
+                  - cell "21091116AC" [ref=e673]:
+                    - generic [ref=e674]: 21091116AC
+                  - cell "11" [ref=e675]:
+                    - generic [ref=e676]: "11"
+                  - cell "墨夕颜" [ref=e677]:
+                    - generic [ref=e678]: 墨夕颜
+                  - cell "v1.0.6 (1005)" [ref=e679]:
+                    - generic [ref=e680]: v1.0.6 (1005)
+                  - cell "在线" [ref=e681]:
+                    - generic [ref=e682]: 在线
+                  - cell " 管理  远控" [ref=e683]:
+                    - generic [ref=e685]:
+                      - button " 管理" [ref=e686] [cursor=pointer]:
+                        - generic [ref=e687]: 
+                        - text: 管理
+                      - button " 远控" [ref=e688] [cursor=pointer]:
+                        - generic [ref=e689]: 
+                        - text: 远控
+                - row "867294069323708 21091116AC 11 墨夕颜 v1.0.9 (1072) 离线  管理  远控" [ref=e690]:
+                  - cell [ref=e691]:
+                    - generic [ref=e694] [cursor=pointer]:
+                      - checkbox
+                  - cell "867294069323708" [ref=e696]:
+                    - generic [ref=e697]: "867294069323708"
+                  - cell "21091116AC" [ref=e698]:
+                    - generic [ref=e699]: 21091116AC
+                  - cell "11" [ref=e700]:
+                    - generic [ref=e701]: "11"
+                  - cell "墨夕颜" [ref=e702]:
+                    - generic [ref=e703]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e704]:
+                    - generic [ref=e705]: v1.0.9 (1072)
+                  - cell "离线" [ref=e706]:
+                    - generic [ref=e707]: 离线
+                  - cell " 管理  远控" [ref=e708]:
+                    - generic [ref=e710]:
+                      - button " 管理" [ref=e711] [cursor=pointer]:
+                        - generic [ref=e712]: 
+                        - text: 管理
+                      - button " 远控" [ref=e713] [cursor=pointer]:
+                        - generic [ref=e714]: 
+                        - text: 远控
+                - row "869895065939509 21091116AG 11 墨夕颜 v1.0.9 (1072) 离线  管理  远控" [ref=e715]:
+                  - cell [ref=e716]:
+                    - generic [ref=e719] [cursor=pointer]:
+                      - checkbox
+                  - cell "869895065939509" [ref=e721]:
+                    - generic [ref=e722]: "869895065939509"
+                  - cell "21091116AG" [ref=e723]:
+                    - generic [ref=e724]: 21091116AG
+                  - cell "11" [ref=e725]:
+                    - generic [ref=e726]: "11"
+                  - cell "墨夕颜" [ref=e727]:
+                    - generic [ref=e728]: 墨夕颜
+                  - cell "v1.0.9 (1072)" [ref=e729]:
+                    - generic [ref=e730]: v1.0.9 (1072)
+                  - cell "离线" [ref=e731]:
+                    - generic [ref=e732]: 离线
+                  - cell " 管理  远控" [ref=e733]:
+                    - generic [ref=e735]:
+                      - button " 管理" [ref=e736] [cursor=pointer]:
+                        - generic [ref=e737]: 
+                        - text: 管理
+                      - button " 远控" [ref=e738] [cursor=pointer]:
+                        - generic [ref=e739]: 
+                        - text: 远控
+                - row "862349075360840 2312DRAABC 13 — v1.1.1 (1074) 在线  管理  远控" [ref=e740]:
+                  - cell [ref=e741]:
+                    - generic [ref=e744] [cursor=pointer]:
+                      - checkbox
+                  - cell "862349075360840" [ref=e746]:
+                    - generic [ref=e747]: "862349075360840"
+                  - cell "2312DRAABC" [ref=e748]:
+                    - generic [ref=e749]: 2312DRAABC
+                  - cell "13" [ref=e750]:
+                    - generic [ref=e751]: "13"
+                  - cell "—" [ref=e752]:
+                    - generic [ref=e753]: —
+                  - cell "v1.1.1 (1074)" [ref=e754]:
+                    - generic [ref=e755]: v1.1.1 (1074)
+                  - cell "在线" [ref=e756]:
+                    - generic [ref=e757]: 在线
+                  - cell " 管理  远控" [ref=e758]:
+                    - generic [ref=e760]:
+                      - button " 管理" [ref=e761] [cursor=pointer]:
+                        - generic [ref=e762]: 
+                        - text: 管理
+                      - button " 远控" [ref=e763] [cursor=pointer]:
+                        - generic [ref=e764]: 
+                        - text: 远控
+          - generic [ref=e766]:
+            - generic [ref=e767]: 共 68 条
+            - generic [ref=e770]:
+              - textbox "请选择" [ref=e771] [cursor=pointer]: 20条/页
+              - generic [ref=e773] [cursor=pointer]: 
+            - button "" [disabled] [ref=e774]:
+              - generic [ref=e775]: 
+            - list [ref=e776]:
+              - listitem [ref=e777]: "1"
+              - listitem [ref=e778] [cursor=pointer]: "2"
+              - listitem [ref=e779] [cursor=pointer]: "3"
+              - listitem [ref=e780] [cursor=pointer]: "4"
+            - button "" [ref=e781] [cursor=pointer]:
+              - generic [ref=e782]: 
+            - generic [ref=e783]:
+              - text: 前往
+              - spinbutton [ref=e785]: "1"
+              - text: 页
+        - text: 
+  - text: 
